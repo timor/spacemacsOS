@@ -36,7 +36,7 @@
     ;; 10 Worskpaces please
     (setq exwm-workspace-number 10)
     ;; You may want Emacs to show you the time
-    (display-time-mode t)
+    ;; (display-time-mode t)
     (when exwm--hide-tiling-modeline
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
     ;; Trying to make shell-pop with a real terminal :P
