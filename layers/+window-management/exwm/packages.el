@@ -210,10 +210,10 @@ Can show completions at point for COMMAND using helm or ido"
     (delete ?\C-h exwm-input-prefix-keys)
 
     ;; Preserve the habit
-    (exwm-input-set-key (kbd "s-:") 'helm-M-x)
-    (exwm-input-set-key (kbd "s-;") 'evil-ex)
+    ;; (exwm-input-set-key (kbd "s-:") 'helm-M-x)
+    ;; (exwm-input-set-key (kbd "s-;") 'evil-ex)
     ;; Shell (not a real one for the moment)
-    (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
+    ;; (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
     ;; Undo window configurations
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
     (exwm-input-set-key (kbd "S-s-U") #'winner-redo)
