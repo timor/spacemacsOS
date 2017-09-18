@@ -179,7 +179,7 @@ Can show completions at point for COMMAND using helm or ido"
     ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
     ;;   is a more feature-rich alternative.
     (exwm-input-set-key (kbd "<s-escape>")
-                        (lambda () (interactive) (start-process "" nil exwm--locking-command)))
+                        (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
     ;; The following example demonstrates how to set a key binding only available
     ;; in line mode. It's simply done by first push the prefix key to
     ;; `exwm-input-prefix-keys' and then add the key sequence to `exwm-mode-map'.
