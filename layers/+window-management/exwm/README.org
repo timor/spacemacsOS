@@ -84,7 +84,7 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~s-SPC~               | App Launcher                                   |
 | ~s-ESC~               | Lock Screen                                    |
 | ~s-u,U~               | Undo, Redo window configurations               |
-| ~s-b~                 | Show all opened buffers                        |
+| ~s-b~                 | Select and switch to buffer                    |
 | ~s-h,j,k,l~           | Switch to left,lower,upper,right window        |
 | ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right |
 | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
