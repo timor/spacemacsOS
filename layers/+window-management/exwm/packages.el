@@ -52,8 +52,8 @@
     ;;      "Termite" #'exwm-launch-term))
     ;;   (shell-pop index))
     :config
-    (when dotspacemacs-use-ido
-      (exwm-enable-ido-workaround))
+    ;; (when dotspacemacs-use-ido
+    ;;   (exwm-enable-ido-workaround))
     (defun spacemacs/exwm-bind-command (key command &rest bindings)
       (while key
         (exwm-input-set-key (kbd key)
@@ -218,7 +218,7 @@ Can show completions at point for COMMAND using helm or ido"
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
     (exwm-input-set-key (kbd "S-s-U") #'winner-redo)
     ;; Change buffers
-    (exwm-input-set-key (kbd "s-b") #'helm-mini)
+    (exwm-input-set-key (kbd "s-b") #'ivy-switch-buffer)
     ;; Focusing windows
     (exwm-input-set-key (kbd "s-h") #'evil-window-left)
     (exwm-input-set-key (kbd "s-j") #'evil-window-down)
