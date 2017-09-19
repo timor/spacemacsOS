@@ -54,6 +54,12 @@
     :config
     ;; (when dotspacemacs-use-ido
     ;;   (exwm-enable-ido-workaround))
+    ;; make sure that displaying transient states gets the keyboard input
+    (add-hook 'spacemacs-transient-state-before-show-hook (lambda()
+                                                            (setq exwm-input-line-mode-passthrough t)))
+    (add-hook 'spacemacs-transient-state-after-close-hook (lambda()
+                                                            (setq exwm-input-line-mode-passthrough nil)))
+
     (defun spacemacs/exwm-bind-command (key command &rest bindings)
       (while key
         (exwm-input-set-key (kbd key)
