@@ -187,8 +187,13 @@ Can show completions at point for COMMAND using helm or ido"
     (push ?\C-q exwm-input-prefix-keys)
     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
-    ;; M-m leader, sorry Space Folks
-    (push ?\M-m exwm-input-prefix-keys)
+    ;; switch to char mode (which has the same semantics as insert mode)
+    (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
+    (push ?\i exwm-input-prefix-keys)
+
+    ;;(define-key exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
+    ;; regular space leader key in line mode
+    (push ?\  exwm-input-prefix-keys)
     ;; Universal Get-me-outta-here
     (push ?\C-g exwm-input-prefix-keys)
     ;; Universal Arguments
