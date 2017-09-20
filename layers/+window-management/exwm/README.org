@@ -77,7 +77,7 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~C-u~                 | Universal Argument                             |
 | ~C-[0-9]~             | Universal Prefix for [0-9]                     |
 | ~SPC~                 | Spacemacs Leader Key (in line mode)            |
-| ~i~                   | Switch to EXWM char mode                       |
+| ~s-i~                 | Switch to EXWM char mode                       |
 | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [1 2 3 ... 8 9 10]         |
 | ~s-TAB~               | Switch to last workspace                       |
 | ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
@@ -95,7 +95,7 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 
 EXWM X windows come up in line mode per default. This means that except for the
 special keys listed above, all keys are sent to the window, and normal evil mode
-bindings are overridden. Pressing ~i~, which would normally get you into insert
+bindings are overridden. Pressing ~s-i~, which would normally get you into insert
 mode, releases all bindings except the ones starting with ~s~, or *Super*,
 effectively giving full control to the X window. To switch back to line mode,
 use ~s-r~.
