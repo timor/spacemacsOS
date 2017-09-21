@@ -95,41 +95,46 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 
 EXWM X windows come up in line mode per default. This means that except for the
 special keys listed above, all keys are sent to the window, and normal evil mode
-bindings are overridden. Pressing ~s-i~, which would normally get you into insert
-mode, releases all bindings except the ones starting with ~s~, or *Super*,
-effectively giving full control to the X window. To switch back to line mode,
-use ~s-r~.
+bindings are overridden. Pressing ~i~, gets you into insert mode and
+simultaneously char mode, releasing all bindings except the ones starting with
+~s~, or *Super*, effectively giving full control to the X window. To switch back
+to line mode, use ~s-r~.
 
 *** Implementation Strategy
 Generally, whenever a EXWM window is created, it is displayed in line mode, with
-spacemacs being in normal state.  When changing to insert-state in EXWM mode,
-char mode should be activated underneath.  When exiting char mode, either by use
-of =exwm-reset= or =exwm-input-grab-keyboard=, the window should return to
-normal state.
+spacemacs being in normal state. When changing to insert-state in EXWM mode,
+char mode should be activated underneath. Likewise, when entering char mode,
+insert state should be activated. When exiting char mode, either by use of
+=exwm-reset= or =exwm-input-grab-keyboard=, the window should return to normal
+state.
 
 Switching to input-state/char mode:
-- bind "i" to switch to insert state as usual, but also activate char mode.
+- bind "i" to switch to char mode
+- advice =exwm-input-release-keyboard= so that insert state is activated when
+  char mode is entered.
 - advice =exwm-input-grab-keyboard= so that normal state is activated when
   control is given back to spacemacs.
 
 Handling transient states from line mode:
 Transient states are not captured by EXWM's intrinsic
 "currently-inputting-command" detection, and must be activated separately.
-- add hook to all hydra show functions that enable EXWM input pass-through
+- add hook to all transient state activation functions that enable EXWM input pass-through
   behaviour
-- add hook to all hydra deactivate functions that disable EXWM input
+- add hook to all transient state deactivation functions that disable EXWM input
   pass-through
 
 Handling transient states from char mode:
 This is a bit more tricky, since char mode has no input-tunneling behavior.
 There is an EXWM-internal mechanism to temporarily enable line mode, but that is
 an implementation detail and not exposed in the interface.
-- add hook to all hydra show functions that store which mode (char/line) was
-  active during hydra activation
+- add hook to all transient state activation functions that store which mode (char/line) was
+  active during transient state activation
+- inhibit manual switching to char/line mode, as that would mess up input to
+  transient state
 - switch to line mode
 - proceed as described above
 - add hook such that whenever the buffer is re-entered, the previous mode is
-  restored.  This is necessary because hydra command execution could have exited
+  restored.  This is necessary because transient state command execution could have exited
   the window, and the next time the window is entered, the original mode should
-  be restored.  Alternatively, if that proves to be to messy, hydra activation
+  be restored.  Alternatively, if that proves to be to messy, transient state activation
   could always be made to change the state back to normal state.
