@@ -224,8 +224,15 @@ Can show completions at point for COMMAND using helm or ido"
     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
     ;; switch to char mode (which has the same semantics as insert mode)
-    (evil-define-key 'normal exwm-mode-map (kbd "s-i") 'exwm-input-release-keyboard)
-    (push ?\i exwm-input-prefix-keys)
+    (define-key exwm-mode-map (kbd "i") (lambda ()
+                                          (interactive)
+                                          (evil-insert-state)
+                                          (exwm-input-release-keyboard)))
+    ;; (push ?\i exwm-input-prefix-keys
+
+    ;; ensure) that when char mode is left, state is restored to normal
+    (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
+                                                   (evil-normal-state)))
 
     ;;(define-key exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
     ;; regular space leader key in line mode
