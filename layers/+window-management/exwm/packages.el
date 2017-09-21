@@ -60,6 +60,16 @@
     (add-hook 'spacemacs-transient-state-after-close-hook (lambda()
                                                             (setq exwm-input-line-mode-passthrough nil)))
 
+    ;; override persp-mode's idea of frame creation for floating frames.  These
+    ;; are characterized by the 'unsplittable' frame parameter, and should not
+    ;; be tried to assign an existing layout to.
+
+    (defun spacemacs//exwm-persp-mode-inhibit-p (frame)
+      (frame-parameter frame 'unsplittable))
+
+    (eval-after-load 'persp-mode
+      (advice-add 'persp-init-new-frame :before-until 'spacemacs//exwm-persp-mode-inhibit-p))
+
     (defun spacemacs/exwm-bind-command (key command &rest bindings)
       (while key
         (exwm-input-set-key (kbd key)
