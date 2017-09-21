@@ -105,17 +105,18 @@
     ;;   Its class name may be more suitable for such case.
     ;; In the following example, we use class names for all windows expect for
     ;; Java applications and GIMP.
-    (add-hook 'exwm-update-class-hook
-       (lambda ()
-         (unless (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                     (string= "gimp" exwm-instance-name))
-           (exwm-workspace-rename-buffer exwm-class-name))))
-    (add-hook 'exwm-update-title-hook
-       (lambda ()
-         (when (or (not exwm-instance-name)
-                   (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                   (string= "gimp" exwm-instance-name))
-           (exwm-workspace-rename-buffer exwm-title))))
+    (defun exwm-rename-buffer ()
+      (let* ((part1 (concat exwm-class-name "/" exwm-title))
+             (part2 (when (not (string-equal exwm-class-name exwm-title))
+                      (concat "/" exwm-title)))
+             (name (concat part1 (or part2 "")))
+             (maxlen 40))
+        (exwm-workspace-rename-buffer (if (> (length name) maxlen)
+                                          (concat (subseq name 0 (- maxlen 3)) "...")
+                                        name))))
+
+    (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
+    (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
 
     (defvar exwm-workspace-switch-wrap t
       "Whether `spacemacs/exwm-workspace-next' and `spacemacs/exwm-workspace-prev' should wrap.")
