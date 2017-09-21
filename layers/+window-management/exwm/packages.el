@@ -181,7 +181,7 @@ Can show completions at point for COMMAND using helm or ido"
     ;; `exwm-input-set-key' allows you to set a global key binding (available in
     ;; any case). Following are a few examples.
     ;; + We always need a way to go back to line-mode from char-mode
-    (exwm-input-set-key (kbd "s-r") 'exwm-reset)
+    (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
 
     (exwm-input-set-key (kbd "s-f") #'spacemacs/exwm-layout-toggle-fullscreen)
     (exwm-input-set-key (kbd "<s-tab>") #'exwm-jump-to-last-exwm)
@@ -211,10 +211,10 @@ Can show completions at point for COMMAND using helm or ido"
     ;; + Application launcher ('M-&' also works if the output buffer does not
     ;;   bother you). Note that there is no need for processes to be created by
     ;;   Emacs.
-    (exwm-input-set-key (kbd "s-SPC") #'spacemacs/exwm-app-launcher)
+    (exwm-input-set-key (kbd "s-r") #'spacemacs/exwm-app-launcher)
     ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
     ;;   is a more feature-rich alternative.
-    (exwm-input-set-key (kbd "<s-escape>")
+    (exwm-input-set-key (kbd "<s-pause>")
                         (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
     ;; The following example demonstrates how to set a key binding only available
     ;; in line mode. It's simply done by first push the prefix key to
