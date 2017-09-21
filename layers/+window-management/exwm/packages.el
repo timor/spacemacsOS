@@ -279,6 +279,9 @@ Can show completions at point for COMMAND using helm or ido"
     ;; (push ?\  exwm-input-prefix-keys)
     (push (spacemacs//exwm-convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
     (push (spacemacs//exwm-convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
+    ;; introduce new universal leader: s-SPC
+    ;; buggy:
+    ;; (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
 
     ;; Universal Get-me-outta-here
     (push ?\C-g exwm-input-prefix-keys)
