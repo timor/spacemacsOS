@@ -54,11 +54,40 @@
     :config
     ;; (when dotspacemacs-use-ido
     ;;   (exwm-enable-ido-workaround))
-    ;; make sure that displaying transient states gets the keyboard input
-    (add-hook 'spacemacs-transient-state-before-show-hook (lambda()
-                                                            (setq exwm-input-line-mode-passthrough t)))
-    (add-hook 'spacemacs-transient-state-after-close-hook (lambda()
-                                                            (setq exwm-input-line-mode-passthrough nil)))
+
+    ;; make sure that displaying transient states gets the keyboard input.  Also
+    ;; take care of going into line mode, and possibly switching back.
+
+    (defvar exwm--transient-state-active-p nil
+      "Set to t during active transient states.")
+
+    (defvar exwm--switch-to-char-after-transient nil
+      "If this is set to a buffer, change this buffer's state back to character
+      mode after transient mode is done.  Unfortunately, this relies on a
+      private exwm variable for now.")
+    (add-hook 'spacemacs-transient-state-before-show-hook
+              (lambda()
+                (message "hooking into transient start")
+                (when (not exwm--keyboard-grabbed)
+                  (message "temporary switch to line mode for transient state")
+                  (setq exwm--switch-to-char-after-transient (current-buffer))
+                  (exwm-input-grab-keyboard))
+                (setq exwm-input-line-mode-passthrough t)))
+    (add-hook 'spacemacs-transient-state-after-close-hook
+              (lambda()
+                (setq exwm-input-line-mode-passthrough nil)))
+
+    ;; if a buffer is redisplayed that has been marked for possible
+    ;; back-to-char-mode behaviour, do that, unregister.
+
+    (defun spacemacs//exwm-redisplay-mode-switch(window)
+      (when (and exwm--switch-to-char-after-transient
+                 (not exwm--transient-state-active-p)
+                 (eq (window-buffer) exwm--switch-to-char-after-transient))
+        (setq exwm--switch-to-char-after-transient nil)
+        (exwm-input-release-keyboard)))
+
+    (add-hook 'pre-redisplay-functions 'spacemacs//exwm-redisplay-mode-switch)
 
     ;; override persp-mode's idea of frame creation for floating frames.  These
     ;; are characterized by the 'unsplittable' frame parameter, and should not
@@ -223,20 +252,34 @@ Can show completions at point for COMMAND using helm or ido"
     (push ?\C-q exwm-input-prefix-keys)
     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
-    ;; switch to char mode (which has the same semantics as insert mode)
-    (define-key exwm-mode-map (kbd "i") (lambda ()
-                                          (interactive)
-                                          (evil-insert-state)
-                                          (exwm-input-release-keyboard)))
-    ;; (push ?\i exwm-input-prefix-keys
-
-    ;; ensure) that when char mode is left, state is restored to normal
+    ;; ensure that when char mode is left, state is restored to normal
     (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
                                                    (evil-normal-state)))
+    ;; ensure that when char mode is entered, input state is activated
+    (advice-add 'exwm-input-release-keyboard :after (lambda(&optional id)
+                                                      (evil-insert-state)))
 
-    ;;(define-key exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
-    ;; regular space leader key in line mode
-    (push ?\  exwm-input-prefix-keys)
+    ;; TODO: optionally inhibit switching to char mode or line mode, used during transient state
+
+    (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
+    (push ?\i exwm-input-prefix-keys)
+
+    ;; regular space leader keys in line mode
+    (defun spacemacs//exwm-convert-key-to-event (key)
+      "Converts something from (kbd ...) format to something suitable for
+    exwm-input-prefix-keys"
+      (let ((key (kbd key)))
+        (if (and (sequencep key)
+                (= (length key) 1))
+           (etypecase key
+             (string (string-to-char key))
+             (vector (elt key 0)))
+         (error "cannot convert to key event: %s" key))))
+
+    ;; (push ?\  exwm-input-prefix-keys)
+    (push (spacemacs//exwm-convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
+    (push (spacemacs//exwm-convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
+
     ;; Universal Get-me-outta-here
     (push ?\C-g exwm-input-prefix-keys)
     ;; Universal Arguments
