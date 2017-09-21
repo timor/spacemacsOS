@@ -106,7 +106,7 @@
     ;; In the following example, we use class names for all windows expect for
     ;; Java applications and GIMP.
     (defun exwm-rename-buffer ()
-      (let* ((part1 (concat exwm-class-name "/" exwm-title))
+      (let* ((part1 exwm-class-name)
              (part2 (when (not (string-equal exwm-class-name exwm-title))
                       (concat "/" exwm-title)))
              (name (concat part1 (or part2 "")))
