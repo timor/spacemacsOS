@@ -1,13 +1,15 @@
 * EXWM contribution layer for Spacemacs
 
 ** Table of Contents                                                  :TOC@4:
- - [[#exwm-contribution-layer-for-spacemacs][EXWM contribution layer for Spacemacs]]
-   - [[#description][Description]]
-   - [[#install][Install]]
-     - [[#note-about-display-managers][Note about Display Managers]]
-     - [[#not-having-display-managers][Not having Display Managers]]
-     - [[#osx][OSX]]
-   - [[#key-bindings][Key bindings]]
+- [[#exwm-contribution-layer-for-spacemacs][EXWM contribution layer for Spacemacs]]
+  - [[#description][Description]]
+  - [[#install][Install]]
+    - [[#note-about-display-managers][Note about Display Managers]]
+    - [[#not-having-display-managers][Not having Display Managers]]
+    - [[#osx][OSX]]
+  - [[#key-bindings][Key bindings]]
+- [[#window-behaviour-regarding-char-and-line-mode][Window behaviour regarding char and line mode]]
+  - [[#implementation-strategy][Implementation Strategy]]
 
 ** Description
 The time has arrived when one can finally use Emacs as a Window Manager, long
@@ -92,7 +94,7 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
 | ~s-[,]~               | Switch to prev,next workspace                  |
 
-** Window behaviour regarding char and line mode
+* Window behaviour regarding char and line mode
 
 EXWM X windows come up in line mode per default. This means that except for the
 special keys listed above, all keys are sent to the window, and normal evil mode
@@ -101,7 +103,7 @@ simultaneously char mode, releasing all bindings except the ones starting with
 ~s~, or *Super*, effectively giving full control to the X window. To switch back
 to line mode, use ~s-r~.
 
-*** Implementation Strategy
+** Implementation Strategy
 Generally, whenever a EXWM window is created, it is displayed in line mode, with
 spacemacs being in normal state. When changing to insert-state in EXWM mode,
 char mode should be activated underneath. Likewise, when entering char mode,
