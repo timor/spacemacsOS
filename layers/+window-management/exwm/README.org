@@ -77,13 +77,14 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~C-u~                 | Universal Argument                             |
 | ~C-[0-9]~             | Universal Prefix for [0-9]                     |
 | ~SPC~                 | Spacemacs Leader Key (in line mode)            |
+| ~M-m~                 | Spacemacs Leader Key (in line mode)            |
 | ~i~                   | Switch to EXWM char mode                       |
 | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [1 2 3 ... 8 9 10]         |
 | ~s-TAB~               | Switch to last workspace                       |
 | ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
 | ~s-ESC~               | Reset window state (gets you out of char mode) |
 | ~s-r~                 | App Launcher                                   |
-| ~s-l~                 | Lock Screen                                    |
+| ~s-pause~             | Lock Screen                                    |
 | ~s-u,U~               | Undo, Redo window configurations               |
 | ~s-b~                 | Select and switch to buffer                    |
 | ~s-h,j,k,l~           | Switch to left,lower,upper,right window        |
