@@ -310,7 +310,7 @@ Can show completions at point for COMMAND using helm or ido"
     ;; (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
     ;; Undo window configurations
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
-    (exwm-input-set-key (kbd "S-s-U") #'winner-redo)
+    (exwm-input-set-key (kbd "s-U") #'winner-redo)
     ;; Change buffers
     (exwm-input-set-key (kbd "s-b") #'ivy-switch-buffer)
     ;; Focusing windows
