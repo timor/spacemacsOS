@@ -28,6 +28,13 @@
 (defun exwm/init-xelb ()
   (use-package xelb))
 
+(defun spacemacs//exwm-switch-to-line-mode ()
+      "Used as a hook to switch to line mode when transient mode starts."
+      (when (not exwm--keyboard-grabbed)
+        ;; (setq exwm--switch-to-char-after-transient (current-buffer))
+        (exwm-input-grab-keyboard))
+      (setq exwm-input-line-mode-passthrough t))
+
 (defun exwm/init-exwm ()
   (use-package exwm
     :init
@@ -65,14 +72,7 @@
       "If this is set to a buffer, change this buffer's state back to character
       mode after transient mode is done.  Unfortunately, this relies on a
       private exwm variable for now.")
-    (add-hook 'spacemacs-transient-state-before-show-hook
-              (lambda()
-                (message "hooking into transient start")
-                (when (not exwm--keyboard-grabbed)
-                  (message "temporary switch to line mode for transient state")
-                  (setq exwm--switch-to-char-after-transient (current-buffer))
-                  (exwm-input-grab-keyboard))
-                (setq exwm-input-line-mode-passthrough t)))
+    (add-hook 'spacemacs-transient-state-before-show-hook 'spacemacs//exwm-switch-to-line-mode)
     (add-hook 'spacemacs-transient-state-after-close-hook
               (lambda()
                 (setq exwm-input-line-mode-passthrough nil)))
@@ -80,14 +80,14 @@
     ;; if a buffer is redisplayed that has been marked for possible
     ;; back-to-char-mode behaviour, do that, unregister.
 
-    (defun spacemacs//exwm-redisplay-mode-switch(window)
-      (when (and exwm--switch-to-char-after-transient
-                 (not exwm--transient-state-active-p)
-                 (eq (window-buffer) exwm--switch-to-char-after-transient))
-        (setq exwm--switch-to-char-after-transient nil)
-        (exwm-input-release-keyboard)))
+    ;; (defun spacemacs//exwm-redisplay-mode-switch(window)
+    ;;   (when (and exwm--switch-to-char-after-transient
+    ;;              (not exwm--transient-state-active-p)
+    ;;              (eq (window-buffer) exwm--switch-to-char-after-transient))
+    ;;     (setq exwm--switch-to-char-after-transient nil)
+    ;;     (exwm-input-release-keyboard)))
 
-    (add-hook 'pre-redisplay-functions 'spacemacs//exwm-redisplay-mode-switch)
+    ;; (add-hook 'pre-redisplay-functions 'spacemacs//exwm-redisplay-mode-switch)
 
     ;; override persp-mode's idea of frame creation for floating frames.  These
     ;; are characterized by the 'unsplittable' frame parameter, and should not
@@ -281,7 +281,7 @@ Can show completions at point for COMMAND using helm or ido"
     (push (spacemacs//exwm-convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
     ;; introduce new universal leader: s-SPC
     ;; buggy:
-    ;; (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
+    (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
 
     ;; Universal Get-me-outta-here
     (push ?\C-g exwm-input-prefix-keys)
