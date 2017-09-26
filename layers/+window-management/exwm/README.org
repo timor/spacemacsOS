@@ -9,6 +9,8 @@
     - [[#osx][OSX]]
   - [[#key-bindings][Key bindings]]
 - [[#window-behaviour-regarding-char-and-line-mode][Window behaviour regarding char and line mode]]
+  - [[#line-mode][Line mode]]
+  - [[#char-mode][Char mode]]
   - [[#implementation-strategy][Implementation Strategy]]
 
 ** Description
@@ -80,6 +82,7 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~C-[0-9]~             | Universal Prefix for [0-9]                     |
 | ~SPC~                 | Spacemacs Leader Key (in line mode)            |
 | ~M-m~                 | Spacemacs Leader Key (in line mode)            |
+| ~s-SPC~               | Spacemacs Leader Key (in char and line mode)   |
 | ~i~                   | Switch to EXWM char mode                       |
 | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [1 2 3 ... 8 9 10]         |
 | ~s-TAB~               | Switch to last workspace                       |
@@ -96,12 +99,20 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 
 * Window behaviour regarding char and line mode
 
-EXWM X windows come up in line mode per default. This means that except for the
-special keys listed above, all keys are sent to the window, and normal evil mode
-bindings are overridden. Pressing ~i~, gets you into insert mode and
-simultaneously char mode, releasing all bindings except the ones starting with
-~s~, or *Super*, effectively giving full control to the X window. To switch back
-to line mode, use ~s-r~.
+** Line mode
+ EXWM X windows come up in line mode per default. This means that except for the
+ special keys listed above, all keys are sent to the window, and normal evil mode
+ bindings are overridden.  Currently, only a select set of keys that work in
+ other normal-mode buffers work in line-mode EXWM buffers, because X
+ applications could use any valid key sequence for navigating, etc.  Basically,
+ only ~i~ and ~SPC~ are working as expected.
+
+** Char mode
+
+ Pressing ~i~ from normal mode gets you into insert mode and
+ simultaneously EXWM char mode, releasing all bindings except the ones starting with
+ ~s~, or *Super*, effectively giving full control to the X window. To switch back
+ to line mode, use ~s-r~.
 
 ** Implementation Strategy
 Generally, whenever a EXWM window is created, it is displayed in line mode, with
@@ -130,6 +141,10 @@ Handling transient states from char mode:
 This is a bit more tricky, since char mode has no input-tunneling behavior.
 There is an EXWM-internal mechanism to temporarily enable line mode, but that is
 an implementation detail and not exposed in the interface.
+Currently, whenever a transient state is entered, a hook is executed which
+activates line mode and performs like above.
+
+To be predictable, the following behaviour should probably be implemented:
 - add hook to all transient state activation functions that store which mode (char/line) was
   active during transient state activation
 - inhibit manual switching to char/line mode, as that would mess up input to
