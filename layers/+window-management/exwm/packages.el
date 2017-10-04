@@ -159,30 +159,22 @@
 
     (defvar exwm-workspace-switch-wrap t
       "Whether `spacemacs/exwm-workspace-next' and `spacemacs/exwm-workspace-prev' should wrap.")
-
     (defun spacemacs/exwm-workspace-next ()
-      "Switch to next exwm-workspaceective (to the right)."
+      "Switch to next exwm-workspace (to the right)."
       (interactive)
-      (let* ((only-workspace? (equal exwm-workspace-number 1))
-             (overflow? (= exwm-workspace-current-index
-                           (1- exwm-workspace-number))))
-        (cond
-         (only-workspace? nil)
-         (overflow?
-          (when exwm-workspace-switch-wrap
-              (exwm-workspace-switch 0)))
-         (t (exwm-workspace-switch  (1+ exwm-workspace-current-index))))))
+      (let ((num-ws (length exwm-workspace--list))
+            (next-ws (1+ exwm-workspace-current-index)))
+        (if exwm-workspace-switch-wrap
+            (exwm-workspace-switch (mod next-ws num-ws))
+          (exwm-workspace-switch (min (1- num-ws) next-ws)))))
     (defun spacemacs/exwm-workspace-prev ()
-      "Switch to next exwm-workspaceective (to the right)."
+      "Switch to previous exwm-workspace (to the left)."
       (interactive)
-      (let* ((only-workspace? (equal exwm-workspace-number 1))
-             (overflow? (= exwm-workspace-current-index 0)))
-        (cond
-         (only-workspace? nil)
-         (overflow?
-          (when exwm-workspace-switch-wrap
-            (exwm-workspace-switch (1- exwm-workspace-number))))
-         (t (exwm-workspace-switch  (1- exwm-workspace-current-index))))))
+      (let ((num-ws (length exwm-workspace--list))
+            (next-ws (1- exwm-workspace-current-index)))
+        (if exwm-workspace-switch-wrap
+            (exwm-workspace-switch (mod next-ws num-ws))
+          (exwm-workspace-switch (max 0 next-ws)))))
     (defun spacemacs/exwm-layout-toggle-fullscreen ()
       "Togggles full screen for Emacs and X windows"
       (interactive)
