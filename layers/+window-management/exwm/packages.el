@@ -28,13 +28,6 @@
 (defun exwm/init-xelb ()
   (use-package xelb))
 
-(defun spacemacs//exwm-switch-to-line-mode ()
-      "Used as a hook to switch to line mode when transient mode starts."
-      (when (not exwm--keyboard-grabbed)
-        ;; (setq exwm--switch-to-char-after-transient (current-buffer))
-        (exwm-input-grab-keyboard))
-      (setq exwm-input-line-mode-passthrough t))
-
 (defun exwm/init-exwm ()
   (use-package exwm
     :init
@@ -93,55 +86,11 @@
     ;; are characterized by the 'unsplittable' frame parameter, and should not
     ;; be tried to assign an existing layout to.
 
-    (defun spacemacs//exwm-persp-mode-inhibit-p (frame)
-      (frame-parameter frame 'unsplittable))
-
     (eval-after-load 'persp-mode
       (advice-add 'persp-init-new-frame :before-until 'spacemacs//exwm-persp-mode-inhibit-p))
 
-    (defun spacemacs/exwm-bind-command (key command &rest bindings)
-      (while key
-        (exwm-input-set-key (kbd key)
-                            `(lambda ()
-                               (interactive)
-                               (start-process-shell-command ,command nil ,command)))
-        (setq key     (pop bindings)
-              command (pop bindings))))
-
-    (defun spacemacs/exwm-switch-to-buffer-or-run (window-class command)
-      "Switch to first buffer with window-class, and if not present, run command."
-      (let ((buffer
-             (find window-class (buffer-list) :key (lambda(b) (cdr (assoc 'exwm-class-name (buffer-local-variables b)))) :test 'string-equal)))
-        (if buffer
-            (exwm-workspace-switch-to-buffer buffer)
-          (start-process-shell-command command nil command))))
-
     (spacemacs/exwm-bind-command
      "<s-return>"  exwm--terminal-command)
-
-    ;; All buffers created in EXWM mode are named "*EXWM*". You may want to change
-    ;; it in `exwm-update-class-hook' and `exwm-update-title-hook', which are run
-    ;; when a new window class name or title is available. Here's some advice on
-    ;; this subject:
-    ;; + Always use `exwm-workspace-rename-buffer` to avoid naming conflict.
-    ;; + Only renaming buffer in one hook and avoid it in the other. There's no
-    ;;   guarantee on the order in which they are run.
-    ;; + For applications with multiple windows (e.g. GIMP), the class names of all
-    ;;   windows are probably the same. Using window titles for them makes more
-    ;;   sense.
-    ;; + Some application change its title frequently (e.g. browser, terminal).
-    ;;   Its class name may be more suitable for such case.
-    ;; In the following example, we use class names for all windows expect for
-    ;; Java applications and GIMP.
-    (defun spacemacs/exwm-rename-buffer ()
-      (let* ((part1 exwm-class-name)
-             (part2 (when (not (string-equal exwm-class-name exwm-title))
-                      (concat "/" exwm-title)))
-             (name (concat part1 (or part2 "")))
-             (maxlen 40))
-        (exwm-workspace-rename-buffer (if (> (length name) maxlen)
-                                          (concat (subseq name 0 (- maxlen 3)) "...")
-                                        name))))
 
     (add-hook 'exwm-update-class-hook 'spacemacs/exwm-rename-buffer)
     (add-hook 'exwm-update-title-hook 'spacemacs/exwm-rename-buffer)
@@ -151,30 +100,6 @@
 
     (defvar exwm-workspace-switch-wrap t
       "Whether `spacemacs/exwm-workspace-next' and `spacemacs/exwm-workspace-prev' should wrap.")
-    (defun spacemacs/exwm-workspace-next ()
-      "Switch to next exwm-workspace (to the right)."
-      (interactive)
-      (let ((num-ws (length exwm-workspace--list))
-            (next-ws (1+ exwm-workspace-current-index)))
-        (if exwm-workspace-switch-wrap
-            (exwm-workspace-switch (mod next-ws num-ws))
-          (exwm-workspace-switch (min (1- num-ws) next-ws)))))
-    (defun spacemacs/exwm-workspace-prev ()
-      "Switch to previous exwm-workspace (to the left)."
-      (interactive)
-      (let ((num-ws (length exwm-workspace--list))
-            (next-ws (1- exwm-workspace-current-index)))
-        (if exwm-workspace-switch-wrap
-            (exwm-workspace-switch (mod next-ws num-ws))
-          (exwm-workspace-switch (max 0 next-ws)))))
-    (defun spacemacs/exwm-layout-toggle-fullscreen ()
-      "Togggles full screen for Emacs and X windows"
-      (interactive)
-      (if exwm--id
-          (if exwm--fullscreen
-              (exwm-reset)
-            (exwm-layout-set-fullscreen))
-        (spacemacs/toggle-maximize-buffer)))
 
     ;; Quick swtiching between workspaces
     (defvar exwm-toggle-workspace 0
@@ -184,12 +109,6 @@
       (exwm-workspace-switch exwm-toggle-workspace))
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
       (setq exwm-toggle-workspace exwm-workspace-current-index))
-
-    (defun spacemacs/exwm-app-launcher (command)
-      "Launches an application in your PATH.
-Can show completions at point for COMMAND using helm or ido"
-      (interactive (list (read-shell-command exwm-app-launcher--prompt)))
-      (start-process-shell-command command nil command))
 
     ;; `exwm-input-set-key' allows you to set a global key binding (available in
     ;; any case). Following are a few examples.
