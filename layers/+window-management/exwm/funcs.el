@@ -7,4 +7,4 @@
   (exwm-input-set-key (kbd key)
                       `(lambda ()
                          (interactive)
-                         (exwm-switch-to-buffer-or-run ,window-class ,command))))
+                         (spacemacs/exwm-switch-to-buffer-or-run ,window-class ,command))))

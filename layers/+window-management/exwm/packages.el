@@ -108,7 +108,7 @@
         (setq key     (pop bindings)
               command (pop bindings))))
 
-    (defun exwm-switch-to-buffer-or-run (window-class command)
+    (defun spacemacs/exwm-switch-to-buffer-or-run (window-class command)
       "Switch to first buffer with window-class, and if not present, run command."
       (let ((buffer
              (find window-class (buffer-list) :key (lambda(b) (cdr (assoc 'exwm-class-name (buffer-local-variables b)))) :test 'string-equal)))
@@ -133,7 +133,7 @@
     ;;   Its class name may be more suitable for such case.
     ;; In the following example, we use class names for all windows expect for
     ;; Java applications and GIMP.
-    (defun exwm-rename-buffer ()
+    (defun spacemacs/exwm-rename-buffer ()
       (let* ((part1 exwm-class-name)
              (part2 (when (not (string-equal exwm-class-name exwm-title))
                       (concat "/" exwm-title)))
@@ -143,8 +143,8 @@
                                           (concat (subseq name 0 (- maxlen 3)) "...")
                                         name))))
 
-    (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
-    (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
+    (add-hook 'exwm-update-class-hook 'spacemacs/exwm-rename-buffer)
+    (add-hook 'exwm-update-title-hook 'spacemacs/exwm-rename-buffer)
 
     ;; kick all exwm buffers into insert mode per default
     (add-hook 'exwm-manage-finish-hook (lambda () (call-interactively #'exwm-input-release-keyboard)))
@@ -178,8 +178,8 @@
 
     ;; Quick swtiching between workspaces
     (defvar exwm-toggle-workspace 0
-      "Previously selected workspace. Used with `exwm-jump-to-last-exwm'.")
-    (defun exwm-jump-to-last-exwm ()
+      "Previously selected workspace. Used with `spacemacs/exwm-jump-to-last-exwm'.")
+    (defun spacemacs/exwm-jump-to-last-exwm ()
       (interactive)
       (exwm-workspace-switch exwm-toggle-workspace))
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
@@ -197,7 +197,7 @@ Can show completions at point for COMMAND using helm or ido"
     (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
 
     (exwm-input-set-key (kbd "s-f") #'spacemacs/exwm-layout-toggle-fullscreen)
-    (exwm-input-set-key (kbd "<s-tab>") #'exwm-jump-to-last-exwm)
+    (exwm-input-set-key (kbd "<s-tab>") #'spacemacs/exwm-jump-to-last-exwm)
     ;; + Bind a key to switch workspace interactively
     (exwm-input-set-key (kbd "s-w") 'exwm-workspace-switch)
     ;; + Set shortcuts to switch to a certain workspace.
