@@ -157,6 +157,9 @@
     (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
     (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
 
+    ;; kick all exwm buffers into insert mode per default
+    (add-hook 'exwm-manage-finish-hook (lambda () (call-interactively #'exwm-input-release-keyboard)))
+
     (defvar exwm-workspace-switch-wrap t
       "Whether `spacemacs/exwm-workspace-next' and `spacemacs/exwm-workspace-prev' should wrap.")
     (defun spacemacs/exwm-workspace-next ()
