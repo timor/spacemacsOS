@@ -100,12 +100,12 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 * Window behaviour regarding char and line mode
 
 ** Line mode
- EXWM X windows come up in line mode per default. This means that except for the
- special keys listed above, all keys are sent to the window, and normal evil mode
- bindings are overridden.  Currently, only a select set of keys that work in
- other normal-mode buffers work in line-mode EXWM buffers, because X
- applications could use any valid key sequence for navigating, etc.  Basically,
- only ~i~ and ~SPC~ are working as expected.
+ EXWM X windows come up in char mode per default. This means that all input is
+ redirected to the application per default, and only the =s-= keybindings work.
+ In line mode, only a select set of keys that work in other normal-mode buffers
+ work in line-mode EXWM buffers, because X applications could use any valid key
+ sequence for navigating, etc. Basically, only ~i~ and ~SPC~ are working as
+ expected.
 
 ** Char mode
 
@@ -115,8 +115,8 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
  to line mode, use ~s-r~.
 
 ** Implementation Strategy
-Generally, whenever a EXWM window is created, it is displayed in line mode, with
-spacemacs being in normal state. When changing to insert-state in EXWM mode,
+Generally, whenever a EXWM window is created, it is displayed in char mode, with
+spacemacs being in insert state. When changing to insert-state in EXWM mode,
 char mode should be activated underneath. Likewise, when entering char mode,
 insert state should be activated. When exiting char mode, either by use of
 =exwm-reset= or =exwm-input-grab-keyboard=, the window should return to normal
