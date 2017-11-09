@@ -104,9 +104,7 @@
     ;; Quick swtiching between workspaces
     (defvar exwm-toggle-workspace 0
       "Previously selected workspace. Used with `spacemacs/exwm-jump-to-last-exwm'.")
-    (defun spacemacs/exwm-jump-to-last-exwm ()
-      (interactive)
-      (exwm-workspace-switch exwm-toggle-workspace))
+
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
       (setq exwm-toggle-workspace exwm-workspace-current-index))
 
