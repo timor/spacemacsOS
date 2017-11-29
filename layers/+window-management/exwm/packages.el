@@ -204,6 +204,11 @@
     ;; We can use `M-m h' to access help
     (delete ?\C-h exwm-input-prefix-keys)
 
+    ;; introduce leader for running programs
+    (spacemacs/declare-prefix "&" "exwm-run")
+    (spacemacs/set-leader-keys "&s" 'spacemacs/exwm-launch-split-below)
+    (spacemacs/set-leader-keys "&v" 'spacemacs/exwm-launch-split-right)
+
     ;; Preserve the habit
     ;; (exwm-input-set-key (kbd "s-:") 'helm-M-x)
     ;; (exwm-input-set-key (kbd "s-;") 'evil-ex)

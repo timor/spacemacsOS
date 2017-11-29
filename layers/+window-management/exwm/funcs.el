@@ -100,6 +100,16 @@ Can show completions at point for COMMAND using helm or ido"
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
   (start-process-shell-command command nil command))
 
+(defun spacemacs/exwm-launch-split-below (command)
+  (interactive (list (read-shell-command exwm-app-launcher--prompt)))
+  (split-window-below-and-focus)
+  (start-process-shell-command command nil command))
+
+(defun spacemacs/exwm-launch-split-right (command)
+  (interactive (list (read-shell-command exwm-app-launcher--prompt)))
+  (split-window-right-and-focus)
+  (start-process-shell-command command nil command))
+
 (defun spacemacs/exwm-jump-to-last-exwm ()
   (interactive)
   (exwm-workspace-switch exwm-toggle-workspace))

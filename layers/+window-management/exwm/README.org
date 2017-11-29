@@ -97,6 +97,14 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
 | ~s-[,]~               | Switch to prev,next workspace                  |
 
+Since running programs is one of the more common task, some explicit support is
+provided for that via the leader key ~SPC &~.
+
+| Key Binding | Description                                                               |
+|-------------+---------------------------------------------------------------------------|
+| ~SPC & s~   | Ask for program to run in separate window below current window            |
+| ~SPC & v~   | Ask for program to run in separate window to the right of current window. |
+
 * Window behaviour regarding char and line mode
 
 ** Line mode
