@@ -27,7 +27,7 @@
       (spacemacs/set-leader-keys-for-major-mode 'factor-mode
         "'" 'run-factor
 
-        "cc" ' fuel-run-file
+        "cc" 'fuel-run-file
 
         "ef" 'fuel-eval-definition
         "er" 'fuel-eval-region
