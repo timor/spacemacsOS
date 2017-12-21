@@ -46,7 +46,6 @@
         "rw" 'fuel-refactor-rename-word
         "ra" 'fuel-refactor-extract-article
         "rg" 'fuel-refactor-make-generic
-        )))
 
         "ss" 'run-factor
 
@@ -56,4 +55,14 @@
         "hv" 'fuel-show-file-words
         "h<" 'fuel-show-callers
         "h>" 'fuel-show-callees
+
+        )
+
+      (spacemacs/set-leader-keys-for-major-mode 'fuel-listener-mode
+        "v" 'fuel-edit-vocabulary
+        "r" 'fuel-refresh-all
+        "Ts" 'fuel-stack-mode
+        )
+
+      (evilified-state-evilify fuel-help-mode fuel-help-mode-map)))
   )
