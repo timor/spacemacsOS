@@ -23,7 +23,7 @@
               ("me" . "eval")
               ("mc" . "compile")
               ("mg" . "nav")
-              ))
+              ("ms" . "repl")))
       (spacemacs/set-leader-keys-for-major-mode 'factor-mode
         "'" 'run-factor
 
@@ -47,4 +47,6 @@
         "ra" 'fuel-refactor-extract-article
         "rg" 'fuel-refactor-make-generic
         )))
+
+        "ss" 'run-factor
   )
