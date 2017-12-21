@@ -7,7 +7,7 @@
   '(
     ;; Assume that factor is installed, and emacs lisp files are correctly
     ;; located in site-lisp
-    (factor-mode :location :site)
+    (factor-mode :location site)
     ))
 
 (defun factor/init-factor-mode()
