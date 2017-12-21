@@ -49,4 +49,11 @@
         )))
 
         "ss" 'run-factor
+
+        "hh" 'fuel-help
+        "he" 'factor//fuel-stack-effect
+        "hp" 'fuel-apropos
+        "hv" 'fuel-show-file-words
+        "h<" 'fuel-show-callers
+        "h>" 'fuel-show-callees
   )
