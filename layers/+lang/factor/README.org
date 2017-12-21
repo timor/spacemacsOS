@@ -1,0 +1,29 @@
+#+TITLE: Factor Layer
+[[file:img/logo.png]]
+
+
+* Table of Contents                                       :TOC_4_gh:noexport:
+- [[#description][Description]]
+- [[#install][Install]]
+- [[#key-bindings][Key Bindings]]
+  - [[#factor-mode-editing-source-files][factor-mode (editing source files)]]
+
+* Description
+A spacemacs layer for Factor language support.
+
+* Install
+This layer depends on the elisp files that are bundled with factor.  To use this
+layer, make sure that factor is installed and the bundled elisp files are picked
+up by emacs (usually somewhere in site-lisp).
+
+To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
+=dotspacemacs-configuration-layers= list there.
+
+* Key Bindings
+
+** factor-mode (editing source files)
+
+| Key Binding | Description                                    |
+|-------------+------------------------------------------------|
+| ~SPC m '~   | Jump to the factor listener, start if required |
+| ~SPC m      |                                                |
