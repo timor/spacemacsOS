@@ -13,6 +13,12 @@
 (defun factor/init-factor-mode()
   (use-package factor-mode
     :commands factor-mode
+    :init
+    (add-to-list 'yas-snippet-dirs (expand-file-name
+                                      "snippets"
+                                      (configuration-layer/get-layer-local-dir
+                                       'factor))
+                 t)
     :config
     (progn
       (require 'fuel-mode)
