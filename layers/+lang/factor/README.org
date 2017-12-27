@@ -7,6 +7,7 @@
 - [[#install][Install]]
 - [[#key-bindings][Key Bindings]]
   - [[#factor-mode-editing-source-files][factor-mode (editing source files)]]
+  - [[#fuel-listener-mode][fuel-listener-mode]]
 - [[#snippets][Snippets]]
 
 * Description
@@ -56,6 +57,13 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 | ~SPC m h <~ | Show calling words of current word                     |
 | ~SPC m h >~ | Show words called by current word                      |
 
+** fuel-listener-mode
+| Key Binding | Description               |
+|-------------+---------------------------|
+| ~SPC m r~   | Refresh all loaded vocabs |
+| ~SPC m T s~ | Toggle stack mode         |
+| ~SPC m h~   | Help for word at point    |
+| ~SPC m v~   | Edit vocab                |
 * Snippets
 This layer provides a yasnippet for colon definitions.  Note that you might have
 to set =yas-triggers-in-field= to nil if you use =x= for stack effect
