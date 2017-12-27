@@ -12,17 +12,18 @@
 
 (defun factor/init-factor-mode()
   (use-package factor-mode
-    :commands factor-mode
+    :commands factor-mode run-factor fuel-mode
     :init
-    (add-to-list 'yas-snippet-dirs (expand-file-name
-                                      "snippets"
-                                      (configuration-layer/get-layer-local-dir
-                                       'factor))
-                 t)
+    (progn
+      (spacemacs/register-repl 'fuel-mode 'run-factor)
+      (add-to-list 'yas-snippet-dirs (expand-file-name
+                                     "snippets"
+                                     (configuration-layer/get-layer-local-dir
+                                      'factor))
+                  t))
     :config
     (progn
       (require 'fuel-mode)
-      (spacemacs/register-repl 'fuel-mode 'run-factor)
       (mapc (lambda (x)
               (spacemacs/declare-prefix-for-mode 'factor-mode (car x) (cdr x)))
             '(("mh" . "help")
