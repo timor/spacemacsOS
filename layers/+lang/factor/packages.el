@@ -30,7 +30,8 @@
               ("me" . "eval")
               ("mc" . "compile")
               ("mg" . "nav")
-              ("ms" . "repl")))
+              ("ms" . "repl")
+              ("mS" . "scaffold")))
       (spacemacs/set-leader-keys-for-major-mode 'factor-mode
         "'" 'run-factor
 
@@ -63,12 +64,16 @@
         "h<" 'fuel-show-callers
         "h>" 'fuel-show-callees
 
+        "Sv" 'fuel-scaffold-vocab
+        "Sh" 'fuel-scaffold-help
         )
 
       (spacemacs/set-leader-keys-for-major-mode 'fuel-listener-mode
         "v" 'fuel-edit-vocabulary
         "r" 'fuel-refresh-all
         "Ts" 'fuel-stack-mode
+        "w" 'fuel-help
+        "Sv" 'fuel-scaffold-vocab
         )
 
       (evilified-state-evilify fuel-help-mode fuel-help-mode-map)))

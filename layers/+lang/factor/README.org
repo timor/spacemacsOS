@@ -56,6 +56,9 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 | ~SPC m h v~ | List all words in current file/vocab                   |
 | ~SPC m h <~ | Show calling words of current word                     |
 | ~SPC m h >~ | Show words called by current word                      |
+|             |                                                        |
+| ~SPC m S v~ | Scaffold vocab                                         |
+| ~SPC m S h~ | Scaffold help for current vocab                        |
 
 ** fuel-listener-mode
 | Key Binding | Description               |
@@ -64,6 +67,7 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 | ~SPC m T s~ | Toggle stack mode         |
 | ~SPC m h~   | Help for word at point    |
 | ~SPC m v~   | Edit vocab                |
+| ~SPC m S v~ | Scaffold vocab            |
 * Snippets
 This layer provides a yasnippet for colon definitions.  Note that you might have
 to set =yas-triggers-in-field= to nil if you use =x= for stack effect
