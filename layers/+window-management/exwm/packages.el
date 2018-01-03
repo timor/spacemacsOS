@@ -90,8 +90,10 @@
     (eval-after-load 'persp-mode
       (advice-add 'persp-init-new-frame :before-until 'spacemacs//exwm-persp-mode-inhibit-p))
 
-    (spacemacs/exwm-bind-command
-     "<s-return>"  exwm--terminal-command)
+    (exwm-input-set-key (kbd "<s-return>")
+                        (lambda ()
+                          (interactive)
+                          (start-process-shell-command exwm-terminal-command nil exwm-terminal-command)))
 
     (add-hook 'exwm-update-class-hook 'spacemacs/exwm-rename-buffer)
     (add-hook 'exwm-update-title-hook 'spacemacs/exwm-rename-buffer)

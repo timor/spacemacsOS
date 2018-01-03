@@ -1,4 +1,4 @@
-(defvar exwm--terminal-command "xterm"
+(defvar exwm-terminal-command "xterm"
   "Terminal command to run.")
 
 (defvar exwm--locking-command "lock"
