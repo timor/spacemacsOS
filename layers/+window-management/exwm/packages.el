@@ -39,6 +39,7 @@
     (display-time-mode t)
     (when exwm--hide-tiling-modeline
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
+    (setq exwm-input-line-mode-passthrough t)
     ;; Trying to make shell-pop with a real terminal :P
     ;; (defun exwm-launch-term ()
     ;;   (start-process-shell-command exwm--terminal-command
@@ -146,12 +147,6 @@
     ;;   is a more feature-rich alternative.
     (exwm-input-set-key (kbd "<s-pause>")
                         (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
-    ;; The following example demonstrates how to set a key binding only available
-    ;; in line mode. It's simply done by first push the prefix key to
-    ;; `exwm-input-prefix-keys' and then add the key sequence to `exwm-mode-map'.
-    ;; The example shorten 'C-c q' to 'C-q'.
-    (push ?\C-q exwm-input-prefix-keys)
-    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
     ;; ensure that when char mode is left, state is restored to normal
     (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
@@ -162,6 +157,7 @@
 
     ;; TODO: optionally inhibit switching to char mode or line mode, used during transient state
 
+    ;; in normal state/line mode, use the familiar i key to switch to input state
     (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
     (push ?\i exwm-input-prefix-keys)
 
