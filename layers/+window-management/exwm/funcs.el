@@ -13,8 +13,7 @@
   "Used as a hook to switch to line mode when transient mode starts."
   (when (not exwm--keyboard-grabbed)
     ;; (setq exwm--switch-to-char-after-transient (current-buffer))
-  (setq exwm-input-line-mode-passthrough t))
-    (call-interactively 'exwm-input-grab-keyboard))
+    (call-interactively 'exwm-input-grab-keyboard)))
 
 (defun spacemacs//exwm-persp-mode-inhibit-p (frame)
   (frame-parameter frame 'unsplittable))
