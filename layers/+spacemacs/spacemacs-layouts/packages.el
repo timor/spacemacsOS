@@ -85,14 +85,17 @@
       ;; declare in the layout transient state
       (spacemacs/set-leader-keys "bW" 'spacemacs/goto-buffer-workspace)
       ;; hooks
-      (add-hook 'persp-before-switch-functions
-                #'spacemacs/update-eyebrowse-for-perspective)
-      (add-hook 'eyebrowse-post-window-switch-hook
-                #'spacemacs/save-eyebrowse-for-perspective)
-      (add-hook 'persp-activated-functions
-                #'spacemacs/load-eyebrowse-for-perspective)
-      (add-hook 'persp-before-save-state-to-file-functions #'spacemacs/update-eyebrowse-for-perspective)
-      (add-hook 'persp-after-load-state-functions #'spacemacs/load-eyebrowse-after-loading-layout)
+      (when (configuration-layer/package-used-p 'persp-mode)
+        (add-hook 'persp-before-switch-functions
+                  #'spacemacs/update-eyebrowse-for-perspective)
+        (add-hook 'eyebrowse-post-window-switch-hook
+                  #'spacemacs/save-eyebrowse-for-perspective)
+        (add-hook 'persp-activated-functions
+                  #'spacemacs/load-eyebrowse-for-perspective)
+        (add-hook 'persp-before-save-state-to-file-functions
+                  #'spacemacs/update-eyebrowse-for-perspective)
+        (add-hook 'persp-after-load-state-functions
+                  #'spacemacs/load-eyebrowse-after-loading-layout))
       ;; vim-style tab switching
       (define-key evil-motion-state-map "gt" 'eyebrowse-next-window-config)
       (define-key evil-motion-state-map "gT" 'eyebrowse-prev-window-config))))
@@ -236,4 +239,5 @@
 
 
 (defun spacemacs-layouts/post-init-swiper ()
+  (ivy-set-actions 'spacemacs/ivy-persp-switch-project counsel-projectile-switch-project-actions)
   (spacemacs/set-leader-keys "pl" 'spacemacs/ivy-persp-switch-project))

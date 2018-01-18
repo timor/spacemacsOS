@@ -48,7 +48,20 @@
       (add-hook 'spacemacs-post-theme-change-hook
                 'spacemacs/customize-powerline-faces)
       (add-hook 'spacemacs-post-theme-change-hook 'powerline-reset)
-      (setq powerline-default-separator (or (spacemacs/mode-line-separator) 'wave)
+      (spacemacs|add-toggle mode-line-responsive
+        :status spaceline-responsive
+        :on (progn (setq spaceline-responsive t)
+                   (powerline-reset))
+        :off (progn (setq spaceline-responsive nil)
+                    ;; seems necessary to recompile when turning off
+                    (spaceline-compile))
+        :documentation "Make the mode-line responsive."
+        :evil-leader "tmr")
+      (setq powerline-default-separator
+            (or (and (memq (spacemacs/get-mode-line-theme-name)
+                           '(spacemacs custom))
+                     (spacemacs/mode-line-separator))
+                'wave)
             powerline-scale (or (spacemacs/mode-line-separator-scale) 1.5)
             powerline-height (spacemacs/compute-mode-line-height))
       (spacemacs|do-after-display-system-init
@@ -137,11 +150,9 @@
     (progn
       (setq
        spaceline-all-the-icons-separator-type
-       (or (spacemacs/mode-line-separator)
-           'wave)
+       (or (spacemacs/mode-line-separator) 'wave)
        spaceline-all-the-icons-separator-scale
-       (or (spacemacs/mode-line-separator-scale)
-           spaceline-all-the-icons-separator-scale)))))
+       (or (spacemacs/mode-line-separator-scale) 1.6)))))
 
 (defun spacemacs-modeline/init-symon ()
   (use-package symon

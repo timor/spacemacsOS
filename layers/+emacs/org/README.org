@@ -404,7 +404,8 @@ are also available.
 | ~M-H~ / ~M-L~ | Promote or demote subtree       |
 | ~>>~ / ~<<~   | Promote or demote heading       |
 | ~TAB~         | org-cycle                       |
-| ~SPC m s a~   | org-archive-subtree             |
+| ~SPC m s a~   | Toggle archive tag for subtree  |
+| ~SPC m s A~   | Archive subtree                 |
 | ~SPC m s b~   | org-tree-to-indirect-buffer     |
 | ~SPC m s l~   | org-demote-subtree              |
 | ~SPC m s h~   | org-promote-subtree             |
@@ -610,8 +611,8 @@ org-present must be activated explicitly by typing: ~SPC SPC org-present~
 | ~SPC a o j j~ | New journal entry      |
 | ~SPC a o j s~ | Search journal entries |
 
-Journal entries are highlighted in the calander. The following key bindings are
-available for =calander-mode= for navigating and manipulating the journal.
+Journal entries are highlighted in the calendar. The following key bindings are
+available for =calendar-mode= for navigating and manipulating the journal.
 
 | Key Binding | Description                           |
 |-------------+---------------------------------------|
