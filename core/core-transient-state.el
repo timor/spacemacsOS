@@ -113,12 +113,6 @@ effect if called after that point."
   `((t :inherit mode-line))
   "Face for title of transient states.")
 
-(defvar spacemacs-transient-state-before-show-hook ()
-  "Hook that gets run whenever a transient state is about to be shown.")
-
-(defvar spacemacs-transient-state-after-close-hook ()
-  "Hook that gets run whenever a transient state is exited.")
-
 (defmacro spacemacs|define-transient-state (name &rest props)
   "Define a transient state called NAME.
 NAME is a symbol.
@@ -205,12 +199,8 @@ used."
                  :hint ,hint
                  :columns ,columns
                  :foreign-keys ,foreign-keys
-                 :body-pre (progn
-                             (run-hooks 'spacemacs-transient-state-before-show-hook)
-                             ,entry-sexp)
-                 :before-exit (progn
-                               (run-hooks 'spacemacs-transient-state-after-close-hook)
-                               ,exit-sexp))
+                 :body-pre ,entry-sexp
+                 :before-exit ,exit-sexp)
                 ,doc)
              (spacemacs//transient-state-adjust-bindings
               ',bindings ',remove-bindings ',add-bindings)))
