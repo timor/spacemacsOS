@@ -58,30 +58,17 @@
 
     ;; make sure that displaying transient states gets the keyboard input.  Also
     ;; take care of going into line mode, and possibly switching back.
-
-    (defvar exwm--transient-state-active-p nil
-      "Set to t during active transient states.")
-
-    (defvar exwm--switch-to-char-after-transient nil
-      "If this is set to a buffer, change this buffer's state back to character
-      mode after transient mode is done.  Unfortunately, this relies on a
-      private exwm variable for now.")
-    (add-hook 'spacemacs-transient-state-before-show-hook 'spacemacs//exwm-switch-to-line-mode)
-    (add-hook 'spacemacs-transient-state-after-close-hook
-              (lambda()
-                (setq exwm-input-line-mode-passthrough nil)))
-
-    ;; if a buffer is redisplayed that has been marked for possible
-    ;; back-to-char-mode behaviour, do that, unregister.
-
-    ;; (defun spacemacs//exwm-redisplay-mode-switch(window)
-    ;;   (when (and exwm--switch-to-char-after-transient
-    ;;              (not exwm--transient-state-active-p)
-    ;;              (eq (window-buffer) exwm--switch-to-char-after-transient))
-    ;;     (setq exwm--switch-to-char-after-transient nil)
-    ;;     (exwm-input-release-keyboard)))
-
-    ;; (add-hook 'pre-redisplay-functions 'spacemacs//exwm-redisplay-mode-switch)
+    ;; borrowed from: https://github.com/abo-abo/hydra/issues/232
+    (define-advice hydra-set-transient-map (:around (fun keymap on-exit &optional foreign-keys) exwm-passthrough)
+      (spacemacs//exwm-switch-to-line-mode)
+      (let ((on-exit (lexical-let ((on-exit on-exit))
+                       (lambda ()
+                         ;; Here would be the place to reactivate input state if
+                         ;; it was active before hydra invocation.  This
+                         ;; probably only makes sense when you have a global
+                         ;; input state.
+                         (when on-exit (funcall on-exit))))))
+        (funcall fun keymap on-exit foreign-keys)))
 
     ;; override persp-mode's idea of frame creation for floating frames.  These
     ;; are characterized by the 'unsplittable' frame parameter, and should not
