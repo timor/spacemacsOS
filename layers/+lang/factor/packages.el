@@ -8,6 +8,7 @@
     ;; Assume that factor is installed, and emacs lisp files are correctly
     ;; located in site-lisp
     (factor-mode :location site)
+    yasnippet
     ))
 
 ;; for some reason, the following does not work
@@ -16,7 +17,8 @@
                                  "snippets"
                                  (configuration-layer/get-layer-local-dir
                                   'factor))
-              t))
+               t)
+  (spacemacs/add-to-hooks 'spacemacs/load-yasnippet '(factor-mode-hook fuel-mode-hook)))
 
 (defun factor/init-factor-mode()
   (use-package factor-mode
