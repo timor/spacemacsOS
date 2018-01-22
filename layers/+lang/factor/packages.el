@@ -23,6 +23,7 @@
 (defun factor/init-factor-mode()
   (use-package factor-mode
     :commands factor-mode run-factor fuel-mode
+    :mode ("factor\\'" . factor-mode)
     :init
     (progn
       (spacemacs/register-repl 'fuel-mode 'run-factor))
