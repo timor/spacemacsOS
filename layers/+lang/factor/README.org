@@ -1,7 +1,6 @@
 #+TITLE: Factor Layer
 [[file:img/logo.png]]
 
-
 * Table of Contents                                       :TOC_4_gh:noexport:
 - [[#description][Description]]
 - [[#install][Install]]
@@ -22,7 +21,6 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 =dotspacemacs-configuration-layers= list there.
 
 * Key Bindings
-
 ** factor-mode (editing source files)
 
 | Key Binding | Description                                            |
@@ -61,6 +59,7 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 | ~SPC m S h~ | Scaffold help for current vocab                        |
 
 ** fuel-listener-mode
+
 | Key Binding | Description               |
 |-------------+---------------------------|
 | ~SPC m r~   | Refresh all loaded vocabs |
@@ -68,6 +67,7 @@ To use this layer, add it to your =./spacemacs= file.  Add =factor= to the
 | ~SPC m h~   | Help for word at point    |
 | ~SPC m v~   | Edit vocab                |
 | ~SPC m S v~ | Scaffold vocab            |
+
 * Snippets
 This layer provides a yasnippet for colon definitions.  Note that you might have
 to set =yas-triggers-in-field= to nil if you use =x= for stack effect
