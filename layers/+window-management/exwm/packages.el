@@ -169,6 +169,9 @@
     ;; buggy:
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
 
+    ;; User s-q to close buffers
+    (exwm-input-set-key (kbd "s-q") 'spacemacs/kill-this-buffer)
+
     ;; Universal Get-me-outta-here
     (push ?\C-g exwm-input-prefix-keys)
     ;; Universal Arguments
