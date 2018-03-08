@@ -82,7 +82,7 @@
         "Dk" 'stop-eclimd
         "Ds" 'start-eclimd
         ;; errors (problems)
-        "ee" 'eclim-problems-correct
+        "Ee" 'eclim-problems-correct
         ;; find
         "ff" 'eclim-java-find-generic
         ;; goto
@@ -177,7 +177,7 @@
                           ("mc" . "check")
                           ("md" . "debug")
                           ("mD" . "daemon")
-                          ("me" . "errors")
+                          ("mE" . "errors")
                           ("mg" . "goto")
                           ("mh" . "docs")
                           ("mi" . "inspect")
@@ -216,9 +216,9 @@
           "Dr"     'spacemacs/ensime-gen-and-restart
           "Ds"     'ensime
 
-          "ee"     'ensime-print-errors-at-point
-          "el"     'ensime-show-all-errors-and-warnings
-          "es"     'ensime-stacktrace-switch
+          "Ee"     'ensime-print-errors-at-point
+          "El"     'ensime-show-all-errors-and-warnings
+          "Es"     'ensime-stacktrace-switch
 
           "gp"     'ensime-pop-find-definition-stack
           "gi"     'ensime-goto-impl

@@ -26,8 +26,7 @@
         (org-expiry :location built-in)
         (org-journal :toggle org-enable-org-journal-support)
         org-download
-        ;; org-mime is installed by `org-plus-contrib'
-        (org-mime :location built-in)
+        org-mime
         org-pomodoro
         org-present
         (org-projectile :requires projectile)
@@ -55,7 +54,8 @@
     :init
     (progn
       (add-hook 'org-mode-hook 'spacemacs//evil-org-mode)
-      (setq evil-org-key-theme `(textobjects
+      (setq evil-org-use-additional-insert t
+            evil-org-key-theme `(textobjects
                                  navigation
                                  additional
                                  ,@(when org-want-todo-bindings '(todo)))))
@@ -158,10 +158,10 @@ Will work on both org-mode and any mode that accepts plain html."
             (forward-char -8))))
 
       (dolist (prefix '(
+                        ("mb" . "babel")
                         ("mC" . "clocks")
                         ("md" . "dates")
                         ("me" . "export")
-                        ("mh" . "headings")
                         ("mi" . "insert")
                         ("miD" . "download")
                         ("ms" . "trees/subtrees")
@@ -189,6 +189,7 @@ Will work on both org-mode and any mode that accepts plain html."
 
         "a" 'org-agenda
 
+        "Tc" 'org-toggle-checkbox
         "Te" 'org-toggle-pretty-entities
         "Ti" 'org-toggle-inline-images
         "Tl" 'org-toggle-link-display
@@ -316,6 +317,7 @@ Will work on both org-mode and any mode that accepts plain html."
         "aoa" 'org-agenda-list
         "aoc" 'org-capture
         "aoe" 'org-store-agenda-views
+        "aokg" 'org-clock-goto
         "aoki" 'org-clock-in-last
         "aokj" 'org-clock-jump-to-current-clock
         "aoko" 'org-clock-out
@@ -495,6 +497,10 @@ Headline^^            Visit entry^^               Filter^^                    Da
       :bindings
       "j" 'org-agenda-next-line
       "k" 'org-agenda-previous-line
+      ;; C-h should not be rebound by evilification so we unshadow it manually
+      ;; TODO add the rule in auto-evilification to ignore C-h (like we do
+      ;; with C-g)
+      (kbd "C-h") nil
       (kbd "M-j") 'org-agenda-next-item
       (kbd "M-k") 'org-agenda-previous-item
       (kbd "M-h") 'org-agenda-earlier
@@ -541,10 +547,8 @@ Headline^^            Visit entry^^               Filter^^                    Da
 (defun org/init-org-mime ()
   (use-package org-mime
     :defer t
-    :commands (org-mime-htmlize org-mime-org-buffer-htmlize)
     :init
     (progn
-      ;; move this key bindings to an `init-message' function
       (spacemacs/set-leader-keys-for-major-mode 'message-mode
         "em" 'org-mime-htmlize)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode

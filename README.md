@@ -1,6 +1,6 @@
 <a name="top" id="fork-destination-box"></a>
 <a href="http://spacemacs.org"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" alt="Made with Spacemacs"></a><a href="http://www.twitter.com/spacemacs"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
-***
+- - -
 <p align="center"><img src="/doc/img/title2.png" alt="Spacemacs"/></p>
 <p align="center">
 <b><a href="http://spacemacs.org/doc/DOCUMENTATION#core-pillars">philosophy</a></b>
@@ -17,7 +17,9 @@
 |
 <b><a href="http://spacemacs.org/doc/FAQ">FAQ</a></b>
 </p>
-***
+
+- - -
+
 <p align="center">
 <a href="https://gitter.im/syl20bnr/spacemacs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/Join Chat.svg" alt="Gitter"></a>
 <a href="https://circleci.com/gh/syl20bnr/spacemacs/tree/develop"><img src="https://circleci.com/gh/syl20bnr/spacemacs/tree/develop.svg?style=shield" alt="Build Status"></a>
@@ -26,7 +28,9 @@
 <a href="https://shop.spreadshirt.com/spacemacs-shop"><img src="https://img.shields.io/badge/Shop-T--Shirts-blue.svg" alt="Donate"></a>
 <a href="http://www.slant.co/topics/12/~what-are-the-best-programming-text-editors"><img src="https://img.shields.io/badge/Slant-Recommend-ff69b4.svg" alt="Recommend it"></a>
 </p>
-***
+
+- - -
+
 
 **Quick Install:**
 
@@ -166,28 +170,6 @@ Spacemacs icon. See [emacs-plus][] for more information.
 After completing the Spacemacs [install process](#install), then it's also
 recommended to add the [osx layer][] to your [dotfile][]. Installation
 instructions are available in the documentation for the [osx layer][].
-
-If the powerline separators on the spaceline have a different (less saturated)
-color than the rest of the line, then you can add the following snippet to the
-`dotspacemacs/user-config` section in your `~/.spacemacs` file:
-
-```elisp
-(setq ns-use-srgb-colorspace nil)
-```
-
-Keep in mind that this is not an ideal solution as it affects all colours in
-Emacs. Another option is to change the powerline separators. For example to
-`alternate` or `bar`, they diminish the color difference. Or change them to
-`utf-8`, which makes them go away completely, without having to change colour
-space. In order to change the powerline separators, put the following snippet in
-the `dotspacemacs/user-config` section of your `~/.spacemacs` file:
-
-```eslip
-(setq powerline-default-separator 'utf-8)
-```
-
-For more information about powerline separators, please refer to the
-[powerline documentation][]
 
 ### Windows
 You can download good quality builds from the [emacs-w64 project][emacs-for-windows].

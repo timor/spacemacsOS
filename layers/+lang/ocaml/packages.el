@@ -13,8 +13,8 @@
   '(
     ;; auto-complete
     company
-   ;; flycheck
-   ;; flycheck-ocaml
+    flycheck
+    flycheck-ocaml
     ggtags
     counsel-gtags
     helm-gtags
@@ -34,7 +34,7 @@
 
 (when (configuration-layer/layer-used-p 'syntax-checking)
   (defun ocaml/post-init-flycheck ()
-    (spacemacs/enable-flycheck 'merlin-mode))
+    (spacemacs/enable-flycheck 'tuareg-mode))
   (defun ocaml/init-flycheck-ocaml ()
     (use-package flycheck-ocaml
       :if (configuration-layer/package-used-p 'flycheck)
@@ -65,9 +65,9 @@
       (spacemacs/set-leader-keys-for-major-mode 'tuareg-mode
         "cp" 'merlin-project-check
         "cv" 'merlin-goto-project-file
-        "eC" 'merlin-error-check
-        "en" 'merlin-error-next
-        "eN" 'merlin-error-prev
+        "Ec" 'merlin-error-check
+        "En" 'merlin-error-next
+        "EN" 'merlin-error-prev
         "gb" 'merlin-pop-stack
         "gG" 'spacemacs/merlin-locate-other-window
         "gl" 'merlin-locate-ident
@@ -79,7 +79,7 @@
         "hT" 'merlin-type-expr
         "rd" 'merlin-destruct)
       (spacemacs/declare-prefix-for-mode 'tuareg-mode "mc" "compile/check")
-      (spacemacs/declare-prefix-for-mode 'tuareg-mode "me" "errors")
+      (spacemacs/declare-prefix-for-mode 'tuareg-mode "mE" "errors")
       (spacemacs/declare-prefix-for-mode 'tuareg-mode "mg" "goto")
       (spacemacs/declare-prefix-for-mode 'tuareg-mode "mh" "help")
       (spacemacs/declare-prefix-for-mode 'tuareg-mode "mr" "refactor"))))

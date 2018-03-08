@@ -28,6 +28,8 @@
   - [[#trees][Trees]]
   - [[#element-insertion][Element insertion]]
   - [[#links][Links]]
+  - [[#babel--source-blocks][Babel / Source Blocks]]
+    - [[#org-babel-transient-state][Org Babel Transient State]]
   - [[#emphasis][Emphasis]]
   - [[#navigating-in-calendar][Navigating in calendar]]
   - [[#capture-buffers-and-src-blocks][Capture buffers and src blocks]]
@@ -119,7 +121,7 @@ extension.
 #+END_SRC
 
 In order to be able to use org-reveal, download =reveal.js= from its
-[[http://lab.hakim.se/reveal-js/#/][homepage]] and set =org-reveal-js= to the
+[[http://lab.hakim.se/reveal-js/#/][homepage]] and set =org-reveal-root= to the
 download path, as described in the [[https://github.com/yjwen/org-reveal#user-content-revealjs-and-org-reveal][manual]]. Alternatively, add the following line
 to each =.org= file you want to process:
 
@@ -267,28 +269,30 @@ To permanently enable mode line display of org clock, add this snippet to your
 * Key bindings
 ** Starting org-mode
 
-| Key Binding   | Description                    |
-|---------------+--------------------------------|
-| ~SPC a o #~   | org agenda list stuck projects |
-| ~SPC a o /~   | org occur in agenda files      |
-| ~SPC a o a~   | org agenda list                |
-| ~SPC a o c~   | org capture                    |
-| ~SPC a o e~   | org store agenda views         |
-| ~SPC a o k i~ | org clock in last              |
-| ~SPC a o k j~ | org jump to current clock      |
-| ~SPC a o k o~ | org clock out                  |
-| ~SPC a o k r~ | org resolve clocks             |
-| ~SPC a o l~   | org store link                 |
-| ~SPC a o m~   | org tags view                  |
-| ~SPC a o o~   | org agenda                     |
-| ~SPC a o s~   | org search view                |
-| ~SPC a o t~   | org todo list                  |
-| ~SPC C c~     | org-capture                    |
+| Key Binding   | Description                                                               |
+|---------------+---------------------------------------------------------------------------|
+| ~SPC a o #~   | org agenda list stuck projects                                            |
+| ~SPC a o /~   | org occur in agenda files                                                 |
+| ~SPC a o a~   | org agenda list                                                           |
+| ~SPC a o c~   | org capture                                                               |
+| ~SPC a o e~   | org store agenda views                                                    |
+| ~SPC a o k g~ | org goto last clocked-in clock (go to specific recent clock with ~SPC u~) |
+| ~SPC a o k i~ | org clock in last                                                         |
+| ~SPC a o k j~ | org jump to current clock                                                 |
+| ~SPC a o k o~ | org clock out                                                             |
+| ~SPC a o k r~ | org resolve clocks                                                        |
+| ~SPC a o l~   | org store link                                                            |
+| ~SPC a o m~   | org tags view                                                             |
+| ~SPC a o o~   | org agenda                                                                |
+| ~SPC a o s~   | org search view                                                           |
+| ~SPC a o t~   | org todo list                                                             |
+| ~SPC C c~     | org-capture                                                               |
 
 ** Toggles
 
 | Key Binding | Description                                   |
 |-------------+-----------------------------------------------|
+| ~SPC m T c~ | org-toggle-checkbox                           |
 | ~SPC m T e~ | org-toggle-pretty-entities                    |
 | ~SPC m T i~ | org-toggle-inline-images                      |
 | ~SPC m T l~ | org-toggle-link-display                       |
@@ -439,6 +443,47 @@ are also available.
 | Key Binding | Description       |
 |-------------+-------------------|
 | ~SPC m x o~ | org-open-at-point |
+
+** Babel / Source Blocks
+
+| Key Binding | Description                              |
+|-------------+------------------------------------------|
+| ~SPC m b .~ | Enter Babel Transient State              |
+| ~SPC m b a~ | org-babel-sha1-hash                      |
+| ~SPC m b b~ | org-babel-execute-buffer                 |
+| ~SPC m b c~ | org-babel-check-src-block                |
+| ~SPC m b d~ | org-babel-demarcate-block                |
+| ~SPC m b e~ | org-babel-execute-maybe                  |
+| ~SPC m b f~ | org-babel-tangle-file                    |
+| ~SPC m b g~ | org-babel-goto-named-src-block           |
+| ~SPC m b i~ | org-babel-lob-ingest                     |
+| ~SPC m b I~ | org-babel-view-src-block-info            |
+| ~SPC m b j~ | org-babel-insert-header-arg              |
+| ~SPC m b l~ | org-babel-load-in-session                |
+| ~SPC m b n~ | org-babel-next-src-block                 |
+| ~SPC m b o~ | org-babel-open-src-block-result          |
+| ~SPC m b p~ | org-babel-previous-src-block             |
+| ~SPC m b r~ | org-babel-goto-named-result              |
+| ~SPC m b s~ | org-babel-execute-subtree                |
+| ~SPC m b t~ | org-babel-tangle                         |
+| ~SPC m b u~ | org-babel-goto-src-block-head            |
+| ~SPC m b v~ | org-babel-expand-src-block               |
+| ~SPC m b x~ | org-babel-do-key-sequence-in-edit-buffer |
+| ~SPC m b z~ | org-babel-switch-to-session              |
+| ~SPC m b Z~ | org-babel-switch-to-session-with-code    |
+
+*** Org Babel Transient State
+Use ~SPC m b .~ to enter a transient state for quick source block navigation and
+execution.  During that state, the following bindings are active:
+
+| Key Binding | Description                   |
+|-------------+-------------------------------|
+| ~'~         | edit source block             |
+| ~e~         | execute source block          |
+| ~g~         | jump to named source block    |
+| ~j~         | jump to next source block     |
+| ~k~         | jump to previous source block |
+| ~q~         | leave transient state         |
 
 ** Emphasis
 
@@ -655,3 +700,4 @@ are available.
 | ~o~         | Open and edit the visualized entry    |
 | ~f~         | Find/visit another entry to visualize |
 | ~r~         | Rename this, or another, entry        |
+|             |                                       |

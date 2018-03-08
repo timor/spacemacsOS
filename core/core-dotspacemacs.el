@@ -55,6 +55,11 @@ exists. Otherwise, fallback to ~/.spacemacs"))
 `+distributions'. For now available distributions are `spacemacs-base'
 or `spacemacs'.")
 
+(defvar dotspacemacs-gc-cons '(100000000 0.1)
+  "Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
+This is an advanced option and should not be changed unless you suspect
+performance issues due to garbage collection operations.")
+
 (defvar dotspacemacs-elpa-https t
   "If non nil ELPA repositories are contacted via HTTPS whenever it's
 possible. Set it to nil if you have no way to use HTTPS in your
@@ -65,7 +70,7 @@ environment, otherwise it is strongly recommended to let it set to t.")
 
 (defvar dotspacemacs-use-spacelpa nil
   "If non-nil then Spacelpa repository is the primary source to install
-a locked version of packages. If nil then Spacemacs will install the lastest
+a locked version of packages. If nil then Spacemacs will install the latest
 version of packages from MELPA.")
 
 (defvar dotspacemacs-verify-spacelpa-archives nil
@@ -128,6 +133,9 @@ If the value is nil then no banner is displayed.")
 
 (defvar dotspacemacs-scratch-mode 'text-mode
   "Default major mode of the scratch buffer.")
+
+(defvar dotspacemacs-initial-scratch-message 'nil
+  "Initial message in the scratch buffer.")
 
 (defvar dotspacemacs-check-for-update nil
   "If non nil then spacemacs will check for updates at startup
@@ -329,6 +337,9 @@ This variable can also be set to a property list for finer control:
 The property `:enabled-for-modes' takes priority over `:disabled-for-modes' and
 restricts line-number to the specified list of major-mode.")
 
+(defvar dotspacemacs-enable-server t
+  "If non-nil, start an Emacs server if one is not already running.")
+
 (defvar dotspacemacs-persistent-server nil
   "If non nil advises quit functions to keep server open when quitting.")
 
@@ -358,11 +369,6 @@ whitespace for changed lines or `nil' to disable cleanup.")
 (defvar dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
   "List of search tool executable names. Spacemacs uses the first installed
 tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.")
-
-(defvar dotspacemacs-default-package-repository 'melpa-stable
-  "The default package repository used if no explicit repository has been
-specified with an installed package.
-NOT USED FOR NOW :-)")
 
 (defvar dotspacemacs-startup-lists '((recents  . 5)
                                     (projects . 7))

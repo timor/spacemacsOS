@@ -190,6 +190,7 @@
 - [[#emacs-server][Emacs Server]]
   - [[#connecting-to-the-emacs-server][Connecting to the Emacs server]]
   - [[#keeping-the-server-alive][Keeping the server alive]]
+  - [[#disabling-the-emacs-server][Disabling the Emacs server]]
 - [[#troubleshoot][Troubleshoot]]
   - [[#loading-fails][Loading fails]]
   - [[#upgradingdowngrading-emacs-version][Upgrading/Downgrading Emacs version]]
@@ -1287,24 +1288,24 @@ Supported separators and preview:
 
 | Separator    | Spacemacs | All-the-icons | Screenshot                        |
 |--------------+-----------+---------------+-----------------------------------|
-| =alternate=  |     X     |               | [[file:img/powerline-alternate.png]]  |
-| =arrow=      |     X     |      X        | [[file:img/powerline-arrow.png]]      |
-| =arrow-fade= |     X     |               | [[file:img/powerline-arrow-fade.png]] |
-| =bar=        |     X     |               | [[file:img/powerline-bar.png]]        |
-| =box=        |     X     |               | [[file:img/powerline-box.png]]        |
-| =brace=      |     X     |               | [[file:img/powerline-brace.png]]      |
-| =butt=       |     X     |               | [[file:img/powerline-butt.png]]       |
-| =chamfer=    |     X     |               | [[file:img/powerline-chamfer.png]]    |
-| =contour=    |     X     |               | [[file:img/powerline-contour.png]]    |
-| =cup=        |           |      X        |                                   |
-| =curve=      |     X     |               | [[file:img/powerline-curve.png]]      |
-| =rounded=    |     X     |               | [[file:img/powerline-rounded.png]]    |
-| =roundstub=  |     X     |               | [[file:img/powerline-roundstub.png]]  |
-| =slant=      |     X     |      X        | [[file:img/powerline-slant.png]]      |
-| =wave=       |     X     |      X        | [[file:img/powerline-wave.png]]       |
-| =zigzag=     |     X     |               | [[file:img/powerline-zigzag.png]]     |
-| =nil=        |     X     |               | [[file:img/powerline-nil.png]]        |
-| =none=       |           |      X        |                                   |
+| =alternate=  | X         |               | [[file:img/powerline-alternate.png]]  |
+| =arrow=      | X         | X             | [[file:img/powerline-arrow.png]]      |
+| =arrow-fade= | X         |               | [[file:img/powerline-arrow-fade.png]] |
+| =bar=        | X         |               | [[file:img/powerline-bar.png]]        |
+| =box=        | X         |               | [[file:img/powerline-box.png]]        |
+| =brace=      | X         |               | [[file:img/powerline-brace.png]]      |
+| =butt=       | X         |               | [[file:img/powerline-butt.png]]       |
+| =chamfer=    | X         |               | [[file:img/powerline-chamfer.png]]    |
+| =contour=    | X         |               | [[file:img/powerline-contour.png]]    |
+| =cup=        |           | X             |                                   |
+| =curve=      | X         |               | [[file:img/powerline-curve.png]]      |
+| =rounded=    | X         |               | [[file:img/powerline-rounded.png]]    |
+| =roundstub=  | X         |               | [[file:img/powerline-roundstub.png]]  |
+| =slant=      | X         | X             | [[file:img/powerline-slant.png]]      |
+| =wave=       | X         | X             | [[file:img/powerline-wave.png]]       |
+| =zigzag=     | X         |               | [[file:img/powerline-zigzag.png]]     |
+| =nil=        | X         |               | [[file:img/powerline-nil.png]]        |
+| =none=       |           | X             |                                   |
 
 A last special separator is supported, it is =utf-8= which uses actual font
 glyphs so it can be rendered in a terminal. You'll need a font patched for the
@@ -1473,7 +1474,6 @@ squared symbols like =🅿=.
 | ~SPC t W~   | =Ⓦ=     | W     | automatic whitespace cleanup (see =dotspacemacs-whitespace-cleanup=) |
 | ~SPC t C-W~ | =Ⓦ=     | W     | automatic whitespace cleanup globally                                |
 | ~SPC t y~   | =ⓨ=     | y     | [[https://github.com/capitaomorte/yasnippet][yasnippet]] mode                                                       |
-
 
 ** Frame title
 Default frame title displays name of current process and hostname of system. You
@@ -3277,6 +3277,14 @@ server is to use the following bindings:
 | ~SPC q t~  | Restart Emacs and debug with --with-timed-requires                       |
 | ~SPC q T~  | Restart Emacs and debug with --adv-timers                                |
 
+** Disabling the Emacs server
+You can disable the built-in server by setting the variable
+=dotspacemacs-enable-server= to =nil= in your =~/.spacemacs=.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default dotspacemacs-enable-server nil)
+#+END_SRC
+
 * Troubleshoot
 ** Loading fails
 If any errors happen during the loading the mode-line will turn red and the
@@ -3387,19 +3395,20 @@ with ~SPC SPC spacemacs/recompile-elpa~.
 
 ** Special Titles
 
-| Achievements                                    | Account      |
-|-------------------------------------------------+--------------|
-| The Gunner (18 PRs in a row)                    | [[https://github.com/ralesi][ralesi]]       |
-| The Saint (unlocked the holy-mode)              | [[https://github.com/trishume][trishume]]     |
-| The Artist ([[https://github.com/nashamri/spacemacs-logo][logo]] and [[https://github.com/nashamri/spacemacs-theme][theme]])                     | [[https://github.com/nashamri][nashamri]]     |
-| The Meme Master (doge banner)                   | [[https://github.com/chrisbarrett][chrisbarrett]] |
-| The Helm captain ([[https://tuhdo.github.io/helm-intro.html][helm guide]])                   | [[https://github.com/tuhdo][tuhdo]]        |
-| The Master of the Keys ([[https://github.com/justbur/emacs-which-key][which-key]] and [[https://github.com/justbur/emacs-bind-map][bind-map]]) | [[https://github.com/justbur][justbur]]      |
-| The PR Patrol Officer                           | [[https://github.com/robbyoconnor][robbyoconnor]] |
-| The Expert in Latin Language ([[https://github.com/syl20bnr/spacemacs/pull/4043][PR]])               | [[https://github.com/vijaykiran][vijaykiran]]   |
-| The Tiler ([[https://github.com/syl20bnr/spacemacs/pull/4068][eyebrowse integration]])               | [[https://github.com/bmag][bmag]]         |
-| The Geometer ([[https://github.com/TheBB/spaceline][spaceline]])                        | [[https://github.com/TheBB][TheBB]]        |
-| The Librarian (doc-fmt tool and space-doc mode) | [[https://github.com/JAremko][JAremko]]      |
+| Achievements                                    | Account       |
+|-------------------------------------------------+---------------|
+| The Gunner (18 PRs in a row)                    | [[https://github.com/ralesi][ralesi]]        |
+| The Saint (unlocked the holy-mode)              | [[https://github.com/trishume][trishume]]      |
+| The Artist ([[https://github.com/nashamri/spacemacs-logo][logo]] and [[https://github.com/nashamri/spacemacs-theme][theme]])                     | [[https://github.com/nashamri][nashamri]]      |
+| The Meme Master (doge banner)                   | [[https://github.com/chrisbarrett][chrisbarrett]]  |
+| The Helm captain ([[https://tuhdo.github.io/helm-intro.html][helm guide]])                   | [[https://github.com/tuhdo][tuhdo]]         |
+| The Master of the Keys ([[https://github.com/justbur/emacs-which-key][which-key]] and [[https://github.com/justbur/emacs-bind-map][bind-map]]) | [[https://github.com/justbur][justbur]]       |
+| The PR Patrol Officer                           | [[https://github.com/robbyoconnor][robbyoconnor]]  |
+| The Expert in Latin Language ([[https://github.com/syl20bnr/spacemacs/pull/4043][PR]])               | [[https://github.com/vijaykiran][vijaykiran]]    |
+| The Tiler ([[https://github.com/syl20bnr/spacemacs/pull/4068][eyebrowse integration]])               | [[https://github.com/bmag][bmag]]          |
+| The Geometer ([[https://github.com/TheBB/spaceline][spaceline]])                        | [[https://github.com/TheBB][TheBB]]         |
+| The Librarian (doc-fmt tool and space-doc mode) | [[https://github.com/JAremko][JAremko]]       |
+| The Orgonaut ([[https://github.com/syl20bnr/spacemacs/issues/9476][fixed most of the Org READMEs]])    | [[https://github.com/smile13241324][smile13241324]] |
 
 * Thank you
 Thank you Richard for this great piece of software.

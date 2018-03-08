@@ -25,6 +25,7 @@
         helm-themes
         (helm-spacemacs-help :location local)
         (helm-spacemacs-faq :location local)
+        helm-xref
         imenu
         persp-mode
         popwin
@@ -58,9 +59,7 @@
 
 (defun helm/init-helm ()
   (use-package helm
-    :defer 1
-    :commands (spacemacs/helm-find-files
-               helm-current-directory)
+    :defer t
     :init
     (progn
       (add-hook 'helm-cleanup-hook #'spacemacs//helm-cleanup)
@@ -120,10 +119,11 @@
                 (lambda ()
                   (unless (configuration-layer/package-used-p 'smex)
                     (spacemacs/set-leader-keys
-                      dotspacemacs-emacs-command-key 'helm-M-x)))))
+                      dotspacemacs-emacs-command-key 'helm-M-x))))
+      (helm-mode))
     :config
     (progn
-      (helm-mode)
+      (spacemacs|hide-lighter helm-mode)
       (advice-add 'helm-grep-save-results-1 :after 'spacemacs//gne-init-helm-grep)
       ;; helm-locate uses es (from everything on windows which doesnt like fuzzy)
       (helm-locate-set-command)
@@ -139,8 +139,6 @@
         (define-key helm-bookmark-map (kbd "C-/") 'helm-bookmark-help))
       (with-eval-after-load 'helm-bookmark
         (simpler-helm-bookmark-keybindings))
-      (with-eval-after-load 'helm-mode ; required
-        (spacemacs|hide-lighter helm-mode))
       (define-key helm-buffer-map (kbd "RET") 'spacemacs/helm-find-buffers-windows)
       (define-key helm-generic-files-map (kbd "RET") 'spacemacs/helm-find-files-windows)
       (define-key helm-find-files-map (kbd "RET") 'spacemacs/helm-find-files-windows))))
@@ -254,7 +252,10 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         ;; --line-number forces line numbers (disabled by default on windows)
         ;; no --vimgrep because it adds column numbers that wgrep can't handle
         ;; see https://github.com/syl20bnr/spacemacs/pull/8065
-        (let ((helm-ag-base-command "rg --smart-case --no-heading --color never --line-number --max-columns 150"))
+        (let* ((root-helm-ag-base-command "rg --smart-case --no-heading --color never --line-number")
+               (helm-ag-base-command (if spacemacs-helm-rg-max-column-number
+                                        (concat root-helm-ag-base-command " --max-columns " (number-to-string spacemacs-helm-rg-max-column-number))
+                                      root-helm-ag-base-command)))
           (helm-do-ag dir)))
 
       (defun spacemacs/helm-files-do-rg-region-or-symbol ()
@@ -708,6 +709,25 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
     :init
     (spacemacs/set-leader-keys
       "Ts" 'spacemacs/helm-themes)))
+
+(defun helm/init-helm-xref ()
+  (use-package helm-xref
+    :commands (helm-xref-show-xrefs)
+    :init
+    (progn
+      ;; This is required to make `xref-find-references' not give a prompt.
+      ;; `xref-find-references' asks the identifier (which has no text property)
+      ;; and then passes it to `lsp-mode', which requires the text property at
+      ;; point to locate the references.
+      ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=29619
+      (setq xref-prompt-for-identifier '(not xref-find-definitions
+                                             xref-find-definitions-other-window
+                                             xref-find-definitions-other-frame
+                                             xref-find-references
+                                             spacemacs/jump-to-definition))
+      ;; Use helm-xref to display `xref.el' results.
+      (setq xref-show-xrefs-function #'helm-xref-show-xrefs))))
+
 
 (defun helm/post-init-imenu ()
   (spacemacs/set-leader-keys "ji" 'spacemacs/helm-jump-in-buffer))

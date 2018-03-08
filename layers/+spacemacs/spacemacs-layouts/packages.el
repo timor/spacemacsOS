@@ -15,7 +15,7 @@
         ivy
         persp-mode
         spaceline
-        swiper))
+        (counsel-projectile :requires projectile)))
 
 
 
@@ -238,5 +238,7 @@
 
 
 
-(defun spacemacs-layouts/post-init-swiper ()
-  (spacemacs/set-leader-keys "pl" 'spacemacs/ivy-persp-switch-project))
+(defun spacemacs-layouts/init-counsel-projectile ()
+  (use-package counsel-projectile
+    :defer t
+    :init (spacemacs/set-leader-keys "pl" 'spacemacs/ivy-persp-switch-project)))

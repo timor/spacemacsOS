@@ -1,4 +1,4 @@
-;;; config.el --- Spacemacs Base Layer configuration File
+;;; config.el --- Spacemacs Defaults Layer configuration File
 ;;
 ;; Copyright (c) 2012-2018 Sylvain Benner & Contributors
 ;;
@@ -153,7 +153,7 @@ It runs `tabulated-list-revert-hook', then calls `tabulated-list-print'."
 ;; ---------------------------------------------------------------------------
 
 ;; scratch buffer empty
-(setq initial-scratch-message nil)
+(setq initial-scratch-message dotspacemacs-initial-scratch-message)
 ;; don't create backup~ files
 (setq make-backup-files nil)
 

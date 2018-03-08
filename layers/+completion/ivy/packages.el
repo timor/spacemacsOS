@@ -14,7 +14,7 @@
         auto-highlight-symbol
         bookmark
         counsel
-        (counsel-projectile :requires projectile)
+        counsel-projectile
         evil
         flx
         helm-make
@@ -22,6 +22,7 @@
         ivy-hydra
         (ivy-rich :toggle ivy-enable-advanced-buffer-information)
         (ivy-spacemacs-help :location local)
+        ivy-xref
         org
         persp-mode
         projectile
@@ -153,8 +154,6 @@
         "pd"    'counsel-projectile-find-dir
         "pp"    'counsel-projectile-switch-project
         "pf"    'counsel-projectile-find-file))))
-(defun ivy/init-counsel-projectile ()
-  (use-package counsel-projectile :defer t))
 
 (defun ivy/post-init-evil ()
   (spacemacs/set-leader-keys
@@ -245,6 +244,20 @@
             "h p"   'ivy-spacemacs-help-packages
             "h r"   'ivy-spacemacs-help-docs
             "h t"   'ivy-spacemacs-help-toggles)))
+
+(defun ivy/init-ivy-xref ()
+  (use-package ivy-xref
+    :defer t
+    :init
+    (progn
+      (setq xref-prompt-for-identifier '(not xref-find-definitions
+                                             xref-find-definitions-other-window
+                                             xref-find-definitions-other-frame
+                                             xref-find-references
+                                             spacemacs/jump-to-definition))
+
+      ;; Use ivy-xref to display `xref.el' results.
+      (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))))
 
 (defun ivy/post-init-org ()
   (add-hook 'org-ctrl-c-ctrl-c-hook 'spacemacs//counsel-org-ctrl-c-ctrl-c-org-tag))

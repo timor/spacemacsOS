@@ -65,7 +65,7 @@ Configure =~/.mailrc= with the path where =msmtp= is found.
 
 For example:
 #+srcname: contents of ~/.mailrc
-#+BEGIN_SRC
+#+BEGIN_SRC rc
 set sendmail="/usr/local/bin/msmtp"
 #+END_SRC
 
@@ -78,7 +78,7 @@ setting the layer variable =notmuch-message-deleted-tags=.
 Default value is to add the =deleted= tag and remove both =inbox= and
 =unread= tags.
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layers
   '((notmuch :variables notmuch-message-deleted-tags '("+deleted" "-inbox" "-unread"))))
 #+END_SRC
@@ -176,7 +176,6 @@ https://notmuchmail.org/
 | ~a~        | [Message] Archive         |
 
 * Spacemacs layout integration
-
 This layer defines a [[https://github.com/syl20bnr/spacemacs/blob/develop/doc/DOCUMENTATION.org#layouts-and-workspaces][Spacemacs custom layout]] and automatically adds notmuch
 buffers to this layout.  The name and the key binding for the layout can be
 customized with the following layer variables:

@@ -13,6 +13,13 @@
       '(
         anzu
         fancy-battery
+        ;; dependency of spaceline-all-the-icons which came from
+        ;; the emacs wiki, we fetch it from Emacs Mirror for now.
+        ;; TODO eventually remove this if font-lock+ is available
+        ;; in an ELPA repository.
+        (font-lock+ :step pre
+                    :location (recipe :fetcher github
+                                      :repo emacsmirror/font-lock-plus))
         neotree
         spaceline
         spaceline-all-the-icons
@@ -34,6 +41,8 @@
         :documentation "Display battery info in mode-line."
         :evil-leader "tmb")
       (setq-default fancy-battery-show-percentage t))))
+
+(defun spacemacs-modeline/init-font-lock+ ())
 
 (defun spacemacs-modeline/post-init-neotree ()
   (when (eq 'all-the-icons (spacemacs/get-mode-line-theme-name))
@@ -62,6 +71,7 @@
                            '(spacemacs custom))
                      (spacemacs/mode-line-separator))
                 'wave)
+            powerline-image-apple-rgb (spacemacs/system-is-mac)
             powerline-scale (or (spacemacs/mode-line-separator-scale) 1.5)
             powerline-height (spacemacs/compute-mode-line-height))
       (spacemacs|do-after-display-system-init
@@ -141,6 +151,10 @@
       :pre-config
       (progn
         (require 'spaceline-all-the-icons)
+        ;; responsivness does not play well with all-the-icons theme
+        ;; let's disable it for now
+        ;; https://github.com/domtronn/spaceline-all-the-icons.el/issues/51#issuecomment-316686790
+        (setq spaceline-responsive nil)
         (spaceline-all-the-icons--setup-git-ahead)))))
 
 (defun spacemacs-modeline/init-spaceline-all-the-icons ()
