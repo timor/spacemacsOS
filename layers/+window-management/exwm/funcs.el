@@ -112,3 +112,11 @@ Can show completions at point for COMMAND using helm or ido"
 (defun spacemacs/exwm-jump-to-last-exwm ()
   (interactive)
   (exwm-workspace-switch exwm-toggle-workspace))
+
+(defun spacemacs/exwm-exwm-buffers-info ()
+  "Helper, return information about open exwm windows"
+  (loop for buffer in (buffer-list)
+        for name = (buffer-name buffer)
+        for ecname = (buffer-local-value 'exwm-class-name buffer)
+        when ecname
+        collect (list :buffer-name name :exwm-class-name ecname)))
