@@ -82,5 +82,6 @@
         "Sv" 'fuel-scaffold-vocab
         )
 
-      (evilified-state-evilify fuel-help-mode fuel-help-mode-map)))
+      (evilified-state-evilify fuel-help-mode fuel-help-mode-map)
+      (evilified-state-evilify fuel-xref-mode fuel-xref-mode-map)))
   )
