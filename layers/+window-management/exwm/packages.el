@@ -222,6 +222,7 @@
     (exwm-input-set-key (kbd "M-s-j") #'spacemacs/shrink-window)
     (exwm-input-set-key (kbd "M-s-k") #'spacemacs/enlarge-window)
     (exwm-input-set-key (kbd "M-s-l") #'spacemacs/enlarge-window-horizontally)
+    (exwm-input-set-key (kbd "s-m") #'spacemacs/toggle-maximize-buffer)
     ;; Workspaces
     (exwm-input-set-key (kbd "s-]") #'spacemacs/exwm-workspace-next)
     (exwm-input-set-key (kbd "s-[") #'spacemacs/exwm-workspace-prev)
