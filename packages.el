@@ -219,8 +219,8 @@
     (exwm-input-set-key (kbd "s-L") #'evil-window-move-far-right)
     ;; Resize
     (exwm-input-set-key (kbd "M-s-h") #'spacemacs/shrink-window-horizontally)
-    (exwm-input-set-key (kbd "M-s-j") #'spacemacs/shrink-window)
-    (exwm-input-set-key (kbd "M-s-k") #'spacemacs/enlarge-window)
+    (exwm-input-set-key (kbd "M-s-j") #'spacemacs/enlarge-window)
+    (exwm-input-set-key (kbd "M-s-k") #'spacemacs/shrink-window)
     (exwm-input-set-key (kbd "M-s-l") #'spacemacs/enlarge-window-horizontally)
     (exwm-input-set-key (kbd "s-m") #'spacemacs/toggle-maximize-buffer)
     ;; Workspaces
