@@ -101,6 +101,9 @@ you want you can enable it, this layer focuses on less Emacs-y bindings.
 Since running programs is one of the more common task, some explicit support is
 provided for that via the leader key ~SPC &~.
 
+For these commands as well as for ~s-r~ the working directory is set to the
+value of =user-home-directory= for the started process.
+
 | Key Binding | Description                                                               |
 |-------------+---------------------------------------------------------------------------|
 | ~SPC & s~   | Ask for program to run in separate window below current window            |

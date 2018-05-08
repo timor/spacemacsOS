@@ -93,21 +93,25 @@
         (exwm-layout-set-fullscreen))
     (spacemacs/toggle-maximize-buffer)))
 
+(defun spacemacs/exwm-run-program-in-home (command)
+  (let ((default-directory user-home-directory))
+    (start-process-shell-command command nil command)))
+
 (defun spacemacs/exwm-app-launcher (command)
   "Launches an application in your PATH.
-Can show completions at point for COMMAND using helm or ido"
+Can show completions at point for COMMAND using helm or ivy"
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
-  (start-process-shell-command command nil command))
+  (spacemacs/exwm-run-program-in-home command))
 
 (defun spacemacs/exwm-launch-split-below (command)
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
   (split-window-below-and-focus)
-  (start-process-shell-command command nil command))
+  (spacemacs/exwm-run-program-in-home command))
 
 (defun spacemacs/exwm-launch-split-right (command)
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
   (split-window-right-and-focus)
-  (start-process-shell-command command nil command))
+  (spacemacs/exwm-run-program-in-home command))
 
 (defun spacemacs/exwm-jump-to-last-exwm ()
   (interactive)
