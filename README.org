@@ -36,7 +36,9 @@ This is how it looks like:
 [[img/spacemacsOS.jpg]]
 
 ** Install
-To use this contribution add it to your =~/.spacemacs=
+To use this contribution, 
+- place this repository  in one of Spacemacs' layer directories (~/.emacs.d/private/local/exwm or ~/.spacemacs.d/layers/exwm)
+- add the layer in your =~/.spacemacs=
 
 #+begin_src emacs-lisp
   (setq-default dotspacemacs-configuration-layers '(exwm))
