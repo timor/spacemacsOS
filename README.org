@@ -173,3 +173,8 @@ To be predictable, the following behaviour should probably be implemented:
   the window, and the next time the window is entered, the original mode should
   be restored.  Alternatively, if that proves to be to messy, transient state activation
   could always be made to change the state back to normal state.
+
+*Update:* The current handling could be more robust against Spacemacs' input
+ state behavior.  At some point™, it will probably make sense to abandon char
+ mode completely, and only use =exwm-input-line-mode-passthrough= to control
+ keyboard focus (see discussion in https://github.com/ch11ng/exwm/issues/352).
