@@ -14,6 +14,9 @@
   - [[#implementation-strategy][Implementation Strategy]]
 
 ** Description
+*Fork Note:*  This layer is based on CestDiego's PR from
+https://github.com/syl20bnr/spacemacs/pull/3321.
+
 The time has arrived when one can finally use Emacs as a Window Manager, long
 ago the concepts of *windows* and *frames* made so much sense when one was
 working in a TTY, and basically that's all the window management you got. In
