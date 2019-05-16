@@ -1,24 +1,24 @@
 ;; Can be used to bind a key to jumping to an application, or alternatively starting it.  E.g.:
 ;;
-;; (spacemacs/exwm-bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
+;; (exwm/bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
 ;;
 ;; The window class can be found out with exwm's builtin info functions, but for most applications it should just match the buffer name.
-(defun spacemacs/exwm-bind-switch-to-or-run-command (key window-class command)
+(defun exwm/bind-switch-to-or-run-command (key window-class command)
   (exwm-input-set-key (kbd key)
                       `(lambda ()
                          (interactive)
-                         (spacemacs/exwm-switch-to-buffer-or-run ,window-class ,command))))
+                         (exwm/switch-to-buffer-or-run ,window-class ,command))))
 
-(defun spacemacs//exwm-switch-to-line-mode ()
+(defun exwm//switch-to-line-mode ()
   "Used as a hook to switch to line mode when transient mode starts."
   (when (eq exwm--input-mode 'char-mode)
     ;; (setq exwm--switch-to-char-after-transient (current-buffer))
     (call-interactively 'exwm-input--grab-keyboard)))
 
-(defun spacemacs//exwm-persp-mode-inhibit-p (frame)
+(defun exwm//persp-mode-inhibit-p (frame)
   (frame-parameter frame 'unsplittable))
 
-(defun spacemacs/exwm-bind-command (key command &rest bindings)
+(defun exwm/bind-command (key command &rest bindings)
   (while key
     (exwm-input-set-key (kbd key)
                         `(lambda ()
@@ -27,7 +27,7 @@
     (setq key     (pop bindings)
           command (pop bindings))))
 
-(defun spacemacs/exwm-switch-to-buffer-or-run (window-class command)
+(defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."
   (let ((buffer
          (find window-class (buffer-list) :key (lambda(b) (cdr (assoc 'exwm-class-name (buffer-local-variables b)))) :test 'string-equal)))
@@ -49,7 +49,7 @@
 ;;   Its class name may be more suitable for such case.
 ;; In the following example, we use class names for all windows expect for
 ;; Java applications and GIMP.
-(defun spacemacs/exwm-rename-buffer ()
+(defun exwm/rename-buffer ()
   (let* ((part1 exwm-class-name)
          (part2 (when (not (string-equal exwm-class-name exwm-title))
                   (concat "/" exwm-title)))
@@ -59,7 +59,7 @@
                                       (concat (subseq name 0 (- maxlen 3)) "...")
                                     name))))
 
-(defun spacemacs/exwm-workspace-next ()
+(defun exwm/workspace-next ()
   "Switch to next exwm-workspaceective (to the right)."
   (interactive)
   (let* ((only-workspace? (equal exwm-workspace-number 1))
@@ -72,7 +72,7 @@
         (exwm-workspace-switch 0)))
      (t (exwm-workspace-switch  (1+ exwm-workspace-current-index))))))
 
-(defun spacemacs/exwm-workspace-prev ()
+(defun exwm/workspace-prev ()
   "Switch to next exwm-workspaceective (to the right)."
   (interactive)
   (let* ((only-workspace? (equal exwm-workspace-number 1))
@@ -84,7 +84,7 @@
         (exwm-workspace-switch (1- exwm-workspace-number))))
      (t (exwm-workspace-switch  (1- exwm-workspace-current-index))))))
 
-(defun spacemacs/exwm-layout-toggle-fullscreen ()
+(defun exwm/layout-toggle-fullscreen ()
   "Togggles full screen for Emacs and X windows"
   (interactive)
   (if exwm--id
@@ -93,31 +93,31 @@
         (exwm-layout-set-fullscreen))
     (spacemacs/toggle-maximize-buffer)))
 
-(defun spacemacs/exwm-run-program-in-home (command)
+(defun exwm/run-program-in-home (command)
   (let ((default-directory user-home-directory))
     (start-process-shell-command command nil command)))
 
-(defun spacemacs/exwm-app-launcher (command)
+(defun exwm/app-launcher (command)
   "Launches an application in your PATH.
 Can show completions at point for COMMAND using helm or ivy"
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
-  (spacemacs/exwm-run-program-in-home command))
+  (exwm/run-program-in-home command))
 
-(defun spacemacs/exwm-launch-split-below (command)
+(defun exwm/launch-split-below (command)
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
   (split-window-below-and-focus)
-  (spacemacs/exwm-run-program-in-home command))
+  (exwm/run-program-in-home command))
 
-(defun spacemacs/exwm-launch-split-right (command)
+(defun exwm/launch-split-right (command)
   (interactive (list (read-shell-command exwm-app-launcher--prompt)))
   (split-window-right-and-focus)
-  (spacemacs/exwm-run-program-in-home command))
+  (exwm/run-program-in-home command))
 
-(defun spacemacs/exwm-jump-to-last-exwm ()
+(defun exwm/jump-to-last-exwm ()
   (interactive)
   (exwm-workspace-switch exwm-toggle-workspace))
 
-(defun spacemacs/exwm-exwm-buffers-info ()
+(defun exwm/exwm-buffers-info ()
   "Helper, return information about open exwm windows"
   (loop for buffer in (buffer-list)
         for name = (buffer-name buffer)

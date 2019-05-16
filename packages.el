@@ -63,7 +63,7 @@
     ;; take care of going into line mode, and possibly switching back.
     ;; borrowed from: https://github.com/abo-abo/hydra/issues/232
     (define-advice hydra-set-transient-map (:around (fun keymap on-exit &optional foreign-keys) exwm-passthrough)
-      (spacemacs//exwm-switch-to-line-mode)
+      (exwm//switch-to-line-mode)
       (let ((on-exit (lexical-let ((on-exit on-exit))
                        (lambda ()
                          ;; Here would be the place to reactivate input state if
@@ -78,25 +78,25 @@
     ;; be tried to assign an existing layout to.
 
     (eval-after-load 'persp-mode
-      (advice-add 'persp-init-new-frame :before-until 'spacemacs//exwm-persp-mode-inhibit-p))
+      (advice-add 'persp-init-new-frame :before-until 'exwm//persp-mode-inhibit-p))
 
     (exwm-input-set-key (kbd "<s-return>")
                         (lambda ()
                           (interactive)
                           (start-process-shell-command exwm-terminal-command nil exwm-terminal-command)))
 
-    (add-hook 'exwm-update-class-hook 'spacemacs/exwm-rename-buffer)
-    (add-hook 'exwm-update-title-hook 'spacemacs/exwm-rename-buffer)
+    (add-hook 'exwm-update-class-hook 'exwm/rename-buffer)
+    (add-hook 'exwm-update-title-hook 'exwm/rename-buffer)
 
     ;; kick all exwm buffers into insert mode per default
     (add-hook 'exwm-manage-finish-hook (lambda () (call-interactively #'exwm-input-release-keyboard)))
 
     (defvar exwm-workspace-switch-wrap t
-      "Whether `spacemacs/exwm-workspace-next' and `spacemacs/exwm-workspace-prev' should wrap.")
+      "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
 
     ;; Quick swtiching between workspaces
     (defvar exwm-toggle-workspace 0
-      "Previously selected workspace. Used with `spacemacs/exwm-jump-to-last-exwm'.")
+      "Previously selected workspace. Used with `exwm/jump-to-last-exwm'.")
 
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
       (setq exwm-toggle-workspace exwm-workspace-current-index))
@@ -106,8 +106,8 @@
     ;; + We always need a way to go back to line-mode from char-mode
     (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
 
-    (exwm-input-set-key (kbd "s-f") #'spacemacs/exwm-layout-toggle-fullscreen)
-    (exwm-input-set-key (kbd "<s-tab>") #'spacemacs/exwm-jump-to-last-exwm)
+    (exwm-input-set-key (kbd "s-f") #'exwm/layout-toggle-fullscreen)
+    (exwm-input-set-key (kbd "<s-tab>") #'exwm/jump-to-last-exwm)
     ;; + Bind a key to switch workspace interactively
     (exwm-input-set-key (kbd "s-w") 'exwm-workspace-switch)
     ;; + Set shortcuts to switch to a certain workspace.
@@ -134,7 +134,7 @@
     ;; + Application launcher ('M-&' also works if the output buffer does not
     ;;   bother you). Note that there is no need for processes to be created by
     ;;   Emacs.
-    (exwm-input-set-key (kbd "s-r") #'spacemacs/exwm-app-launcher)
+    (exwm-input-set-key (kbd "s-r") #'exwm/app-launcher)
     ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
     ;;   is a more feature-rich alternative.
     (exwm-input-set-key (kbd "<s-pause>")
@@ -154,7 +154,7 @@
     (push ?\i exwm-input-prefix-keys)
 
     ;; regular space leader keys in line mode
-    (defun spacemacs//exwm-convert-key-to-event (key)
+    (defun exwm//convert-key-to-event (key)
       "Converts something from (kbd ...) format to something suitable for
     exwm-input-prefix-keys"
       (let ((key (kbd key)))
@@ -166,8 +166,8 @@
          (error "cannot convert to key event: %s" key))))
 
     ;; (push ?\  exwm-input-prefix-keys)
-    (push (spacemacs//exwm-convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
-    (push (spacemacs//exwm-convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
+    (push (exwm//convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
+    (push (exwm//convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
     ;; introduce new universal leader: s-SPC
     ;; buggy:
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
@@ -227,8 +227,8 @@
     (exwm-input-set-key (kbd "M-s-l") #'spacemacs/enlarge-window-horizontally)
     (exwm-input-set-key (kbd "s-m") #'spacemacs/toggle-maximize-buffer)
     ;; Workspaces
-    (exwm-input-set-key (kbd "s-]") #'spacemacs/exwm-workspace-next)
-    (exwm-input-set-key (kbd "s-[") #'spacemacs/exwm-workspace-prev)
+    (exwm-input-set-key (kbd "s-]") #'exwm/workspace-next)
+    (exwm-input-set-key (kbd "s-[") #'exwm/workspace-prev)
 
     (require 'exwm-randr)
     (setq exwm-randr-workspace-output-plist '(0 "VGA1"))
