@@ -229,6 +229,8 @@
     ;; Workspaces
     (exwm-input-set-key (kbd "s-]") #'exwm/workspace-next)
     (exwm-input-set-key (kbd "s-[") #'exwm/workspace-prev)
+    ;; Debugging
+    (exwm-input-set-key (kbd "s-d") #'exwm/toggle-debug-mode)
 
     (require 'exwm-randr)
     (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))

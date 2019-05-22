@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; Can be used to bind a key to jumping to an application, or alternatively starting it.  E.g.:
 ;;
 ;; (exwm/bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
@@ -124,3 +126,15 @@ Can show completions at point for COMMAND using helm or ivy"
         for ecname = (buffer-local-value 'exwm-class-name buffer)
         when ecname
         collect (list :buffer-name name :exwm-class-name ecname)))
+
+(let ((debug-modes-active nil))
+  (defun exwm/toggle-debug-mode ()
+   "Toggle exwm and xcb debug modes"
+   (interactive)
+   (setf debug-modes-active (not debug-modes-active))
+   (message (if debug-modes-active
+                "Enabling xcb and exwm debug modes."
+              "Disabling xcb and exqm debug modes."))
+   (let ((flag (if debug-modes-active 1 0)))
+     (exwm-debug flag)
+     (xcb:debug flag))))
