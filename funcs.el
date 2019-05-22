@@ -88,7 +88,7 @@
   "Togggles full screen for Emacs and X windows"
   (interactive)
   (if exwm--id
-      (if exwm--fullscreen
+      (if (exwm-layout--fullscreen-p)
           (exwm-reset)
         (exwm-layout-set-fullscreen))
     (spacemacs/toggle-maximize-buffer)))
