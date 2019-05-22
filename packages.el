@@ -231,7 +231,7 @@
     (exwm-input-set-key (kbd "s-[") #'exwm/workspace-prev)
 
     (require 'exwm-randr)
-    (setq exwm-randr-workspace-output-plist '(0 "VGA1"))
+    (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
     (exwm-randr-enable)
     ;; The following example demonstrates how to use simulation keys to mimic the
     ;; behavior of Emacs. The argument to `exwm-input-set-simulation-keys' is a
