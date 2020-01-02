@@ -154,17 +154,6 @@
     (push ?\i exwm-input-prefix-keys)
 
     ;; regular space leader keys in line mode
-    (defun exwm//convert-key-to-event (key)
-      "Converts something from (kbd ...) format to something suitable for
-    exwm-input-prefix-keys"
-      (let ((key (kbd key)))
-        (if (and (sequencep key)
-                (= (length key) 1))
-           (etypecase key
-             (string (string-to-char key))
-             (vector (elt key 0)))
-         (error "cannot convert to key event: %s" key))))
-
     ;; (push ?\  exwm-input-prefix-keys)
     (push (exwm//convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
     (push (exwm//convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)

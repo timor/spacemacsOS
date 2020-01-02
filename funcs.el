@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(require 'cl-lib)
+
 ;; Can be used to bind a key to jumping to an application, or alternatively starting it.  E.g.:
 ;;
 ;; (exwm/bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
@@ -126,6 +128,18 @@ Can show completions at point for COMMAND using helm or ivy"
         for ecname = (buffer-local-value 'exwm-class-name buffer)
         when ecname
         collect (list :buffer-name name :exwm-class-name ecname)))
+
+(defun exwm//convert-key-to-event (key)
+  "Converts something from (kbd ...) format to something suitable for
+    exwm-input-prefix-keys"
+  (let ((key (kbd key)))
+    (if (and (sequencep key)
+             (= (length key) 1))
+        (etypecase key
+          (string (string-to-char key))
+          (vector (elt key 0)))
+      (error "cannot convert to key event: %s" key))))
+
 
 (let ((debug-modes-active nil))
   (defun exwm/toggle-debug-mode ()
