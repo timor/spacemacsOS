@@ -131,7 +131,7 @@ value of =user-home-directory= for the started process.
  Pressing ~i~ from normal mode gets you into insert mode and
  simultaneously EXWM char mode, releasing all bindings except the ones starting with
  ~s~, or *Super*, effectively giving full control to the X window. To switch back
- to line mode, use ~s-r~.
+ to line mode, use ~s-ESC~.
 
 ** Implementation Strategy
 Generally, whenever a EXWM window is created, it is displayed in char mode, with
