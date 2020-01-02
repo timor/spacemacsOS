@@ -34,7 +34,7 @@
 (defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."
   (let ((buffer
-         (find window-class (buffer-list) :key (lambda(b) (cdr (assoc 'exwm-class-name (buffer-local-variables b)))) :test 'string-equal)))
+         (cl-find window-class (buffer-list) :key (lambda(b) (cdr (assoc 'exwm-class-name (buffer-local-variables b)))) :test 'string-equal)))
     (if buffer
         (exwm-workspace-switch-to-buffer buffer)
       (start-process-shell-command command nil command))))
@@ -60,7 +60,7 @@
          (name (concat part1 (or part2 "")))
          (maxlen 40))
     (exwm-workspace-rename-buffer (if (> (length name) maxlen)
-                                      (concat (subseq name 0 (- maxlen 3)) "...")
+                                      (concat (cl-subseq name 0 (- maxlen 3)) "...")
                                     name))))
 
 (defun exwm/workspace-next ()
