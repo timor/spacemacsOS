@@ -13,20 +13,16 @@
 ;; List of all packages to install and/or initialize. Built-in packages
 ;; which require an initialization must be listed explicitly in the list.
 (setq exwm-packages
-    '(cl-generic
-      ;; (xelb :location (recipe :fetcher github
-      ;;                         :repo "ch11ng/xelb")
-      ;;       :step pre)
-      ;; (exwm :location (recipe :fetcher github
-      ;;                         :repo "ch11ng/exwm")
-      ;;       :step pre)
-      (xelb :location elpa)
-      (exwm :location elpa)
-      ))
-
-(defun exwm/init-cl-generic ()
-  (use-package cl-generic
-    :demand))
+      '(
+        ;; (xelb :location (recipe :fetcher github
+        ;;                         :repo "ch11ng/xelb")
+        ;;       :step pre)
+        ;; (exwm :location (recipe :fetcher github
+        ;;                         :repo "ch11ng/exwm")
+        ;;       :step pre)
+        (xelb :location elpa)
+        (exwm :location elpa)
+        ))
 
 (defun exwm/init-xelb ()
   (use-package xelb))
