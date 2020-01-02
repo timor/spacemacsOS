@@ -52,8 +52,6 @@
     ;;      "Termite" #'exwm-launch-term))
     ;;   (shell-pop index))
     :config
-    ;; (when dotspacemacs-use-ido
-    ;;   (exwm-enable-ido-workaround))
 
     ;; make sure that displaying transient states gets the keyboard input.  Also
     ;; take care of going into line mode, and possibly switching back.
