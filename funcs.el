@@ -13,11 +13,11 @@
                          (interactive)
                          (exwm/switch-to-buffer-or-run ,window-class ,command))))
 
-(defun exwm//switch-to-line-mode ()
-  "Used as a hook to switch to line mode when transient mode starts."
-  (when (eq exwm--input-mode 'char-mode)
-    ;; (setq exwm--switch-to-char-after-transient (current-buffer))
-    (call-interactively 'exwm-input-grab-keyboard)))
+;; (defun exwm//switch-to-line-mode ()
+;;   "Used as a hook to switch to line mode when transient mode starts."
+;;   (when (eq exwm--input-mode 'char-mode)
+;;     ;; (setq exwm--switch-to-char-after-transient (current-buffer))
+;;     (call-interactively 'exwm-input-grab-keyboard)))
 
 (defun exwm//persp-mode-inhibit-p (frame)
   (frame-parameter frame 'unsplittable))
@@ -30,6 +30,18 @@
                            (start-process-shell-command ,command nil ,command)))
     (setq key     (pop bindings)
           command (pop bindings))))
+
+;; Simulate insert state by using line mode without passthrough
+(defun exwm/enter-insert-state ()
+  (interactive)
+  (setq exwm-input-line-mode-passthrough nil)
+  (evil-insert-state))
+
+;; Simulate normal state by using line mode with passthrough, i.e. forward all commands to emacs
+(defun exwm/enter-normal-state ()
+  (interactive)
+  (setq exwm-input-line-mode-passthrough t)
+  (evil-normal-state))
 
 (defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."

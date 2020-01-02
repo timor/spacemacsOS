@@ -51,17 +51,13 @@
     ;;   (shell-pop index))
     :config
 
-    ;; make sure that displaying transient states gets the keyboard input.  Also
-    ;; take care of going into line mode, and possibly switching back.
-    ;; borrowed from: https://github.com/abo-abo/hydra/issues/232
+    ;; make sure that displaying transient states gets the keyboard input.
+    ;; Borrowed from: https://github.com/abo-abo/hydra/issues/232
     (define-advice hydra-set-transient-map (:around (fun keymap on-exit &optional foreign-keys) exwm-passthrough)
-      (exwm//switch-to-line-mode)
+      (setq exwm-input-line-mode-passthrough t)
       (let ((on-exit (lexical-let ((on-exit on-exit))
                        (lambda ()
-                         ;; Here would be the place to reactivate input state if
-                         ;; it was active before hydra invocation.  This
-                         ;; probably only makes sense when you have a global
-                         ;; input state.
+                         (setq exwm-input-line-mode-passthrough nil)
                          (when on-exit (funcall on-exit))))))
         (funcall fun keymap on-exit foreign-keys)))
 
@@ -81,7 +77,7 @@
     (add-hook 'exwm-update-title-hook 'exwm/rename-buffer)
 
     ;; kick all exwm buffers into insert mode per default
-    (add-hook 'exwm-manage-finish-hook (lambda () (call-interactively #'exwm-input-release-keyboard)))
+    (add-hook 'exwm-manage-finish-hook 'exwm/enter-insert-state)
 
     (defvar exwm-workspace-switch-wrap t
       "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
@@ -96,7 +92,7 @@
     ;; `exwm-input-set-key' allows you to set a global key binding (available in
     ;; any case). Following are a few examples.
     ;; + We always need a way to go back to line-mode from char-mode
-    (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
+    (exwm-input-set-key (kbd "s-<escape>") 'exwm/enter-normal-state)
 
     (exwm-input-set-key (kbd "s-f") #'exwm/layout-toggle-fullscreen)
     (exwm-input-set-key (kbd "<s-tab>") #'exwm/jump-to-last-exwm)
@@ -133,47 +129,26 @@
                         (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
 
     ;; ensure that when char mode is left, state is restored to normal
-    (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
-                                                   (evil-normal-state)))
+    ;; (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
+    ;;                                                (evil-normal-state)))
     ;; ensure that when char mode is entered, input state is activated
-    (advice-add 'exwm-input-release-keyboard :after (lambda(&optional id)
-                                                      (evil-insert-state)))
+    ;; (advice-add 'exwm-input-release-keyboard :after (lambda(&optional id)
+    ;;                                                   (evil-insert-state)))
 
     ;; TODO: optionally inhibit switching to char mode or line mode, used during transient state
 
     ;; in normal state/line mode, use the familiar i key to switch to input state
-    (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
-    (push ?\i exwm-input-prefix-keys)
+    ;; (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
+    (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm/enter-insert-state)
 
-    ;; regular space leader keys in line mode
-    (push (exwm//convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
-    (push (exwm//convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
-    ;; introduce new universal leader: s-SPC
-    ;; buggy:
+    ;; buggy, does not show correct map prefixes
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
 
     ;; User s-q to close buffers
     (exwm-input-set-key (kbd "s-q") 'spacemacs/kill-this-buffer)
 
-    ;; Universal Get-me-outta-here
-    (push ?\C-g exwm-input-prefix-keys)
-    ;; Universal Arguments
-    (push ?\C-u exwm-input-prefix-keys)
-    (push ?\C-0 exwm-input-prefix-keys)
-    (push ?\C-1 exwm-input-prefix-keys)
-    (push ?\C-2 exwm-input-prefix-keys)
-    (push ?\C-3 exwm-input-prefix-keys)
-    (push ?\C-4 exwm-input-prefix-keys)
-    (push ?\C-5 exwm-input-prefix-keys)
-    (push ?\C-6 exwm-input-prefix-keys)
-    (push ?\C-7 exwm-input-prefix-keys)
-    (push ?\C-8 exwm-input-prefix-keys)
-    (push ?\C-9 exwm-input-prefix-keys)
-    ;; C-c, C-x are needed for copying and pasting
-    (delete ?\C-x exwm-input-prefix-keys)
-    (delete ?\C-c exwm-input-prefix-keys)
-    ;; We can use `M-m h' to access help
-    (delete ?\C-h exwm-input-prefix-keys)
+    ;; Don't override any keybindings in line-mode
+    (setq exwm-input-prefix-keys '())
 
     ;; introduce leader for running programs
     (spacemacs/declare-prefix "&" "exwm-run")
