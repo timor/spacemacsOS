@@ -63,6 +63,7 @@
                                       (concat (cl-subseq name 0 (- maxlen 3)) "...")
                                     name))))
 
+;; unused, untested
 (defun exwm/workspace-next ()
   "Switch to next exwm-workspaceective (to the right)."
   (interactive)

@@ -146,7 +146,6 @@
     (push ?\i exwm-input-prefix-keys)
 
     ;; regular space leader keys in line mode
-    ;; (push ?\  exwm-input-prefix-keys)
     (push (exwm//convert-key-to-event dotspacemacs-leader-key) exwm-input-prefix-keys)
     (push (exwm//convert-key-to-event dotspacemacs-emacs-leader-key) exwm-input-prefix-keys)
     ;; introduce new universal leader: s-SPC
