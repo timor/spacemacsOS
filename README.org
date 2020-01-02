@@ -9,9 +9,6 @@
     - [[#osx][OSX]]
   - [[#key-bindings][Key bindings]]
 - [[#window-behaviour-regarding-char-and-line-mode][Window behaviour regarding char and line mode]]
-  - [[#line-mode][Line mode]]
-  - [[#char-mode][Char mode]]
-  - [[#implementation-strategy][Implementation Strategy]]
 
 ** Description
 
@@ -75,34 +72,25 @@ always back up your data before attempting to try stuff like this.
 ** Key bindings
 
 As other window managers the ~s~ or *Super* key (Windows Key) is the one that
-is the prefix to every action. We'll use a lot of ~s~.
+is the prefix to every action. We'll use a lot of ~s~.  These commands work in
+both normal state and insert state.
 
-I have, for convenience, disabled the use of ~C-x~ and ~C-c~ in X windows,
-mainly because that's something we could use for Cutting and Copying text, but if
-you want you can enable it, this layer focuses on less Emacs-y bindings.
-
-| Key Binding           | Description                                    |
-|-----------------------+------------------------------------------------|
-| ~C-q~                 | Send next key pressed to the X window          |
-| ~C-g~                 | Universal GetMeOuttaHere Key from Emacs        |
-| ~C-u~                 | Universal Argument                             |
-| ~C-[0-9]~             | Universal Prefix for [0-9]                     |
-| ~SPC~                 | Spacemacs Leader Key (in line mode)            |
-| ~M-m~                 | Spacemacs Leader Key (in line mode)            |
-| ~s-SPC~               | Spacemacs Leader Key (in char and line mode)   |
-| ~i~                   | Switch to EXWM char mode                       |
-| ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [1 2 3 ... 8 9 10]         |
-| ~s-TAB~               | Switch to last workspace                       |
-| ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
-| ~s-ESC~               | Reset window state (gets you out of char mode) |
-| ~s-r~                 | App Launcher                                   |
-| ~s-pause~             | Lock Screen                                    |
-| ~s-u,U~               | Undo, Redo window configurations               |
-| ~s-b~                 | Select and switch to buffer                    |
-| ~s-q~                 | Close current buffer                           |
-| ~s-h,j,k,l~           | Switch to left,lower,upper,right window        |
-| ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right |
-| ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
+| Key Binding           | Description                                                           |
+|-----------------------+-----------------------------------------------------------------------|
+| ~i~                   | Switch from normal state to insert state, (similar to EXWM char mode) |
+| ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
+| ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
+| ~s-TAB~               | Switch to last workspace                                              |
+| ~s-w~                 | Workspace Switch Menu (kinda like micro-state)                        |
+| ~s-ESC~               | Switch to normal state                                                |
+| ~s-r~                 | App Launcher                                                          |
+| ~s-pause~             | Lock Screen                                                           |
+| ~s-u,U~               | Undo, Redo window configurations                                      |
+| ~s-b~                 | Select and switch to buffer                                           |
+| ~s-q~                 | Close current buffer                                                  |
+| ~s-h,j,k,l~           | Switch to left,lower,upper,right window                               |
+| ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right                        |
+| ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)                         |
 
 Since running programs is one of the more common task, some explicit support is
 provided for that via the leader key ~SPC &~.
@@ -117,65 +105,13 @@ value of =user-home-directory= for the started process.
 
 * Window behaviour regarding char and line mode
 
-** Line mode
- EXWM X windows come up in char mode per default. This means that all input is
- redirected to the application per default, and only the =s-= keybindings work.
- In line mode, only a select set of keys that work in other normal-mode buffers
- work in line-mode EXWM buffers, because X applications could use any valid key
- sequence for navigating, etc. Basically, only ~i~ and ~SPC~ are working as
- expected.
+  In stock Emacs, EXWM uses char mode and line mode to distinguish between using
+  the keyboard to control an application vs. using the keyboard to control the
+  application's *buffer*.  Since Spacemacs pursues a different concept regarding
+  keybindings SpacemacsOS handles this differently:
 
-** Char mode
-
- Pressing ~i~ from normal mode gets you into insert mode and
- simultaneously EXWM char mode, releasing all bindings except the ones starting with
- ~s~, or *Super*, effectively giving full control to the X window. To switch back
- to line mode, use ~s-ESC~.
-
-** Implementation Strategy
-Generally, whenever a EXWM window is created, it is displayed in char mode, with
-spacemacs being in insert state. When changing to insert-state in EXWM mode,
-char mode should be activated underneath. Likewise, when entering char mode,
-insert state should be activated. When exiting char mode, either by use of
-=exwm-reset= or =exwm-input-grab-keyboard=, the window should return to normal
-state.
-
-Switching to input-state/char mode:
-- bind "i" to switch to char mode
-- advice =exwm-input-release-keyboard= so that insert state is activated when
-  char mode is entered.
-- advice =exwm-input-grab-keyboard= so that normal state is activated when
-  control is given back to spacemacs.
-
-Handling transient states from line mode:
-Transient states are not captured by EXWM's intrinsic
-"currently-inputting-command" detection, and must be activated separately.
-- add hook to all transient state activation functions that enable EXWM input pass-through
-  behaviour
-- add hook to all transient state deactivation functions that disable EXWM input
-  pass-through
-
-Handling transient states from char mode:
-This is a bit more tricky, since char mode has no input-tunneling behavior.
-There is an EXWM-internal mechanism to temporarily enable line mode, but that is
-an implementation detail and not exposed in the interface.
-Currently, whenever a transient state is entered, a hook is executed which
-activates line mode and performs like above.
-
-To be predictable, the following behaviour should probably be implemented:
-- add hook to all transient state activation functions that store which mode (char/line) was
-  active during transient state activation
-- inhibit manual switching to char/line mode, as that would mess up input to
-  transient state
-- switch to line mode
-- proceed as described above
-- add hook such that whenever the buffer is re-entered, the previous mode is
-  restored.  This is necessary because transient state command execution could have exited
-  the window, and the next time the window is entered, the original mode should
-  be restored.  Alternatively, if that proves to be to messy, transient state activation
-  could always be made to change the state back to normal state.
-
-*Update:* The current handling could be more robust against Spacemacs' input
- state behavior.  At some point™, it will probably make sense to abandon char
- mode completely, and only use =exwm-input-line-mode-passthrough= to control
- keyboard focus (see discussion in https://github.com/ch11ng/exwm/issues/352).
+  - EXWM buffers are used in line mode, all local key bindings are removed per
+    default.  This corresponds to Spacemacs insert state.
+  - The command `exwm/enter-normal-state` (default binding ~s-ESC~) enters
+    EXWM's input passthrough mode, meaning that *all* key-presses are sent to
+    Spacemacs, and not the application.  This corresponds to Spacemacs normal state.
