@@ -9,3 +9,6 @@
 
 (defvar exwm--hide-tiling-modeline nil
   "Whether to hide modeline.")
+
+(defvar exwm-buffer-name-prefix "X:"
+  "A prefix to append to each buffer managed by exwm")

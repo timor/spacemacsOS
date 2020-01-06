@@ -69,7 +69,7 @@
   (let* ((part1 exwm-class-name)
          (part2 (when (not (string-equal exwm-class-name exwm-title))
                   (concat "/" exwm-title)))
-         (name (concat part1 (or part2 "")))
+         (name (concat exwm-buffer-name-prefix part1 (or part2 "")))
          (maxlen 40))
     (exwm-workspace-rename-buffer (if (> (length name) maxlen)
                                       (concat (cl-subseq name 0 (- maxlen 3)) "...")
