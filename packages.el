@@ -144,6 +144,12 @@
     ;; buggy, does not show correct map prefixes
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
 
+    ;; EXWM does not bypass exwm-mode-map keybindings in line-mode, so the
+    ;; default bindings are still mapped to C-c.  We remap that to C-s-c.
+
+    (define-key exwm-mode-map (kbd "C-s-c") (lookup-key exwm-mode-map (kbd "C-c")))
+    (define-key exwm-mode-map (kbd "C-c") nil)
+
     ;; User s-q to close buffers
     (exwm-input-set-key (kbd "s-q") 'spacemacs/kill-this-buffer)
 
