@@ -12,3 +12,12 @@
 
 (defvar exwm-buffer-name-prefix "X:"
   "A prefix to append to each buffer managed by exwm")
+
+(defvar exwm-enable-systray nil
+  "Whether to enable EXWM's bundled system tray implementation.")
+
+(defvar exwm-autostart-xdg-applications nil
+  "Whether to run $XDG_USER_HOME/autostart applications after initialization.")
+
+(defvar exwm-custom-init nil
+  "This can be set to a function that runs after all other EXWM initialization.")

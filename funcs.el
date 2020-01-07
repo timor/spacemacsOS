@@ -136,7 +136,7 @@ Can show completions at point for COMMAND using helm or ivy"
 
 (defun exwm/exwm-buffers-info ()
   "Helper, return information about open exwm windows"
-  (loop for buffer in (buffer-list)
+  (cl-loop for buffer in (buffer-list)
         for name = (buffer-name buffer)
         for ecname = (buffer-local-value 'exwm-class-name buffer)
         when ecname
@@ -165,3 +165,31 @@ Can show completions at point for COMMAND using helm or ivy"
    (let ((flag (if debug-modes-active 1 0)))
      (exwm-debug flag)
      (xcb:debug flag))))
+
+(defvar exwm//autostart-process-list nil
+  "List of processes run during autostart.")
+
+(defun exwm/autostart-process (name command)
+  "Can be used during initialization to run COMMAND as a process
+  with NAME and add it to the list of autostarted processes."
+  (push (start-process-shell-command name nil command)
+        exwm//autostart-process-list))
+
+(defun exwm//autostart-desktop-applications ()
+  "Run XDG autostart applications."
+  (unless exwm//autostart-process-list
+    (let ((config-dir (expand-file-name "autostart/" (xdg-config-home))))
+      (when (file-accessible-directory-p config-dir)
+        (let ((desktop-files (directory-files config-dir t "[^.].*")))
+          (cl-loop for f in desktop-files
+                when (file-readable-p f)
+                for xdg = (xdg-desktop-read-file f)
+                for name = (gethash "Name" xdg)
+                for cmd = (gethash "Exec" xdg)
+                do (exwm/autostart-process name cmd)
+                ))))))
+
+(defun exwm//kill-autostart-processes ()
+  (cl-loop for p in exwm//autostart-process-list do
+        (if (process-live-p p) (kill-process p)))
+  (setq exwm//autostart-process-list nil))

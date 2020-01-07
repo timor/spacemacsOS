@@ -190,6 +190,13 @@
     (require 'exwm-randr)
     (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
     (exwm-randr-enable)
+    (when exwm-enable-systray
+      (require 'exwm-systemtray)
+      (exwm-systemtray-enable))
+    (when exwm-autostart-xdg-applications
+      (exwm//autostart-desktop-applications))
+    (when exwm-custom-init
+      (add-hook 'exwm-init-hook exwm-custom-init t))
     ;; The following example demonstrates how to use simulation keys to mimic the
     ;; behavior of Emacs. The argument to `exwm-input-set-simulation-keys' is a
     ;; list of cons cells (SRC . DEST), where SRC is the key sequence you press and
