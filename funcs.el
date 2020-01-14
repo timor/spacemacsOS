@@ -43,6 +43,12 @@
   (setq exwm-input-line-mode-passthrough t)
   (evil-normal-state))
 
+(defun exwm/escape ()
+  "Switch to normal state, and cancel possible fullscreen layout."
+  (interactive)
+  (exwm/enter-normal-state)
+  (exwm-layout-unset-fullscreen))
+
 (defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."
   (let ((buffer
@@ -165,3 +171,9 @@ Can show completions at point for COMMAND using helm or ivy"
    (let ((flag (if debug-modes-active 1 0)))
      (exwm-debug flag)
      (xcb:debug flag))))
+
+(let ((sm-keyvec (elt (edmacro-parse-keys dotspacemacs-leader-key t) 0))
+      (our-keyvec (elt (edmacro-parse-keys "s-SPC" t) 0)))
+  (defun exwm//which-key-transform-filter (oldargs)
+    (destructuring-bind (key-seq &rest rest) oldargs
+      (list* (cl-substitute sm-keyvec our-keyvec key-seq) rest))))
