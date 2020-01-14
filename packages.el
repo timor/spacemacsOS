@@ -37,18 +37,6 @@
     (when exwm--hide-tiling-modeline
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
     (setq exwm-input-line-mode-passthrough t)
-    ;; Trying to make shell-pop with a real terminal :P
-    ;; (defun exwm-launch-term ()
-    ;;   (start-process-shell-command exwm--terminal-command
-    ;;                                nil exwm--terminal-command))
-    ;; (defun shell-pop-exwm-term (index)
-    ;;   (interactive "P")
-    ;;   (require 'shell-pop)
-    ;;   (shell-pop--set-shell-type
-    ;;    'shell-pop-shell-type
-    ;;    '("exwm-term"
-    ;;      "Termite" #'exwm-launch-term))
-    ;;   (shell-pop index))
     :config
 
     ;; make sure that displaying transient states gets the keyboard input.
@@ -89,14 +77,14 @@
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
       (setq exwm-toggle-workspace exwm-workspace-current-index))
 
-    ;; `exwm-input-set-key' allows you to set a global key binding (available in
-    ;; any case). Following are a few examples.
-    ;; + We always need a way to go back to line-mode from char-mode
+    ;; `exwm-input-set-key' sets global key bindings, independent of char mode, line mode, and line mode passthru
+
+    ;; + We always need a way to get to normal state if we are in insert state.
     (exwm-input-set-key (kbd "s-<escape>") 'exwm/enter-normal-state)
 
     (exwm-input-set-key (kbd "s-f") #'exwm/layout-toggle-fullscreen)
     (exwm-input-set-key (kbd "<s-tab>") #'exwm/jump-to-last-exwm)
-    ;; + Bind a key to switch workspace interactively
+    ;; + Bind a key to switch workspace interactively.
     (exwm-input-set-key (kbd "s-w") 'exwm-workspace-switch)
     ;; + Set shortcuts to switch to a certain workspace.
     (exwm-input-set-key (kbd "s-1")
@@ -161,11 +149,6 @@
     (spacemacs/set-leader-keys "&s" 'exwm/launch-split-below)
     (spacemacs/set-leader-keys "&v" 'exwm/launch-split-right)
 
-    ;; Preserve the habit
-    ;; (exwm-input-set-key (kbd "s-:") 'helm-M-x)
-    ;; (exwm-input-set-key (kbd "s-;") 'evil-ex)
-    ;; Shell (not a real one for the moment)
-    ;; (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
     ;; Undo window configurations
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
     (exwm-input-set-key (kbd "s-U") #'winner-redo)
