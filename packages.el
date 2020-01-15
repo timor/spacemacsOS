@@ -209,6 +209,9 @@
     (require 'exwm-randr)
     (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
     (exwm-randr-enable)
+    (when (and exwm--install-logind-lock-handler
+               exwm--locking-command)
+      (add-hook 'exwm-init-hook exwm//install-logind-lock-handler))
     ;; The following example demonstrates how to use simulation keys to mimic the
     ;; behavior of Emacs. The argument to `exwm-input-set-simulation-keys' is a
     ;; list of cons cells (SRC . DEST), where SRC is the key sequence you press and

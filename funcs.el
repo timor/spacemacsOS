@@ -182,11 +182,12 @@ Can show completions at point for COMMAND using helm or ivy"
 ;; We should be able to talk to loginctl to handle the current session, so we
 ;; can react to the lock signal.
 
-(defun exwm/install-logind-lock-handler ()
+(defun exwm//install-logind-lock-handler ()
   (let ((session (dbus-call-method :system "org.freedesktop.login1" "/org/freedesktop/login1"
                                    "org.freedesktop.login1.Manager" "GetSessionByPID" (emacs-pid))))
     (dbus-register-signal :system "org.freedesktop.login1" session
                           "org.freedesktop.login1.Session" "Lock"
                           (lambda()
-                            (message "Lock signal received"))))
+                            (message "Lock signal received")
+                            (start-process-shell-command "session-lock" nil exwm--locking-command))))
   )
