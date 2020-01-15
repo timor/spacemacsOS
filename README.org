@@ -69,7 +69,7 @@ details.
 If you are an OSX user, please report back on whether this works with xQuartz,
 always back up your data before attempting to try stuff like this.
 
-** Key bindings
+** TODO Key bindings
 
 As other window managers the ~s~ or *Super* key (Windows Key) is the one that
 is the prefix to every action. We'll use a lot of ~s~.  These commands work in
@@ -77,12 +77,12 @@ both normal state and insert state.
 
 | Key Binding           | Description                                                           |
 |-----------------------+-----------------------------------------------------------------------|
-| ~i~                   | Switch from normal state to insert state, (similar to EXWM char mode) |
+| ~i,<down-mouse-X>~    | Switch from normal state to insert state, (similar to EXWM char mode) |
 | ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
 | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
 | ~s-TAB~               | Switch to last workspace                                              |
 | ~s-w~                 | Workspace Switch Menu (kinda like micro-state)                        |
-| ~s-ESC~               | Switch to normal state                                                |
+| ~s-ESC~               | Switch to normal state, cancel fullscreen                             |
 | ~s-r~                 | App Launcher                                                          |
 | ~s-pause~             | Lock Screen                                                           |
 | ~s-u,U~               | Undo, Redo window configurations                                      |
@@ -102,6 +102,19 @@ value of =user-home-directory= for the started process.
 |-------------+---------------------------------------------------------------------------|
 | ~SPC & s~   | Ask for program to run in separate window below current window            |
 | ~SPC & v~   | Ask for program to run in separate window to the right of current window. |
+
+*This layer overrides the leader bindings on* ~SPC F~, which are tricky with EXWM
+anyways, and replaces them with the following bindings.
+
+| Key Binding | Description                            |
+|-------------+----------------------------------------|
+| ~SPC F r~   | Reset state of current window          |
+| ~SPC F h~   | Hide floating window                   |
+| ~SPC F w w~ | Prompt for workspace and switch to it  |
+| ~SPC F w a~ | Add new workspace                      |
+| ~SPC F w d~ | Delete current workspace               |
+| ~SPC F w m~ | Move window to different workspace     |
+| ~SPC F w s~ | Interchange position of two workspaces |
 
 * Window behaviour regarding char and line mode
 
