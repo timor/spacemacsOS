@@ -157,6 +157,8 @@
     ;; in normal state/line mode, use the familiar i key to switch to input state
     ;; (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
     (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm/enter-insert-state)
+    (dolist (k '("<down-mouse-1>" "<down-mouse-2>" "<down-mouse-3>"))
+      (evil-define-key 'normal exwm-mode-map (kbd k) 'exwm/enter-insert-state))
 
     ;; Define super-space as default leader key.
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
