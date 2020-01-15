@@ -4,6 +4,9 @@
 (defvar exwm--locking-command "lock"
   "Command to run when locking session")
 
+(defvar exwm--install-logind-lock-handler nil
+  "If this is non-nil and `exwm--locking-command' is set, register a D-BUS handler on the session lock signal.")
+
 (defvar exwm-app-launcher--prompt "$ "
   "Prompt for the EXWM application launcher")
 
