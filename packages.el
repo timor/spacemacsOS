@@ -37,18 +37,38 @@
     (when exwm--hide-tiling-modeline
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
     (setq exwm-input-line-mode-passthrough t)
-    ;; Trying to make shell-pop with a real terminal :P
-    ;; (defun exwm-launch-term ()
-    ;;   (start-process-shell-command exwm--terminal-command
-    ;;                                nil exwm--terminal-command))
-    ;; (defun shell-pop-exwm-term (index)
-    ;;   (interactive "P")
-    ;;   (require 'shell-pop)
-    ;;   (shell-pop--set-shell-type
-    ;;    'shell-pop-shell-type
-    ;;    '("exwm-term"
-    ;;      "Termite" #'exwm-launch-term))
-    ;;   (shell-pop index))
+
+    ;; EXWM is quite particular about handling frames, so we override the default
+    ;; ~SPC F~ Frame leader mappings with EXWM workspace-specific stuff.
+    (define-key spacemacs-default-map (kbd "F") nil)
+
+    ;; Keybindings for ~s-SPC F~ Frame handling Menu
+    (spacemacs/declare-prefix "F" "EXWM")
+    (spacemacs/declare-prefix "Fw" "workspace")
+    (spacemacs/declare-prefix "Fm" "minibuffer")
+    (spacemacs/set-leader-keys
+      "Fr" 'exwm-reset
+      "Fh" 'exwm-floating-hide
+      "Fw." 'exwm-workspace-switch
+      "Fwa" 'exwm-workspace-add
+      "Fwd" 'exwm-workspace-delete
+      "Fwm" 'exwm-workspace-move
+      "Fws" 'exwm-workspace-swap
+      "Fmd" 'exwm-workspace-detach-minibuffer
+      "Fma" 'exwm-workspace-attach-minibuffer
+      )
+
+    ;; introduce leader for running programs
+    (spacemacs/declare-prefix "&" "exwm-run")
+    (spacemacs/set-leader-keys "&s" 'exwm/launch-split-below)
+    (spacemacs/set-leader-keys "&v" 'exwm/launch-split-right)
+
+    ;; Keybindings for ~SPC m~
+    (spacemacs/set-leader-keys-for-major-mode 'exwm-mode
+      "f" 'exwm-floating-toggle-floating
+      "m" 'exwm-workspace-move-window
+      "F" 'exwm-layout-toggle-fullscreen
+      )
     :config
 
     ;; make sure that displaying transient states gets the keyboard input.
@@ -89,15 +109,12 @@
     (defadvice exwm-workspace-switch (before save-toggle-workspace activate)
       (setq exwm-toggle-workspace exwm-workspace-current-index))
 
-    ;; `exwm-input-set-key' allows you to set a global key binding (available in
-    ;; any case). Following are a few examples.
-    ;; + We always need a way to go back to line-mode from char-mode
-    (exwm-input-set-key (kbd "s-<escape>") 'exwm/enter-normal-state)
+    ;; `exwm-input-set-key' sets global key bindings, independent of char mode, line mode, and line mode passthru
 
-    (exwm-input-set-key (kbd "s-f") #'exwm/layout-toggle-fullscreen)
+    ;; + We always need a way to get to normal state if we are in insert state.
+    (exwm-input-set-key (kbd "s-<escape>") 'exwm/escape)
+
     (exwm-input-set-key (kbd "<s-tab>") #'exwm/jump-to-last-exwm)
-    ;; + Bind a key to switch workspace interactively
-    (exwm-input-set-key (kbd "s-w") 'exwm-workspace-switch)
     ;; + Set shortcuts to switch to a certain workspace.
     (exwm-input-set-key (kbd "s-1")
                         (lambda () (interactive) (exwm-workspace-switch 0)))
@@ -141,8 +158,12 @@
     ;; (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
     (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm/enter-insert-state)
 
-    ;; buggy, does not show correct map prefixes
+    ;; Define super-space as default leader key.
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
+    (with-eval-after-load 'which-key
+     ;; Hack which-key to translate our prefix into the original leader key prefix
+      (define-advice which-key--get-bindings (:filter-args (oldargs) exwm-translate-leader-key)
+        (exwm//which-key-transform-filter oldargs)))
 
     ;; EXWM does not bypass exwm-mode-map keybindings in line-mode, so the
     ;; default bindings are still mapped to C-c.  We remap that to C-s-c.
@@ -156,16 +177,6 @@
     ;; Don't override any keybindings in line-mode
     (setq exwm-input-prefix-keys '())
 
-    ;; introduce leader for running programs
-    (spacemacs/declare-prefix "&" "exwm-run")
-    (spacemacs/set-leader-keys "&s" 'exwm/launch-split-below)
-    (spacemacs/set-leader-keys "&v" 'exwm/launch-split-right)
-
-    ;; Preserve the habit
-    ;; (exwm-input-set-key (kbd "s-:") 'helm-M-x)
-    ;; (exwm-input-set-key (kbd "s-;") 'evil-ex)
-    ;; Shell (not a real one for the moment)
-    ;; (exwm-input-set-key (kbd "C-'") #'spacemacs/default-pop-shell)
     ;; Undo window configurations
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
     (exwm-input-set-key (kbd "s-U") #'winner-redo)
