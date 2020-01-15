@@ -205,3 +205,16 @@ Can show completions at point for COMMAND using helm or ivy"
   (defun exwm//which-key-transform-filter (oldargs)
     (destructuring-bind (key-seq &rest rest) oldargs
       (list* (cl-substitute sm-keyvec our-keyvec key-seq) rest))))
+
+;; D-Bus locking
+;; We should be able to talk to loginctl to handle the current session, so we
+;; can react to the lock signal.
+
+(defun exwm/install-logind-lock-handler ()
+  (let ((session (dbus-call-method :system "org.freedesktop.login1" "/org/freedesktop/login1"
+                                   "org.freedesktop.login1.Manager" "GetSessionByPID" (emacs-pid))))
+    (dbus-register-signal :system "org.freedesktop.login1" session
+                          "org.freedesktop.login1.Session" "Lock"
+                          (lambda()
+                            (message "Lock signal received"))))
+  )

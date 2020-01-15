@@ -49,7 +49,7 @@
     (spacemacs/set-leader-keys
       "Fr" 'exwm-reset
       "Fh" 'exwm-floating-hide
-      "Fw." 'exwm-workspace-switch
+      "Fww" 'exwm-workspace-switch
       "Fwa" 'exwm-workspace-add
       "Fwd" 'exwm-workspace-delete
       "Fwm" 'exwm-workspace-move
