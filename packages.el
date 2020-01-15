@@ -41,6 +41,7 @@
     ;; EXWM is quite particular about handling frames, so we override the default
     ;; ~SPC F~ Frame leader mappings with EXWM workspace-specific stuff.
     (define-key spacemacs-default-map (kbd "F") nil)
+    (define-key spacemacs-cmds (kbd "F") nil)
 
     ;; Keybindings for ~s-SPC F~ Frame handling Menu
     (spacemacs/declare-prefix "F" "EXWM")
