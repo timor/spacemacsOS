@@ -216,6 +216,9 @@
       (exwm//autostart-desktop-applications))
     (when exwm-custom-init
       (add-hook 'exwm-init-hook exwm-custom-init t))
+    (when (and exwm--install-logind-lock-handler
+               exwm--locking-command)
+      (add-hook 'exwm-init-hook exwm//install-logind-lock-handler))
     ;; The following example demonstrates how to use simulation keys to mimic the
     ;; behavior of Emacs. The argument to `exwm-input-set-simulation-keys' is a
     ;; list of cons cells (SRC . DEST), where SRC is the key sequence you press and
