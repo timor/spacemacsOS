@@ -83,7 +83,7 @@
 
 ;; unused, untested
 (defun exwm/workspace-next ()
-  "Switch to next exwm-workspaceective (to the right)."
+  "Switch to next exwm-workspace (to the right)."
   (interactive)
   (let* ((only-workspace? (equal exwm-workspace-number 1))
          (overflow? (= exwm-workspace-current-index
@@ -96,7 +96,7 @@
      (t (exwm-workspace-switch  (1+ exwm-workspace-current-index))))))
 
 (defun exwm/workspace-prev ()
-  "Switch to next exwm-workspaceective (to the right)."
+  "Switch to next exwm-workspace (to the right)."
   (interactive)
   (let* ((only-workspace? (equal exwm-workspace-number 1))
          (overflow? (= exwm-workspace-current-index 0)))
@@ -217,5 +217,5 @@ Can show completions at point for COMMAND using helm or ivy"
                           "org.freedesktop.login1.Session" "Lock"
                           (lambda()
                             (message "Lock signal received")
-                            (start-process-shell-command "session-lock" nil exwm--locking-command))))
+                            (start-process-shell-command "session-lock" nil exwm-locking-command))))
   )

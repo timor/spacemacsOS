@@ -59,7 +59,7 @@
     (setq use-dialog-box nil)
     ;; You may want Emacs to show you the time
     (display-time-mode t)
-    (when exwm--hide-tiling-modeline
+    (when exwm-hide-tiling-modeline
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
     (setq exwm-input-line-mode-passthrough t)
 
@@ -105,9 +105,6 @@
     ;; kick all exwm buffers into insert mode per default
     (add-hook 'exwm-manage-finish-hook 'exwm/enter-insert-state)
 
-    (defvar exwm-workspace-switch-wrap t
-      "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
-
     ;; Quick swtiching between workspaces
     (defvar exwm-toggle-workspace 0
       "Previously selected workspace. Used with `exwm/jump-to-last-exwm'.")
@@ -149,7 +146,7 @@
     ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
     ;;   is a more feature-rich alternative.
     (exwm-input-set-key (kbd "<s-pause>")
-                        (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
+                        (lambda () (interactive) (start-process-shell-command "lock" nil exwm-locking-command)))
 
     ;; ensure that when char mode is left, state is restored to normal
     ;; (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
@@ -218,8 +215,8 @@
     (when exwm-enable-systray
       (require 'exwm-systemtray)
       (exwm-systemtray-enable))
-    (when (and exwm--install-logind-lock-handler
-               exwm--locking-command)
+    (when (and exwm-install-logind-lock-handler
+               exwm-locking-command)
       (add-hook 'exwm-init-hook 'exwm//install-logind-lock-handler))
     (when exwm-autostart-xdg-applications
       (add-hook 'exwm-init-hook 'exwm//autostart-desktop-applications t))
