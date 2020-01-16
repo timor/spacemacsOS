@@ -50,7 +50,7 @@ To use this contribution,
 
 #+begin_src emacs-lisp
   ;; (setq-default dotspacemacs-configuration-layers ...
-  '(exwm :variables
+  (exwm :variables
          exwm-enable-systray t
          exwm-autostart-xdg-applications t
          exwm-locking-command "i3lock -n"
