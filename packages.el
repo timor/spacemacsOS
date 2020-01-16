@@ -166,7 +166,8 @@
     ;; Define super-space as default leader key.
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
     (with-eval-after-load 'which-key
-     ;; Hack which-key to translate our prefix into the original leader key prefix
+     ;; Hack which-key to translate our prefix into the original leader key
+     ;; prefix, otherwise all nested keymaps are shown as 'prefix'
       (define-advice which-key--get-bindings (:filter-args (oldargs) exwm-translate-leader-key)
         (exwm//which-key-transform-filter oldargs)))
 

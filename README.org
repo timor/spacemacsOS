@@ -9,8 +9,9 @@
     - [[#osx][OSX]]
   - [[#features][Features]]
   - [[#key-bindings][Key bindings]]
+    - [[#normal-state-bindings][Normal State Bindings]]
+      - [[#major-mode-bindings][Major Mode Bindings]]
     - [[#global-bindings][Global Bindings]]
-    - [[#major-mode-bindings][Major Mode Bindings]]
 - [[#window-behaviour-regarding-char-and-line-mode][Window behaviour regarding char and line mode]]
 - [[#known-limitations][Known Limitations]]
 
@@ -74,28 +75,49 @@ If you are an OSX user, please report back on whether this works with xQuartz,
 always back up your data before attempting to try stuff like this.
 
 ** Features
-Specific support for optional EXWM features:
+Configurable support for optional EXWM features:
 
 - System Tray
 
 The following features are preconfigured/provided on top of EXWM:
 
-- EXWM buffer names are prefixed with a configurable prefix (default "X:"), to
-  aid selection filtering in ivy/helm.
+- EXWM buffer names are prefixed with a configurable prefix (default: ~X:~), to
+  aid buffer selection in ivy/helm.
+- Limited Support for XDG autostart applications in =~/.config/autostart~= (does
+  not support any advanced ~.desktop~ file entries, does not take into account
+  system-wide ~share/applications/autostart~ files)
 - Session locking with specified lock command
 - Support for D-Bus based locking (e.g. ~loginctl lock-session~)
 
 ** Key bindings
 
-As other window managers the ~s~ or *Super* key (Windows Key) is the one that
-is the prefix to every action. We'll use a lot of ~s~.  These commands work in
-both normal state and insert state.
+*** Normal State Bindings
+
+ | Key Binding        | Description                                                           |
+ |--------------------+-----------------------------------------------------------------------|
+ | ~i,<down-mouse-X>~ | Switch from normal state to insert state, (similar to EXWM char mode) |
+
+**** Major Mode Bindings
+
+  These bindings are accessible via the major mode leader keys when EXWM buffers
+  are focused, but only in normal state.  This means that you usually have to get
+  out of insert state with ~s-ESC~ first.
+
+ | Key Binding | Description                                |
+ |-------------+--------------------------------------------|
+ | ~SPC m f~ | Toggle floating/tiling for current window  |
+ | ~SPC m w~     | Move current window to different workspace |
+ | ~SPC m F~     | Toggle fullscreen                          |
 
 *** Global Bindings
 
+  As other window managers the ~s~ or *Super* key (Windows Key) is the one that
+  is the prefix to every action. We'll use a lot of ~s~.  These commands work in
+  both normal state and insert state.
+
+
  | Key Binding           | Description                                                           |
  |-----------------------+-----------------------------------------------------------------------|
- | ~i,<down-mouse-X>~    | Switch from normal state to insert state, (similar to EXWM char mode) |
  | ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
  | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
  | ~s-[~, ~s-]~          | Switch to previous/next workspace                                     |
@@ -135,16 +157,10 @@ both normal state and insert state.
  | ~SPC F w w~ | Prompt for workspace and switch to it      |
  | ~SPC F w a~ | Add new workspace                          |
  | ~SPC F w d~ | Delete current workspace                   |
- | ~SPC F w m~ | Move window to different workspace         |
+ | ~SPC F w m~ | Move Workspace to different position       |
  | ~SPC F w s~ | Interchange position of two workspaces     |
  | ~SPC F m d~ | Detach Minibuffer (for autohide enabled)   |
  | ~SPC F m a~ | Attach Minibuffer (for autohide enabled)   |
-
-*** Major Mode Bindings
-
- These bindings are accessible via the major mode leader keys when EXWM buffers
- are focused, but only in normal state.  This means that you usually have to get
- out of insert state with ~s-ESC~ first.
 
 * Window behaviour regarding char and line mode
 
@@ -160,6 +176,8 @@ both normal state and insert state.
     Spacemacs, and not the application.  This corresponds to Spacemacs normal state.
 
 * Known Limitations
+  (3rd party research welcome...)
+
 - ~s-SPC m~ does not work for accessing major mode bindings
 - When clicking into a buffer in normal state to press something, it has to be
   clicked twice, because the first click only gets you into insert state
@@ -168,3 +186,7 @@ both normal state and insert state.
   for the return of an interactive graphical password entry dialog.  To get it
   to respond again, switch to a text console and send the SIGUSR2 signal
   (e.g. =pkill -USR2 emacs=).
+- Under certain conditions, an EXWM buffer may end up in a state where Emacs
+  wants to insert into the underlying buffer, and pressing ~i~ does not get you
+  into insert state.  If that happens, use ~s-ESC~ to get to line mode/normal
+  state, where you should be able to use ~i~ to to get into insert state again.
