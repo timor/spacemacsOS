@@ -148,15 +148,6 @@
     (exwm-input-set-key (kbd "<s-pause>")
                         (lambda () (interactive) (start-process-shell-command "lock" nil exwm-locking-command)))
 
-    ;; ensure that when char mode is left, state is restored to normal
-    ;; (advice-add 'exwm-input-grab-keyboard :after (lambda (&optional id)
-    ;;                                                (evil-normal-state)))
-    ;; ensure that when char mode is entered, input state is activated
-    ;; (advice-add 'exwm-input-release-keyboard :after (lambda(&optional id)
-    ;;                                                   (evil-insert-state)))
-
-    ;; TODO: optionally inhibit switching to char mode or line mode, used during transient state
-
     ;; in normal state/line mode, use the familiar i key to switch to input state
     ;; (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm-input-release-keyboard)
     (evil-define-key 'normal exwm-mode-map (kbd "i") 'exwm/enter-insert-state)
@@ -224,20 +215,4 @@
     (add-hook 'exwm-init-hook 'exwm//install-frame-keybindings t)
     (when exwm-custom-init
       (add-hook 'exwm-init-hook exwm-custom-init t))
-    ;; The following example demonstrates how to use simulation keys to mimic the
-    ;; behavior of Emacs. The argument to `exwm-input-set-simulation-keys' is a
-    ;; list of cons cells (SRC . DEST), where SRC is the key sequence you press and
-    ;; DEST is what EXWM actually sends to application. Note that SRC must be a key
-    ;; sequence (of type vector or string), while DEST can also be a single key.
-
-    ;; (exwm-input-set-simulation-keys
-    ;;  '(([?\C-b] . left)
-    ;;    ([?\C-f] . right)
-    ;;    ([?\C-p] . up)
-    ;;    ([?\C-n] . down)
-    ;;    ([?\M-v] . prior)
-    ;;    ))
-
-    ;; Do not forget to enable EXWM. It will start by itself when things are ready.
-    ;; (exwm-enable)
     ))
