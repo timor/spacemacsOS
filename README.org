@@ -7,8 +7,12 @@
     - [[#note-about-display-managers][Note about Display Managers]]
     - [[#not-having-display-managers][Not having Display Managers]]
     - [[#osx][OSX]]
+  - [[#features][Features]]
   - [[#key-bindings][Key bindings]]
+    - [[#global-bindings][Global Bindings]]
+    - [[#major-mode-bindings][Major Mode Bindings]]
 - [[#window-behaviour-regarding-char-and-line-mode][Window behaviour regarding char and line mode]]
+- [[#known-limitations][Known Limitations]]
 
 ** Description
 
@@ -69,52 +73,78 @@ details.
 If you are an OSX user, please report back on whether this works with xQuartz,
 always back up your data before attempting to try stuff like this.
 
-** TODO Key bindings
+** Features
+Specific support for optional EXWM features:
+
+- System Tray
+
+The following features are preconfigured/provided on top of EXWM:
+
+- EXWM buffer names are prefixed with a configurable prefix (default "X:"), to
+  aid selection filtering in ivy/helm.
+- Session locking with specified lock command
+- Support for D-Bus based locking (e.g. ~loginctl lock-session~)
+
+** Key bindings
 
 As other window managers the ~s~ or *Super* key (Windows Key) is the one that
 is the prefix to every action. We'll use a lot of ~s~.  These commands work in
 both normal state and insert state.
 
-| Key Binding           | Description                                                           |
-|-----------------------+-----------------------------------------------------------------------|
-| ~i,<down-mouse-X>~    | Switch from normal state to insert state, (similar to EXWM char mode) |
-| ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
-| ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
-| ~s-TAB~               | Switch to last workspace                                              |
-| ~s-w~                 | Workspace Switch Menu (kinda like micro-state)                        |
-| ~s-ESC~               | Switch to normal state, cancel fullscreen                             |
-| ~s-r~                 | App Launcher                                                          |
-| ~s-pause~             | Lock Screen                                                           |
-| ~s-u,U~               | Undo, Redo window configurations                                      |
-| ~s-b~                 | Select and switch to buffer                                           |
-| ~s-q~                 | Close current buffer                                                  |
-| ~s-h,j,k,l~           | Switch to left,lower,upper,right window                               |
-| ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right                        |
-| ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)                         |
+*** Global Bindings
 
-Since running programs is one of the more common task, some explicit support is
-provided for that via the leader key ~SPC &~.
+ | Key Binding           | Description                                                           |
+ |-----------------------+-----------------------------------------------------------------------|
+ | ~i,<down-mouse-X>~    | Switch from normal state to insert state, (similar to EXWM char mode) |
+ | ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
+ | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
+ | ~s-[~, ~s-]~          | Switch to previous/next workspace                                     |
+ | ~s-TAB~               | Switch to last workspace                                              |
+ | ~s-w~                 | Workspace Switch Menu (kinda like micro-state)                        |
+ | ~s-ESC~               | Switch to normal state, cancel fullscreen                             |
+ | ~s-r~                 | App Launcher                                                          |
+ | ~s-pause~             | Lock Screen                                                           |
+ | ~s-<return>~          | Open (X-)Terminal                                                     |
+ | ~s-u,U~               | Undo, Redo window configurations                                      |
+ | ~s-b~                 | Select and switch to buffer                                           |
+ | ~s-q~                 | Close current buffer                                                  |
+ | ~s-h,j,k,l~           | Switch to left,lower,upper,right window                               |
+ | ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right                        |
+ | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)                         |
+ | ~s-m~                 | Toggle maximized buffer                                               |
+ | ~s-d~                 | Toggle exwm debug mode (for development)                              |
 
-For these commands as well as for ~s-r~ the working directory is set to the
-value of =user-home-directory= for the started process.
+ Since running programs is one of the more common task, some explicit support is
+ provided for that via the leader key ~SPC &~.
 
-| Key Binding | Description                                                               |
-|-------------+---------------------------------------------------------------------------|
-| ~SPC & s~   | Ask for program to run in separate window below current window            |
-| ~SPC & v~   | Ask for program to run in separate window to the right of current window. |
+ For these commands as well as for ~s-r~ the working directory is set to the
+ value of =user-home-directory= for the started process.
 
-*This layer overrides the leader bindings on* ~SPC F~, which are tricky with EXWM
-anyways, and replaces them with the following bindings.
+ | Key Binding | Description                                                               |
+ |-------------+---------------------------------------------------------------------------|
+ | ~SPC & s~   | Ask for program to run in separate window below current window            |
+ | ~SPC & v~   | Ask for program to run in separate window to the right of current window. |
 
-| Key Binding | Description                            |
-|-------------+----------------------------------------|
-| ~SPC F r~   | Reset state of current window          |
-| ~SPC F h~   | Hide floating window                   |
-| ~SPC F w w~ | Prompt for workspace and switch to it  |
-| ~SPC F w a~ | Add new workspace                      |
-| ~SPC F w d~ | Delete current workspace               |
-| ~SPC F w m~ | Move window to different workspace     |
-| ~SPC F w s~ | Interchange position of two workspaces |
+ *This layer overrides the leader bindings on* ~SPC F~, which are tricky with EXWM
+ anyways, and replaces them with the following bindings.
+
+ | Key Binding | Description                                |
+ |-------------+--------------------------------------------|
+ | ~SPC F r~   | Reset state of current window (exwm-reset) |
+ | ~SPC F h~   | Hide floating window                       |
+ | ~SPC F w w~ | Prompt for workspace and switch to it      |
+ | ~SPC F w a~ | Add new workspace                          |
+ | ~SPC F w d~ | Delete current workspace                   |
+ | ~SPC F w m~ | Move window to different workspace         |
+ | ~SPC F w s~ | Interchange position of two workspaces     |
+ | ~SPC F m d~ | Detach Minibuffer (for autohide enabled)   |
+ | ~SPC F m a~ | Attach Minibuffer (for autohide enabled)   |
+
+*** Major Mode Bindings
+
+ These bindings are accessible via the major mode leader keys when EXWM buffers
+ are focused, but only in normal state.  This means that you usually have to get
+ out of insert state with ~s-ESC~ first.
 
 * Window behaviour regarding char and line mode
 
@@ -125,6 +155,16 @@ anyways, and replaces them with the following bindings.
 
   - EXWM buffers are used in line mode, all local key bindings are removed per
     default.  This corresponds to Spacemacs insert state.
-  - The command `exwm/enter-normal-state` (default binding ~s-ESC~) enters
+  - The command ~exwm/enter-normal-state~ (default binding ~s-ESC~) enters
     EXWM's input passthrough mode, meaning that *all* key-presses are sent to
     Spacemacs, and not the application.  This corresponds to Spacemacs normal state.
+
+* Known Limitations
+- ~s-SPC m~ does not work for accessing major mode bindings
+- When clicking into a buffer in normal state to press something, it has to be
+  clicked twice, because the first click only gets you into insert state
+- In some cases, the Emacs GUI becomes completely unresponsive if an X window
+  was opened by Emacs' foreground command loop, e.g. when emacs starts an waits
+  for the return of an interactive graphical password entry dialog.  To get it
+  to respond again, switch to a text console and send the SIGUSR2 signal
+  (e.g. =pkill -USR2 emacs=).

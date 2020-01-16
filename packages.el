@@ -141,7 +141,7 @@
     ;;   bother you). Note that there is no need for processes to be created by
     ;;   Emacs.
     (exwm-input-set-key (kbd "s-r") #'exwm/app-launcher)
-    ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
+    ;; + 'slock' is a simple X display locker provided by suckless tools. 'i3lock'
     ;;   is a more feature-rich alternative.
     (exwm-input-set-key (kbd "<s-pause>")
                         (lambda () (interactive) (start-process-shell-command "lock" nil exwm--locking-command)))
