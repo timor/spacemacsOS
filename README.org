@@ -45,10 +45,19 @@ This is how it looks like:
 To use this contribution,
 - place this repository in one of Spacemacs' layer directories
   (~/.emacs.d/private/local/exwm, ~/.spacemacs.d/private/exwm, or ~/.spacemacs.d/layers/exwm)
-- add the layer in your =~/.spacemacs=
+- add an entry ~exwm~ for the layer in your =~/.spacemacs=, optionally set some
+  configuration variables:
 
 #+begin_src emacs-lisp
-  (setq-default dotspacemacs-configuration-layers '(exwm))
+  ;; (setq-default dotspacemacs-configuration-layers ...
+  '(exwm :variables
+         exwm-enable-systray t
+         exwm-autostart-xdg-applications t
+         exwm-locking-command "i3lock -n"
+         exwm-install-logind-lock-handler t
+         exwm-terminal-command "st"
+         exwm-custom-init (lambda() (exwm/autostart-process "Dunst OSD" "dunst")))
+  ;; )
 #+end_src
 
 *** Note about Display Managers
