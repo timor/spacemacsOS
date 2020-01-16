@@ -27,6 +27,31 @@
 (defun exwm/init-xelb ()
   (use-package xelb))
 
+(defun exwm//install-frame-keybindings ()
+  "This installes the bindings that override the original ~SPC F~ frame
+  commands.  This is a separate function becuse it is called only after exwm
+  initialization, when the window manager has successfully be started."
+  ;; EXWM is quite particular about handling frames, so we override the default
+  ;; ~SPC F~ Frame leader mappings with EXWM workspace-specific stuff.
+  (define-key spacemacs-default-map (kbd "F") nil)
+  (define-key spacemacs-cmds (kbd "F") nil)
+
+  ;; Keybindings for ~s-SPC F~ Frame handling Menu
+  (spacemacs/declare-prefix "F" "EXWM")
+  (spacemacs/declare-prefix "Fw" "workspace")
+  (spacemacs/declare-prefix "Fm" "minibuffer")
+  (spacemacs/set-leader-keys
+    "Fr" 'exwm-reset
+    "Fh" 'exwm-floating-hide
+    "Fww" 'exwm-workspace-switch
+    "Fwa" 'exwm-workspace-add
+    "Fwd" 'exwm-workspace-delete
+    "Fwm" 'exwm-workspace-move
+    "Fws" 'exwm-workspace-swap
+    "Fmd" 'exwm-workspace-detach-minibuffer
+    "Fma" 'exwm-workspace-attach-minibuffer
+    ))
+
 (defun exwm/init-exwm ()
   (use-package exwm
     :init
@@ -38,26 +63,6 @@
       (add-hook 'exwm-mode-hook #'hidden-mode-line-mode))
     (setq exwm-input-line-mode-passthrough t)
 
-    ;; EXWM is quite particular about handling frames, so we override the default
-    ;; ~SPC F~ Frame leader mappings with EXWM workspace-specific stuff.
-    (define-key spacemacs-default-map (kbd "F") nil)
-    (define-key spacemacs-cmds (kbd "F") nil)
-
-    ;; Keybindings for ~s-SPC F~ Frame handling Menu
-    (spacemacs/declare-prefix "F" "EXWM")
-    (spacemacs/declare-prefix "Fw" "workspace")
-    (spacemacs/declare-prefix "Fm" "minibuffer")
-    (spacemacs/set-leader-keys
-      "Fr" 'exwm-reset
-      "Fh" 'exwm-floating-hide
-      "Fww" 'exwm-workspace-switch
-      "Fwa" 'exwm-workspace-add
-      "Fwd" 'exwm-workspace-delete
-      "Fwm" 'exwm-workspace-move
-      "Fws" 'exwm-workspace-swap
-      "Fmd" 'exwm-workspace-detach-minibuffer
-      "Fma" 'exwm-workspace-attach-minibuffer
-      )
 
     ;; introduce leader for running programs
     (spacemacs/declare-prefix "&" "exwm-run")
@@ -213,11 +218,12 @@
     (when exwm-enable-systray
       (require 'exwm-systemtray)
       (exwm-systemtray-enable))
-    (when exwm-autostart-xdg-applications
-      (add-hook 'exwm-init-hook 'exwm//autostart-desktop-applications))
     (when (and exwm--install-logind-lock-handler
                exwm--locking-command)
       (add-hook 'exwm-init-hook 'exwm//install-logind-lock-handler))
+    (when exwm-autostart-xdg-applications
+      (add-hook 'exwm-init-hook 'exwm//autostart-desktop-applications t))
+    (add-hook 'exwm-init-hook 'exwm//install-frame-keybindings t)
     (when exwm-custom-init
       (add-hook 'exwm-init-hook exwm-custom-init t))
     ;; The following example demonstrates how to use simulation keys to mimic the
