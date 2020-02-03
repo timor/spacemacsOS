@@ -97,6 +97,8 @@ The following features are preconfigured/provided on top of EXWM:
   system-wide ~share/applications/autostart~ files)
 - Session locking with specified lock command
 - Support for D-Bus based locking (e.g. ~loginctl lock-session~)
+- Optionally use [[https://github.com/DamienCassou/desktop-environment][~desktop-environment~]] to support special keys for things like
+  audio volume control or brightness control (except for locking)
 
 ** Key bindings
 
@@ -125,25 +127,26 @@ The following features are preconfigured/provided on top of EXWM:
   both normal state and insert state.
 
 
- | Key Binding           | Description                                                           |
- |-----------------------+-----------------------------------------------------------------------|
- | ~s-SPC~               | Spacemacs Leader Key (in insert state)                                |
- | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                                         |
- | ~s-[~, ~s-]~          | Switch to previous/next workspace                                     |
- | ~s-TAB~               | Switch to last workspace                                              |
- | ~s-w~                 | Workspace Switch Menu (kinda like micro-state)                        |
- | ~s-ESC~               | Switch to normal state, cancel fullscreen                             |
- | ~s-r~                 | App Launcher                                                          |
- | ~s-pause~             | Lock Screen                                                           |
- | ~s-<return>~          | Open (X-)Terminal                                                     |
- | ~s-u,U~               | Undo, Redo window configurations                                      |
- | ~s-b~                 | Select and switch to buffer                                           |
- | ~s-q~                 | Close current buffer                                                  |
- | ~s-h,j,k,l~           | Switch to left,lower,upper,right window                               |
- | ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right                        |
- | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)                         |
- | ~s-m~                 | Toggle maximized buffer                                               |
- | ~s-d~                 | Toggle exwm debug mode (for development)                              |
+ | Key Binding           | Description                                    |
+ |-----------------------+------------------------------------------------|
+ | ~s-SPC~               | Spacemacs Leader Key (in insert state)         |
+ | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                  |
+ | ~s-[~, ~s-]~          | Switch to previous/next workspace              |
+ | ~s-TAB~               | Switch to last workspace                       |
+ | ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
+ | ~s-ESC~               | Switch to normal state, cancel fullscreen      |
+ | ~s-r~                 | App Launcher                                   |
+ | ~s-pause~             | Lock Screen                                    |
+ | ~s-<return>~          | Open (X-)Terminal                              |
+ | ~s-u,U~               | Undo, Redo window configurations               |
+ | ~s-b~                 | Select and switch to buffer                    |
+ | ~s-q~                 | Close current buffer                           |
+ | ~s-h,j,k,l~           | Switch to left,lower,upper,right window        |
+ | ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right |
+ | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
+ | ~s-m~                 | Toggle maximized buffer                        |
+ | ~s-T~D~               | Toggle ~desktop-environment-mode~              |
+ | ~s-d~                 | Toggle exwm debug mode (for development)       |
 
  Since running programs is one of the more common task, some explicit support is
  provided for that via the leader key ~SPC &~.

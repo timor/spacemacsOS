@@ -22,7 +22,34 @@
         ;;       :step pre)
         (xelb :location elpa)
         (exwm :location elpa)
+
+        ;; desktop-environment
+        ;; TODO: remove :commit binding once upstream has new release
+        (desktop-environment :location (recipe :fetcher github :repo "DamienCassou/desktop-environment" :upgrade t :commit "cd5145288944f4bbd7b2459e4b55a6a95e37f06d"))
         ))
+
+(defun exwm/init-desktop-environment ()
+  (use-package desktop-environment
+    :after exwm
+    :diminish desktop-environment-mode
+    :defer t
+    :init
+    (progn
+      (spacemacs|add-toggle desktop-environment
+        :mode desktop-environment-mode
+        :documentation "Keybindings for Desktop Environment functionality."
+        :evil-leader "TD")
+      )
+    :config
+    (progn
+      ;; We bypass desktop-environment's locking functionality for 2 reasons:
+      ;; 1. s-l is most likely needed for window manipulation
+      ;; 2. desktop-environment's locking mechanism does not support registering as session manager
+      ;; TODO: To be completely consistent, we should put our own locking stuff also under this toggle
+      ;; The following line would instead assign their locking command to the default binding:
+      ;; (define-key desktop-environment-mode-map (kbd "<s-pause>") (lookup-key desktop-environment-mode-map (kbd "s-l")))
+      (setq desktop-environment-update-exwm-global-keys :prefix)
+      (define-key desktop-environment-mode-map (kbd "s-l") nil))))
 
 (defun exwm/init-xelb ()
   (use-package xelb))
