@@ -92,7 +92,7 @@ The following features are preconfigured/provided on top of EXWM:
 
 - EXWM buffer names are prefixed with a configurable prefix (default: ~X:~), to
   aid buffer selection in ivy/helm.
-- Limited Support for XDG autostart applications in =~/.config/autostart~= (does
+- Limited Support for XDG autostart applications in =~/.config/autostart= (does
   not support any advanced ~.desktop~ file entries, does not take into account
   system-wide ~share/applications/autostart~ files)
 - Session locking with specified lock command
