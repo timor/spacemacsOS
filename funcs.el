@@ -128,12 +128,13 @@ Can show completions at point for COMMAND using helm or ivy"
   (exwm-workspace-switch exwm-toggle-workspace))
 
 (defun exwm/exwm-buffers-info ()
+  (interactive)
   "Helper, return information about open exwm windows"
   (cl-loop for buffer in (buffer-list)
         for name = (buffer-name buffer)
         for ecname = (buffer-local-value 'exwm-class-name buffer)
         when ecname
-        collect (list :buffer-name name :exwm-class-name ecname)))
+        do (message "Buffer name: '%s', exwm class name: '%s'" name ecname)))
 
 (defun exwm//convert-key-to-event (key)
   "Converts something from (kbd ...) format to something suitable for
@@ -204,5 +205,4 @@ Can show completions at point for COMMAND using helm or ivy"
                           "org.freedesktop.login1.Session" "Lock"
                           (lambda()
                             (message "Lock signal received")
-                            (start-process-shell-command "session-lock" nil exwm-locking-command))))
-  )
+                            (start-process-shell-command "session-lock" nil exwm-locking-command)))))
