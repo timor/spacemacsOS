@@ -85,27 +85,14 @@
 (defun exwm/workspace-next ()
   "Switch to next exwm-workspace (to the right)."
   (interactive)
-  (let* ((only-workspace? (equal exwm-workspace-number 1))
-         (overflow? (= exwm-workspace-current-index
-                       (1- exwm-workspace-number))))
-    (cond
-     (only-workspace? nil)
-     (overflow?
-      (when exwm-workspace-switch-wrap
-        (exwm-workspace-switch 0)))
-     (t (exwm-workspace-switch  (1+ exwm-workspace-current-index))))))
+  (let ((max (exwm-workspace--count)))
+    (exwm-workspace-switch (mod (1+ exwm-workspace-current-index) max))))
 
 (defun exwm/workspace-prev ()
-  "Switch to next exwm-workspace (to the right)."
+  "Switch to next exwm-workspace (to the left)."
   (interactive)
-  (let* ((only-workspace? (equal exwm-workspace-number 1))
-         (overflow? (= exwm-workspace-current-index 0)))
-    (cond
-     (only-workspace? nil)
-     (overflow?
-      (when exwm-workspace-switch-wrap
-        (exwm-workspace-switch (1- exwm-workspace-number))))
-     (t (exwm-workspace-switch  (1- exwm-workspace-current-index))))))
+  (let ((max (exwm-workspace--count)))
+    (exwm-workspace-switch (mod (1- exwm-workspace-current-index) max))))
 
 (defun exwm/layout-toggle-fullscreen ()
   "Togggles full screen for Emacs and X windows"
