@@ -75,6 +75,10 @@
       "m" 'exwm-workspace-move-window
       "F" 'exwm-layout-toggle-fullscreen
       )
+
+    ;; make winner aware of new window configuration
+    (with-eval-after-load 'winner
+      (add-hook 'exwm-manage-finish-hook 'winner-save-old-configurations t))
     :config
 
     ;; make sure that displaying transient states gets the keyboard input.
