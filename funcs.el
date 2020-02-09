@@ -42,10 +42,12 @@
   (evil-normal-state))
 
 (defun exwm/escape ()
-  "Switch to normal state, and cancel possible fullscreen layout."
+  "Switch to normal state, and cancel possible fullscreen layout.  Also close minibuffer."
   (interactive)
   (exwm/enter-normal-state)
-  (exwm-layout-unset-fullscreen))
+  (exwm-layout-unset-fullscreen)
+  (when (active-minibuffer-window)
+    (minibuffer-keyboard-quit)))
 
 (defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."
