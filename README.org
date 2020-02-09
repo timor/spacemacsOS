@@ -114,9 +114,9 @@ The following features are preconfigured/provided on top of EXWM:
 
  | Key Binding | Description                                |
  |-------------+--------------------------------------------|
- | ~SPC m f~ | Toggle floating/tiling for current window  |
- | ~SPC m w~     | Move current window to different workspace |
- | ~SPC m F~     | Toggle fullscreen                          |
+ | ~SPC m f~   | Toggle floating/tiling for current window  |
+ | ~SPC m w~   | Move current window to different workspace |
+ | ~SPC m F~   | Toggle fullscreen                          |
 
 *** Global Bindings
 
@@ -199,3 +199,4 @@ The following features are preconfigured/provided on top of EXWM:
   wants to insert into the underlying buffer, and pressing ~i~ does not get you
   into insert state.  If that happens, use ~s-ESC~ to get to line mode/normal
   state, where you should be able to use ~i~ to to get into insert state again.
+- `which-key` still not working correctly with ~s-SPC~ in exwm buffers
