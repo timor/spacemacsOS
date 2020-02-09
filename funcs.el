@@ -1,7 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(require 'cl-lib)
-
 ;; Can be used to bind a key to jumping to an application, or alternatively starting it.  E.g.:
 ;;
 ;; (exwm/bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
@@ -191,7 +189,7 @@ Can show completions at point for COMMAND using helm or ivy"
 (let ((sm-keyvec (elt (edmacro-parse-keys dotspacemacs-leader-key t) 0))
       (our-keyvec (elt (edmacro-parse-keys "s-SPC" t) 0)))
   (defun exwm//which-key-transform-filter (oldargs)
-    (destructuring-bind (key-seq &rest rest) oldargs
+    (cl-destructuring-bind (key-seq &rest rest) oldargs
       (list* (cl-substitute sm-keyvec our-keyvec key-seq) rest))))
 
 ;; D-Bus locking
