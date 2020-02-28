@@ -81,18 +81,55 @@
                                       (concat (cl-subseq name 0 (- maxlen 3)) "...")
                                     name))))
 
-;; unused, untested
+;; Helper
+;; TODO: actually incorporate exwm-workspace-switch-wrap here...
+(defun exwm//ws-offset (offset)
+  "Return the number of the workspace which is OFFSET workspaces
+  away from the current workspace, cycling if necessary."
+  (mod (+ offset exwm-workspace-current-index) (exwm-workspace--count)))
+
 (defun exwm/workspace-next ()
   "Switch to next exwm-workspace (to the right)."
   (interactive)
-  (let ((max (exwm-workspace--count)))
-    (exwm-workspace-switch (mod (1+ exwm-workspace-current-index) max))))
+  (exwm-workspace-switch (exwm//ws-offset 1)))
 
 (defun exwm/workspace-prev ()
   "Switch to next exwm-workspace (to the left)."
   (interactive)
-  (let ((max (exwm-workspace--count)))
-    (exwm-workspace-switch (mod (1- exwm-workspace-current-index) max))))
+  (exwm-workspace-switch (exwm//ws-offset -1)))
+
+;; Buffer move between frames semantics:
+;; - In source window, display last buffer that was replaced in this frame using `other-window'
+;; - In target frame, show the buffer in the active window
+(defun exwm/workspace-move-buffer-to-workspace (ws-id)
+  "Move the current buffer to the exwm-workspace with id WS-ID"
+  (let ((target-frame (exwm-workspace--workspace-from-frame-or-index ws-id))
+        (src-exwm-id exwm--id))
+    (if src-exwm-id
+        (progn
+          (exwm-workspace-move-window target-frame src-exwm-id)
+          (exwm-workspace-switch target-frame))
+      (let ((src-buffer (current-buffer)))
+        (switch-to-buffer (other-buffer src-buffer))
+        (pop-to-buffer src-buffer `((display-buffer-in-previous-window
+                                     display-buffer-use-some-window
+                                     display-buffer-pop-up-window
+                                     ;; display-buffer-use-some-frame
+                                     )
+                                    (inhibit-same-window . t)
+                                    (reusable-frames . ,target-frame)
+                                    ;; (frame-predicate . (lambda(f) (eql f ,target-frame)))
+                                    ))))))
+
+(defun exwm/workspace-move-buffer-next ()
+  "Display active buffer in next frame (to the right)."
+  (interactive)
+  (exwm/workspace-move-buffer-to-workspace (exwm//ws-offset 1)))
+
+(defun exwm/workspace-move-buffer-prev ()
+  "Display active buffer in next frame (to the right)."
+  (interactive)
+  (exwm/workspace-move-buffer-to-workspace (exwm//ws-offset -1)))
 
 (defun exwm/layout-toggle-fullscreen ()
   "Togggles full screen for Emacs and X windows"

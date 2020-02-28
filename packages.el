@@ -49,7 +49,9 @@
       ;; The following line would instead assign their locking command to the default binding:
       ;; (define-key desktop-environment-mode-map (kbd "<s-pause>") (lookup-key desktop-environment-mode-map (kbd "s-l")))
       (setq desktop-environment-update-exwm-global-keys :prefix)
-      (define-key desktop-environment-mode-map (kbd "s-l") nil))))
+      (define-key desktop-environment-mode-map (kbd "s-l") nil)
+      ;; If we don't enable this, exwm/switch-to-buffer-or-run won't move an X window to the current frame
+      (setq exwm-layout-show-all-buffers t))))
 
 (defun exwm/init-xelb ()
   (use-package xelb))
@@ -229,6 +231,8 @@
     ;; Workspaces
     (exwm-input-set-key (kbd "s-]") #'exwm/workspace-next)
     (exwm-input-set-key (kbd "s-[") #'exwm/workspace-prev)
+    (exwm-input-set-key (kbd "s-}") #'exwm/workspace-move-buffer-next)
+    (exwm-input-set-key (kbd "s-{") #'exwm/workspace-move-buffer-prev)
     ;; Debugging
     (exwm-input-set-key (kbd "s-d") #'exwm/toggle-debug-mode)
 
