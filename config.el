@@ -27,3 +27,8 @@
 
 (defvar exwm-workspace-switch-wrap t
   "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
+
+(defvar exwm-use-autorandr t
+  "Whether to call autorandr in the screen change hook. Does
+  nothing if the autorandr binary cannot be found in PATH. Note
+  that changes to this variable probably require restarting EXWM.")

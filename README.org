@@ -8,6 +8,7 @@
     - [[#not-having-display-managers][Not having Display Managers]]
     - [[#osx][OSX]]
   - [[#features][Features]]
+    - [[#randr][RandR]]
   - [[#key-bindings][Key bindings]]
     - [[#normal-state-bindings][Normal State Bindings]]
       - [[#major-mode-bindings][Major Mode Bindings]]
@@ -99,6 +100,25 @@ The following features are preconfigured/provided on top of EXWM:
 - Support for D-Bus based locking (e.g. ~loginctl lock-session~)
 - Optionally use [[https://github.com/DamienCassou/desktop-environment][~desktop-environment~]] to support special keys for things like
   audio volume control or brightness control (except for locking)
+
+*** RandR
+Experimental support for
+[[https://github.com/phillipberndt/autorandr][autorandr]] is enabled with
+~exwm-use-autorandr~, which can be used to set up and handle different monitor
+configuration profiles.
+
+Note that except for calling ~autorandr -c~ in EXWM's screen-change hook, the
+actual profiles have to be configured outside of Spacemacs (see ~autorandr
+--help~).
+
+This is enabled per default but will do nothing if the ~autorandr~ executable is
+not found.
+
+One tool which is useful for interactively setting up screen configurations is
+[[https://christian.amsuess.com/tools/arandr/][ARandR]] (note that their
+save files don't have anything to with autorandr's.
+
+(TODO: provide some bindings for =autorandr='s built-in configurations)
 
 ** Key bindings
 
