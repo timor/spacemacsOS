@@ -206,5 +206,11 @@ The following features are preconfigured/provided on top of EXWM:
   into insert state.  If that happens, use ~s-ESC~ to get to line mode/normal
   state, where you should be able to use ~i~ to to get into insert state again.
 - `which-key` still not working correctly with ~s-SPC~ in EXWM buffers
-- There are dependencies on EXWM internal variables/functions:
+- There are dependencies on EXWM internals:
   - ~exwm--id~
+  - ~exwm--workspace-count~
+  - ~exwm-workspace--workspace-from-frame-or-index~
+  - ~exwm-layout--fullscreen-p~
+- ~exwm/workspace-move-buffer-to-workspace~ is buggy.  It seems depends on the window
+  layout whether the current buffer will be moved correctly, or the current
+  frame will be messed up...
