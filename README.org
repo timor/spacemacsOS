@@ -134,7 +134,6 @@ The following features are preconfigured/provided on top of EXWM:
  | ~s-[~, ~s-]~          | Switch to previous/next workspace              |
  | ~s-{~, ~s-}~          | Move current buffer to previous/next workspace |
  | ~s-TAB~               | Switch to last workspace                       |
- | ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
  | ~s-ESC~               | Switch to normal state, cancel fullscreen      |
  | ~s-r~                 | App Launcher                                   |
  | ~s-pause~             | Lock Screen                                    |
