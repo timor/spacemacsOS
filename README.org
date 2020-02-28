@@ -99,6 +99,9 @@ The following features are preconfigured/provided on top of EXWM:
 - Support for D-Bus based locking (e.g. ~loginctl lock-session~)
 - Optionally use [[https://github.com/DamienCassou/desktop-environment][~desktop-environment~]] to support special keys for things like
   audio volume control or brightness control (except for locking)
+- Uses ~framemove~ to enable navigation between frames by using window
+  navigation at frame borders.  Can be disabled by setting
+  ~exwm-move-frame-at-edge~ to ~nil~.
 
 ** Key bindings
 

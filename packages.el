@@ -26,7 +26,15 @@
         ;; desktop-environment
         ;; TODO: remove :commit binding once upstream has new release
         (desktop-environment :location (recipe :fetcher github :repo "DamienCassou/desktop-environment" :upgrade t :commit "cd5145288944f4bbd7b2459e4b55a6a95e37f06d"))
+        (framemove :location (recipe :fetcher github :repo "emacsmirror/framemove"))
         ))
+
+(defun exwm/init-framemove ()
+  (use-package framemove
+    :after exwm
+    :config
+    (progn
+      (setq framemove-hook-into-windmove exwm-move-frame-at-edge))))
 
 (defun exwm/init-desktop-environment ()
   (use-package desktop-environment

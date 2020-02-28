@@ -27,3 +27,7 @@
 
 (defvar exwm-workspace-switch-wrap t
   "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
+
+(defvar exwm-move-frame-at-edge t
+  "If enabled, use framemove to switch frames when trying to move
+  outside of current frame." )
