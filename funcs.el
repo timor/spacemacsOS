@@ -274,3 +274,7 @@ offsets by xrandr."
   (exwm//randr-dwim)
   ;; TODO: maybe adjust number of workspaces if one workspace per monitor model is desired
   )
+(defun exwm//fm-frame-bbox-from-randr (frame)
+  "Replacement for `fm-frame-bbox' which uses exwm's idea of frame geometry"
+  (with-slots (x y width height) (frame-parameter frame 'exwm-geometry)
+    (list x y (+ x width) (+ y height))))
