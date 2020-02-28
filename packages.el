@@ -34,6 +34,11 @@
     :after exwm
     :config
     (progn
+      ;; Emacs frame parameters don't seem to be too reliable...
+      (define-advice fm-frame-bbox (:around (oldfun frame) exwm-frame-bbox-from-randr)
+        (if (frame-parameter frame 'exwm-geometry)
+            (exwm//fm-frame-bbox-from-randr frame)
+          (funcall oldfun frame)))
       (setq framemove-hook-into-windmove exwm-move-frame-at-edge))))
 
 (defun exwm/init-desktop-environment ()

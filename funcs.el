@@ -243,3 +243,8 @@ Can show completions at point for COMMAND using helm or ivy"
                           (lambda()
                             (message "Lock signal received")
                             (start-process-shell-command "session-lock" nil exwm-locking-command)))))
+
+(defun exwm//fm-frame-bbox-from-randr (frame)
+  "Replacement for `fm-frame-bbox' which uses exwm's idea of frame geometry"
+  (with-slots (x y width height) (frame-parameter frame 'exwm-geometry)
+    (list x y (+ x width) (+ y height))))
