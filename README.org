@@ -152,9 +152,8 @@ save files don't have anything to with autorandr's.
  | ~s-SPC~               | Spacemacs Leader Key (in insert state)         |
  | ~s-[1 2 3 ... 8 9 0]~ | Switch to workspace [0 ... 9]                  |
  | ~s-[~, ~s-]~          | Switch to previous/next workspace              |
- | ~s-[~, ~s-]~          | Move current buffer to previous/next workspace |
+ | ~s-{~, ~s-}~          | Move current buffer to previous/next workspace |
  | ~s-TAB~               | Switch to last workspace                       |
- | ~s-w~                 | Workspace Switch Menu (kinda like micro-state) |
  | ~s-ESC~               | Switch to normal state, cancel fullscreen      |
  | ~s-r~                 | App Launcher                                   |
  | ~s-pause~             | Lock Screen                                    |
@@ -223,4 +222,6 @@ save files don't have anything to with autorandr's.
   wants to insert into the underlying buffer, and pressing ~i~ does not get you
   into insert state.  If that happens, use ~s-ESC~ to get to line mode/normal
   state, where you should be able to use ~i~ to to get into insert state again.
-- `which-key` still not working correctly with ~s-SPC~ in exwm buffers
+- `which-key` still not working correctly with ~s-SPC~ in EXWM buffers
+- There are dependencies on EXWM internal variables/functions:
+  - ~exwm--id~
