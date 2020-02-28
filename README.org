@@ -115,8 +115,7 @@ This is enabled per default but will do nothing if the ~autorandr~ executable is
 not found.
 
 One tool which is useful for interactively setting up screen configurations is
-[[https://christian.amsuess.com/tools/arandr/][ARandR]] (note that their
-save files don't have anything to with autorandr's.
+[[https://christian.amsuess.com/tools/arandr/][ARandR]] (note that their save files don't have anything to with autorandr's).
 
 (TODO: provide some bindings for =autorandr='s built-in configurations)
 
