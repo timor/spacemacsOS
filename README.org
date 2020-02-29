@@ -167,7 +167,7 @@ One tool which is useful for interactively setting up screen configurations is
  | ~s-H,J,K,L~           | Move window to far left,down,lower,upper,right |
  | ~M-s-h,j,k,l~         | Resizing (try them, it's too hard to explain)  |
  | ~s-m~                 | Toggle maximized buffer                        |
- | ~s-T~D~               | Toggle ~desktop-environment-mode~              |
+ | ~SPC T D~             | Toggle ~desktop-environment-mode~              |
  | ~s-d~                 | Toggle exwm debug mode (for development)       |
 
  Since running programs is one of the more common task, some explicit support is
