@@ -80,18 +80,17 @@
 
   ;; Keybindings for ~s-SPC F~ Frame handling Menu
   (spacemacs/declare-prefix "F" "EXWM")
-  (spacemacs/declare-prefix "Fw" "workspace")
-  (spacemacs/declare-prefix "Fm" "minibuffer")
+  (spacemacs/declare-prefix "FM" "minibuffer")
   (spacemacs/set-leader-keys
     "Fr" 'exwm-reset
     "Fh" 'exwm-floating-hide
-    "Fww" 'exwm-workspace-switch
-    "Fwa" 'exwm-workspace-add
-    "Fwd" 'exwm-workspace-delete
-    "Fwm" 'exwm-workspace-move
-    "Fws" 'exwm-workspace-swap
-    "Fmd" 'exwm-workspace-detach-minibuffer
-    "Fma" 'exwm-workspace-attach-minibuffer
+    "Fw" 'exwm-workspace-switch
+    "Fa" 'exwm-workspace-add
+    "Fd" 'exwm-workspace-delete
+    "Fm" 'exwm-workspace-move
+    "Fs" 'exwm-workspace-swap
+    "FMd" 'exwm-workspace-detach-minibuffer
+    "FMa" 'exwm-workspace-attach-minibuffer
     ))
 
 (defun exwm/init-exwm ()

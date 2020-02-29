@@ -169,13 +169,13 @@ The following features are preconfigured/provided on top of EXWM:
  |-------------+--------------------------------------------|
  | ~SPC F r~   | Reset state of current window (exwm-reset) |
  | ~SPC F h~   | Hide floating window                       |
- | ~SPC F w w~ | Prompt for workspace and switch to it      |
- | ~SPC F w a~ | Add new workspace                          |
- | ~SPC F w d~ | Delete current workspace                   |
- | ~SPC F w m~ | Move Workspace to different position       |
- | ~SPC F w s~ | Interchange position of two workspaces     |
- | ~SPC F m d~ | Detach Minibuffer (for autohide enabled)   |
- | ~SPC F m a~ | Attach Minibuffer (for autohide enabled)   |
+ | ~SPC F w~   | Prompt for workspace and switch to it      |
+ | ~SPC F a~   | Add new workspace                          |
+ | ~SPC F d~   | Delete current workspace                   |
+ | ~SPC F m~   | Move Workspace to different position       |
+ | ~SPC F s~   | Interchange position of two workspaces     |
+ | ~SPC F M d~ | Detach Minibuffer (for autohide enabled)   |
+ | ~SPC F M a~ | Attach Minibuffer (for autohide enabled)   |
 
 * Window behaviour regarding char and line mode
 
