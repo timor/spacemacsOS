@@ -231,6 +231,8 @@ One tool which is useful for interactively setting up screen configurations is
   - ~exwm-workspace--workspace-from-frame-or-index~
   - ~exwm-layout--fullscreen-p~
   - ~exwm-randr--get-monitors~
-- ~exwm/workspace-move-buffer-to-workspace~ is buggy.  It seems depends on the window
+- ~exwm/workspace-move-buffer-to-workspace~ is buggy.  It seems to depend on the window
   layout whether the current buffer will be moved correctly, or the current
   frame will be messed up...
+- ~winner-undo~ currently behaves differently than expected with EXWM buffers
+  (https://github.com/ch11ng/exwm/issues/709)
