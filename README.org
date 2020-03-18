@@ -236,3 +236,7 @@ One tool which is useful for interactively setting up screen configurations is
   frame will be messed up...
 - ~winner-undo~ currently behaves differently than expected with EXWM buffers
   (https://github.com/ch11ng/exwm/issues/709)
+- The ~autorandr~ functionality is currently extremely eager.  After any mode
+  switch, the hook will be called and reset it to a known configuration, if
+  found.  So any changes made using ~xrandr~ manually will be immediately
+  overridden again by the hooks.
