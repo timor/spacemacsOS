@@ -244,6 +244,36 @@ Can show completions at point for COMMAND using helm or ivy"
                             (message "Lock signal received")
                             (start-process-shell-command "session-lock" nil exwm-locking-command)))))
 
+(defun exwm//geom-< (r1 r2)
+  "Compare two xcb-rectangles for ordering by their offsets, in
+  row-major order."
+  (let ((x1 (slot-value r1 'x))
+        (y1 (slot-value r1 'y))
+        (x2 (slot-value r2 'x))
+        (y2 (slot-value r2 'y)))
+    (if (= y1 y2)
+        (< x1 x2)
+      (< y1 y2))))
+
+;; EXPERIMENTAL: depends on exwm-randr internals, also assumes randr-1.5 support
+(defun exwm//randr-dwim ()
+  "Map one workspace per monitor, sorted
+left-to-right/top-to-bottom based on the reported virtual screen
+offsets by xrandr."
+  (let ((geom-alist (second (exwm-randr--get-monitors))))
+    (cl-loop for entry in (cl-sort geom-alist 'exwm//geom-< :key 'cdr)
+             for i from 0
+             for name = (car entry)
+             do (setq exwm-randr-workspace-monitor-plist
+                      (plist-put exwm-randr-workspace-monitor-plist i name)))))
+
+(defun exwm//autorandr-hook ()
+  "Screen change hook handler for use with autorandr."
+  (start-process-shell-command "autorandr-exwm-randr-hook" nil "autorandr -c")
+  ;; TODO: maybe provide that as a command instead of always doing it
+  (exwm//randr-dwim)
+  ;; TODO: maybe adjust number of workspaces if one workspace per monitor model is desired
+  )
 (defun exwm//fm-frame-bbox-from-randr (frame)
   "Replacement for `fm-frame-bbox' which uses exwm's idea of frame geometry"
   (with-slots (x y width height) (frame-parameter frame 'exwm-geometry)

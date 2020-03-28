@@ -253,6 +253,9 @@
 
     (require 'exwm-randr)
     (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
+    (when (and exwm-use-autorandr
+               (executable-find "autorandr"))
+      (add-hook 'exwm-randr-screen-change-hook 'exwm//autorandr-hook))
     (exwm-randr-enable)
     (when exwm-enable-systray
       (require 'exwm-systemtray)
