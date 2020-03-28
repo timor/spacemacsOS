@@ -201,6 +201,9 @@
 
     ;; Define super-space as default leader key.
     (exwm-input-set-key (kbd "s-SPC") spacemacs-default-map)
+    ;; Don't have to lift finger from s-key for M-x behavior:
+    (spacemacs/set-leader-keys "s-SPC" 'execute-extended-command)
+
     (with-eval-after-load 'which-key
      ;; Hack which-key to translate our prefix into the original leader key
      ;; prefix, otherwise all nested keymaps are shown as 'prefix'
