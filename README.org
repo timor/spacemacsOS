@@ -8,6 +8,7 @@
     - [[#not-having-display-managers][Not having Display Managers]]
     - [[#osx][OSX]]
   - [[#features][Features]]
+    - [[#autostart][Autostart]]
     - [[#randr][RandR]]
   - [[#key-bindings][Key bindings]]
     - [[#normal-state-bindings][Normal State Bindings]]
@@ -93,9 +94,6 @@ The following features are preconfigured/provided on top of EXWM:
 
 - EXWM buffer names are prefixed with a configurable prefix (default: ~X:~), to
   aid buffer selection in ivy/helm.
-- Limited Support for XDG autostart applications in =~/.config/autostart= (does
-  not support any advanced ~.desktop~ file entries, does not take into account
-  system-wide ~share/applications/autostart~ files)
 - Session locking with specified lock command
 - Support for D-Bus based locking (e.g. ~loginctl lock-session~)
 - Optionally use [[https://github.com/DamienCassou/desktop-environment][~desktop-environment~]] to support special keys for things like
@@ -103,6 +101,16 @@ The following features are preconfigured/provided on top of EXWM:
 - Uses ~framemove~ to enable navigation between frames by using window
   navigation at frame borders.  Can be disabled by setting
   ~exwm-move-frame-at-edge~ to ~nil~.
+
+*** Autostart
+If ~exwm-autostart-xdg-applications~ is non-nil, ~.desktop~ files in
+=$XDG_CONFIG_HOME/autostart= and ~XDG_CONFIG_DIRS~ will be used to run applications at
+startup. (See [[https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html][Specification]] for details).
+
+For the purpose of controlling whether an entry should be run under SpacemacsOS,
+the ~OnlyShowIn~ and ~NotShotIn~ keys are checked for the string ~EXWM~.
+
+This is disabled per default.
 
 *** RandR
 Experimental support for
