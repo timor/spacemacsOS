@@ -162,6 +162,8 @@
     ;; + We always need a way to get to normal state if we are in insert state.
     (exwm-input-set-key (kbd "s-<escape>") 'exwm/escape)
 
+    (exwm-input-set-key (kbd "s-c") 'exwm/enter-char-mode)
+
     (exwm-input-set-key (kbd "<s-tab>") #'exwm/jump-to-last-exwm)
     ;; + Set shortcuts to switch to a certain workspace.
     (exwm-input-set-key (kbd "s-1")

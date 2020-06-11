@@ -33,12 +33,14 @@
 (defun exwm/enter-insert-state ()
   (interactive)
   (setq exwm-input-line-mode-passthrough nil)
+  (call-interactively 'exwm-input-grab-keyboard)
   (evil-insert-state))
 
 ;; Simulate normal state by using line mode with passthrough, i.e. forward all commands to emacs
 (defun exwm/enter-normal-state ()
   (interactive)
   (setq exwm-input-line-mode-passthrough t)
+  (call-interactively 'exwm-input-grab-keyboard)
   (evil-normal-state))
 
 (defun exwm/escape ()
@@ -48,6 +50,13 @@
   (exwm-layout-unset-fullscreen)
   (when (active-minibuffer-window)
     (minibuffer-keyboard-quit)))
+
+(defun exwm/enter-char-mode ()
+  "Enter EXWM char mode."
+  (interactive)
+  (when exwm--id
+    (exwm/enter-insert-state)
+    (call-interactively 'exwm-input-release-keyboard)))
 
 (defun exwm/switch-to-buffer-or-run (window-class command)
   "Switch to first buffer with window-class, and if not present, run command."
