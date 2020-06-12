@@ -268,7 +268,7 @@
                exwm-locking-command)
       (add-hook 'exwm-init-hook 'exwm//install-logind-lock-handler))
     (when exwm-autostart-xdg-applications
-      (add-hook 'exwm-init-hook 'exwm//autostart-desktop-applications t))
+      (add-hook 'exwm-init-hook 'exwm//autostart-xdg-applications t))
     (add-hook 'exwm-init-hook 'exwm//install-frame-keybindings t)
     (when exwm-custom-init
       (add-hook 'exwm-init-hook exwm-custom-init t))
