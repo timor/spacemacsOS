@@ -208,12 +208,6 @@
         (spacemacs/set-leader-keys "s-SPC" 'helm-M-x)
       (spacemacs/set-leader-keys "s-SPC" 'execute-extended-command))
 
-    (with-eval-after-load 'which-key
-     ;; Hack which-key to translate our prefix into the original leader key
-     ;; prefix, otherwise all nested keymaps are shown as 'prefix'
-      (define-advice which-key--get-bindings (:filter-args (oldargs) exwm-translate-leader-key)
-        (exwm//which-key-transform-filter oldargs)))
-
     ;; EXWM does not bypass exwm-mode-map keybindings in line-mode, so the
     ;; default bindings are still mapped to C-c.  We remap that to C-s-c.
 

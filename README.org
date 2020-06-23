@@ -237,7 +237,7 @@ One tool which is useful for interactively setting up screen configurations is
   wants to insert into the underlying buffer, and pressing ~i~ does not get you
   into insert state.  If that happens, use ~s-ESC~ to get to line mode/normal
   state, where you should be able to use ~i~ to to get into insert state again.
-- `which-key` still not working correctly with ~s-SPC~ in EXWM buffers
+- `which-key` does only display "prefix" for nested leader key bindings for ~s-SPC~
 - There are dependencies on EXWM internals:
   - ~exwm--id~
   - ~exwm--workspace-count~
