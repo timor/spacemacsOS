@@ -224,7 +224,7 @@
     (exwm-input-set-key (kbd "s-u") #'winner-undo)
     (exwm-input-set-key (kbd "s-U") #'winner-redo)
     ;; Change buffers
-    (exwm-input-set-key (kbd "s-b") #'ivy-switch-buffer)
+    (exwm-input-set-key (kbd "s-b") #'switch-to-buffer)
     ;; Focusing windows
     (exwm-input-set-key (kbd "s-h") #'evil-window-left)
     (exwm-input-set-key (kbd "s-j") #'evil-window-down)
