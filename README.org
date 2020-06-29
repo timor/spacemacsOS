@@ -47,7 +47,7 @@ This is how it looks like:
 To use this contribution,
 - (status quo 2020-06-29) install Spacemacs, switch to *develop* branch
 - place this repository in one of Spacemacs' layer directories
-  (~/.emacs.d/private/local/exwm, ~/.spacemacs.d/private/exwm, or ~/.spacemacs.d/layers/exwm)
+  (=~/.emacs.d/private/local/exwm=, =~/.spacemacs.d/private/exwm=, or =~/.spacemacs.d/layers/exwm=)
 - add an entry ~exwm~ for the layer in your =~/.spacemacs=, optionally set some
   configuration variables:
 
@@ -221,7 +221,7 @@ One tool which is useful for interactively setting up screen configurations is
     state.  Press ~i~ to get back to sending input to the application.
   - Certain applications (e.g. SDL based) may not work correctly with line mode,
     and register double keyboard events.  In this case, ~s-c~ can be used to
-    enter EXWM char mode.  To return from that, also use ~exwm/enter-nomral-state~
+    enter EXWM char mode.  To return from that, also use ~exwm/enter-normal-state~
 
 * Known Limitations
   (3rd party research welcome...)
