@@ -30,10 +30,8 @@ Example: '(\"DESKTOP_SESSION=kde\" \"KDE_SESSION_VERSION=5\") ")
 (defvar exwm-workspace-switch-wrap t
   "Whether `exwm/workspace-next' and `exwm/workspace-prev' should wrap.")
 
-(defvar exwm-use-autorandr t
-  "Whether to call autorandr in the screen change hook. Does
-  nothing if the autorandr binary cannot be found in PATH. Note
-  that changes to this variable probably require restarting EXWM.")
+(defvar exwm-randr-dwim t
+  "Whether to try to dwim workspace/screen association in the screen change hook.")
 
 (defvar exwm-move-frame-at-edge t
   "If enabled, use framemove to switch frames when trying to move

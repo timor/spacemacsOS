@@ -244,14 +244,16 @@
     (exwm-input-set-key (kbd "s-[") #'exwm/workspace-prev)
     (exwm-input-set-key (kbd "s-}") #'exwm/workspace-move-buffer-next)
     (exwm-input-set-key (kbd "s-{") #'exwm/workspace-move-buffer-prev)
+    ;; Autorandr
+    (when (exwm//autorandr-executable)
+      (exwm-input-set-key (kbd "s-s") #'exwm/load-autorandr-profile))
     ;; Debugging
     (exwm-input-set-key (kbd "s-d") #'exwm/toggle-debug-mode)
 
     (require 'exwm-randr)
     (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
-    (when (and exwm-use-autorandr
-               (executable-find "autorandr"))
-      (add-hook 'exwm-randr-screen-change-hook 'exwm//autorandr-hook))
+    (when exwm-randr-dwim
+      (add-hook 'exwm-randr-screen-change-hook 'exwm//randr-dwim))
     (exwm-randr-enable)
     (when exwm-enable-systray
       (require 'exwm-systemtray)

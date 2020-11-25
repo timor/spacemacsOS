@@ -119,22 +119,25 @@ The variable ~exwm-autostart-environment~ can be used to extend
 This is disabled per default.
 
 *** RandR
-Experimental support for
-[[https://github.com/phillipberndt/autorandr][autorandr]] is enabled with
-~exwm-use-autorandr~, which can be used to set up and handle different monitor
-configuration profiles.
+If ~autorandr~ is found in the current path, ~exwm//load-autorandr-profile~
+can be used to interactively select from the list of autorandr profiles.  The
+default entry is either the one that ~autorandr -c~ would choose, or one of the
+builtin configurations.  The default binding for that command is ~s-s~.
 
-Note that except for calling ~autorandr -c~ in EXWM's screen-change hook, the
-actual profiles have to be configured outside of Spacemacs (see ~autorandr
+Automatic switching of profiles is supported by ~autorandr~ directly, or there
+should be some OS support to install the corresponding system configuration.
+
+Note that any custom autorandr profiles have to be configured outside of Spacemacs (see ~autorandr
 --help~).
 
-This is enabled per default but will do nothing if the ~autorandr~ executable is
-not found.
+The variable ~exwm-randr-dwim~, if set (default), will try to assign a sensible
+value to ~exwm-randr-monitor-plist~ to spread the workspaces out to the detected screens.
+
+The ~s-s~ binding is not assigned if the ~autorandr~ executable is
+not found at startup.
 
 One tool which is useful for interactively setting up screen configurations is
 [[https://christian.amsuess.com/tools/arandr/][ARandR]] (note that their save files don't have anything to with autorandr's).
-
-(TODO: provide some bindings for =autorandr='s built-in configurations)
 
 ** Key bindings
 
@@ -184,6 +187,7 @@ One tool which is useful for interactively setting up screen configurations is
  | ~s-m~                 | Toggle maximized buffer                                 |
  | ~SPC T D~             | Toggle ~desktop-environment-mode~                       |
  | ~s-d~                 | Toggle exwm debug mode (for development)                |
+ | ~s-s~                 | (conditional, see [[*RandR][RandR]]) Change autorandr profile       |
 
  Since running programs is one of the more common task, some explicit support is
  provided for that via the leader key ~SPC &~.
@@ -253,7 +257,3 @@ One tool which is useful for interactively setting up screen configurations is
 - ~exwm/workspace-move-buffer-to-workspace~ is buggy.  It seems to depend on the window
   layout whether the current buffer will be moved correctly, or the current
   frame will be messed up...
-- The ~autorandr~ functionality is currently extremely eager.  After any mode
-  switch, the hook will be called and reset it to a known configuration, if
-  found.  So any changes made using ~xrandr~ manually will be immediately
-  overridden again by the hooks.

@@ -315,13 +315,21 @@ offsets by xrandr."
              do (setq exwm-randr-workspace-monitor-plist
                       (plist-put exwm-randr-workspace-monitor-plist i name)))))
 
-(defun exwm//autorandr-hook ()
-  "Screen change hook handler for use with autorandr."
-  (start-process-shell-command "autorandr-exwm-randr-hook" nil "autorandr -c")
-  ;; TODO: maybe provide that as a command instead of always doing it
-  (exwm//randr-dwim)
-  ;; TODO: maybe adjust number of workspaces if one workspace per monitor model is desired
-  )
+(defvar exwm--autorandr-hist nil)
+
+(defun exwm//autorandr-executable ()
+  "Return path to autorandr executable or nil."
+  (executable-find "autorandr"))
+
+(defun exwm/load-autorandr-profile ()
+  "Select autorandr configuration."
+  (interactive)
+  (let* ((candidates (append (split-string (shell-command-to-string "autorandr --detected") "\n" t)
+                            '("common" "clone-largest" "horizontal" "vertical")))
+         (profile (completing-read "Select autorandr profile: "
+                                   candidates nil t nil 'exwm--autorandr-hist (first candidates))))
+    (start-process-shell-command "autorandr" nil (concat "autorandr -l " profile))))
+
 (defun exwm//fm-frame-bbox-from-randr (frame)
   "Replacement for `fm-frame-bbox' which uses exwm's idea of frame geometry"
   (with-slots (x y width height) (frame-parameter frame 'exwm-geometry)
