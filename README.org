@@ -112,7 +112,7 @@ If ~exwm-autostart-xdg-applications~ is non-nil, ~.desktop~ files in
 startup. (See [[https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html][Specification]] for details).
 
 For the purpose of controlling whether an entry should be run under SpacemacsOS,
-the ~OnlyShowIn~ and ~NotShotIn~ keys are checked for the string ~EXWM~.
+the ~OnlyShowIn~ and ~NotShowIn~ keys are checked for the string ~EXWM~.
 
 The variable ~exwm-autostart-environment~ can be used to extend
 ~process-environment~ for the started processes.
