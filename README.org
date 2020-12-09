@@ -59,7 +59,10 @@ To use this contribution,
          exwm-locking-command "i3lock -n"
          exwm-install-logind-lock-handler t
          exwm-terminal-command "st"
-         exwm-custom-init (lambda() (exwm/autostart-process "Dunst OSD" "dunst")))
+         exwm-autostart-environment '("DESKTOP_SESSION=kde" "KDE_SESSION_VERSION=5")
+         exwm-custom-init (lambda()
+                              (exwm/autostart-process "Dunst OSD" "dunst")
+                              (exwm/autostart-process "KWallet Daemon" "kwalletd5")))
   ;; )
 #+end_src
 
@@ -110,6 +113,9 @@ startup. (See [[https://specifications.freedesktop.org/autostart-spec/autostart-
 
 For the purpose of controlling whether an entry should be run under SpacemacsOS,
 the ~OnlyShowIn~ and ~NotShotIn~ keys are checked for the string ~EXWM~.
+
+The variable ~exwm-autostart-environment~ can be used to extend
+~process-environment~ for the started processes.
 
 This is disabled per default.
 

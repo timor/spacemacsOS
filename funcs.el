@@ -216,8 +216,12 @@ Can show completions at point for COMMAND using helm or ivy"
 
 DIRECTORY can be set to a string which will be used as working directory for the
 process.  If not supplied, will be set to `user-home-directory'.
+
+Prepends the value of `exwm-autostart-environmwnt' to
+`process-environment' for the started process.
 "
-  (push (let ((default-directory (or directory user-home-directory)))
+  (push (let ((default-directory (or directory user-home-directory))
+              (process-environment (append exwm-autostart-environment process-environment)))
           (start-process-shell-command name nil command))
         exwm//autostart-process-list))
 

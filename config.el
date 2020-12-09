@@ -22,6 +22,11 @@
 (defvar exwm-autostart-xdg-applications nil
   "Whether to run $XDG_USER_HOME/autostart applications after initialization.")
 
+(defvar exwm-autostart-environment '()
+  "List of \"KEY=value\" strings which should be set when running autostart applications.
+
+Example: '(\"DESKTOP_SESSION=kde\" \"KDE_SESSION_VERSION=5\") ")
+
 (defvar exwm-custom-init nil
   "This can be set to a function that runs after all other EXWM initialization.")
 
