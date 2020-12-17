@@ -139,10 +139,8 @@
     (eval-after-load 'persp-mode
       (advice-add 'persp-init-new-frame :before-until 'exwm//persp-mode-inhibit-p))
 
-    (exwm-input-set-key (kbd "<s-return>")
-                        (lambda ()
-                          (interactive)
-                          (start-process-shell-command exwm-terminal-command nil exwm-terminal-command)))
+    (eval-after-load 'terminal-here
+      (exwm-input-set-key (kbd "<s-return>") 'terminal-here-launch))
 
     (add-hook 'exwm-update-class-hook 'exwm/rename-buffer)
     (add-hook 'exwm-update-title-hook 'exwm/rename-buffer)
