@@ -250,7 +250,7 @@ One tool which is useful for interactively setting up screen configurations is
 - `which-key` does only display "prefix" for nested leader key bindings for ~s-SPC~
 - There are dependencies on EXWM internals:
   - ~exwm--id~
-  - ~exwm--workspace-count~
+  - ~exwm-workspace--count~
   - ~exwm-workspace--workspace-from-frame-or-index~
   - ~exwm-layout--fullscreen-p~
   - ~exwm-randr--get-monitors~
