@@ -45,7 +45,7 @@ This is how it looks like:
 
 ** Install
 To use this contribution,
-- (status quo 2020-06-29) install Spacemacs, switch to *develop* branch
+- (status quo 2021-03-28) install Spacemacs, switch to *develop* branch
 - place this repository in one of Spacemacs' layer directories
   (=~/.emacs.d/private/local/exwm=, =~/.spacemacs.d/private/exwm=, or =~/.spacemacs.d/layers/exwm=)
 - add an entry ~exwm~ for the layer in your =~/.spacemacs=, optionally set some
