@@ -68,6 +68,18 @@
         (exwm-workspace-switch-to-buffer buffer)
       (start-process-shell-command command nil command))))
 
+(defun exwm/rename-buffer-name ()
+  (let* ((part1 exwm-class-name)
+         (part2 (when (not (string-equal exwm-class-name exwm-title))
+                  (concat "/" exwm-title)))
+         (maxlen 40)
+         (name (concat exwm-buffer-name-prefix part1 (or part2 ""))))
+    ;; (if (> (length name) maxlen)
+    ;;     (concat (cl-subseq name 0 (- maxlen 3)) "...")
+    ;;   name)
+    name
+    ))
+
 ;; All buffers created in EXWM mode are named "*EXWM*". You may want to change
 ;; it in `exwm-update-class-hook' and `exwm-update-title-hook', which are run
 ;; when a new window class name or title is available. Here's some advice on
@@ -86,11 +98,8 @@
   (let* ((part1 exwm-class-name)
          (part2 (when (not (string-equal exwm-class-name exwm-title))
                   (concat "/" exwm-title)))
-         (name (concat exwm-buffer-name-prefix part1 (or part2 "")))
-         (maxlen 40))
-    (exwm-workspace-rename-buffer (if (> (length name) maxlen)
-                                      (concat (cl-subseq name 0 (- maxlen 3)) "...")
-                                    name))))
+         (name (exwm/rename-buffer-name)))
+    (exwm-workspace-rename-buffer name)))
 
 ;; Helper
 ;; TODO: actually incorporate exwm-workspace-switch-wrap here...
