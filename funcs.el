@@ -2,6 +2,7 @@
 
 (require 'dbus)
 (require 'xdg)
+(require 'edmacro)
 ;; Can be used to bind a key to jumping to an application, or alternatively starting it.  E.g.:
 ;;
 ;; (exwm/bind-switch-to-or-run-command "s-f" "Firefox" "firefox")
