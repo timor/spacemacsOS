@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; packages.el --- exwm Layer packages File for Spacemacs
 ;;
 ;; Copyright (c) 2012-2014 Sylvain Benner
@@ -126,7 +128,7 @@
     ;; Borrowed from: https://github.com/abo-abo/hydra/issues/232
     (define-advice hydra-set-transient-map (:around (fun keymap on-exit &optional foreign-keys) exwm-passthrough)
       (setq exwm-input-line-mode-passthrough t)
-      (let ((on-exit (lexical-let ((on-exit on-exit))
+      (let ((on-exit (let ((on-exit on-exit))
                        (lambda ()
                          (setq exwm-input-line-mode-passthrough nil)
                          (when on-exit (funcall on-exit))))))
